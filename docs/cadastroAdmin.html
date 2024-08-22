@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro</title>
+    <link rel="stylesheet" href="styleMesario.css" />
+    <script
+    src="https://kit.fontawesome.com/877e197de7.js"
+    crossorigin="anonymous"
+  ></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="janela">
+        <form id="registerForm" class="formContainer">
+          <label for="register">Usuário:</label>
+          <input type="text" id="register" name="register" />
+          <label for="registerPassword">Senha:</label>
+          <input
+            type="password"
+            id="registerPassword"
+            name="registerPassword"
+          />
+          <label for="role">Role:</label>
+          <select id="role" name="role">
+            <option value="ADMIN">Admin</option>
+            <option value="USER">User</option>
+          </select>
+          <button type="submit" class="botao">Cadastrar</button>
+          <p id="error-message" class="error-message"></p>
+        </form>
+        <button id="hubSair" class="botao sair" onclick="hubSair()">
+          Voltar
+        </button>
+      </div>
+    </div>
+
+    <script src="main.js"></script>
+    <script>
+      
+      document.addEventListener("DOMContentLoaded", function () {
+        const loginForm = document.getElementById("loginForm");
+        const registerForm = document.getElementById("registerForm");
+
+        if (loginForm) {
+          loginForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const data = {
+              login: formData.get("login"),
+              password: formData.get("password"),
+            };
+            fetch("https://mesariobarao.squareweb.app/auth/login", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            })
+              .then((response) => {
+                if (response.ok) {
+                  console.log("Login successful!");
+                } else {
+                  console.error("Login failed!");
+                }
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+              });
+          });
+        }
+
+        if (registerForm) {
+          registerForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const data = {
+              login: formData.get("register"),
+              password: formData.get("registerPassword"),
+              role: formData.get("role"),
+            };
+            fetch("https://mesariobarao.squareweb.app/auth/register", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(data),
+            })
+              .then((response) => {
+                if (response.ok) {
+                  console.log("Registration successful!");
+                  alert("Cadastro feito com sucesso!");
+                  location.href = "index.html";
+                } else {
+                  console.error("Registration failed!");
+                  document.getElementById("error-message").innerText =
+                    "Campos inválidos!";
+                }
+              })
+              .catch((error) => {
+                console.error("Error:", error);
+              });
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

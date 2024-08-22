@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro do Eleitor</title>
+    <link rel="stylesheet" href="styleMesario.css" />
+    <script
+      src="https://kit.fontawesome.com/877e197de7.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="janela">
+        <h2>Cadastro do Eleitor</h2>
+        <div class="infoLogin">
+          <label for="ra">
+            <i class="fa-regular fa-rectangle-list"></i>
+            <input type="text" name="ra" id="ra" placeholder="RA" maxlength="4" />
+          </label>
+
+          <label for="nome">
+            <i class="fa-solid fa-user"></i>
+            <input type="text" name="nome" id="nome" placeholder="Nome" />
+          </label>
+
+          <div>
+            <label for="ID">ID:</label>
+            <span id="ID"></span>
+          </div>
+
+          <button onclick="adicionarRegistroEle()" class="botao">
+            <i class="fa-solid fa-user-plus"></i> Cadastrar
+          </button>
+        </div>
+        <button id="voltarHub" class="botao sair" onclick="voltarHubEleitores()">
+          <i class="fa-solid fa-circle-chevron-left"></i> Voltar
+        </button>
+        <ul id="registros"></ul>
+      </div>
+    </div>
+
+    <script src="mainMesario.js"></script>
+    <script>
+      var idCounter = 1;
+
+      function adicionarRegistroEle() {
+        var raInput = document.getElementById("ra");
+        var nomeInput = document.getElementById("nome");
+        var raValue = raInput.value;
+        var nomeValue = nomeInput.value;
+
+        if (raValue && nomeValue) {
+          var eleitor = {
+            ra: raValue,
+            nome: nomeValue,
+          };
+
+          fetch("https://mesariobarao.squareweb.app/eleitor", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              mode: "no-cors",
+            },
+            body: JSON.stringify(eleitor),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Erro ao adicionar eleitor");
+              }
+              return response.json();
+            })
+            .then((data) => {
+
+              console.log(data);
+              alert(
+                    "Cadastro Bem Sucedido - Nome: " +
+                      data.nome +
+                      ". RA: " +
+                      data.ra
+                  );
+              window.location.reload();
+            })
+            .catch((error) => {
+              console.error("Erro:", error);
+              alert("RA já cadastrado!");
+              window.location.reload();
+            });
+
+          document.getElementById("ID").textContent = "";
+        } else {
+          alert("Por favor, preencha todos os campos.");
+        }
+      }
+    </script>
+  </body>
+</html>
