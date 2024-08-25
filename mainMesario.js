@@ -136,3 +136,26 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  const trapContainer = document.getElementById('trap-container');
+  const focusableElements = trapContainer.querySelectorAll('input, select, textarea, button');
+  const firstFocusableElement = focusableElements[0];
+  const lastFocusableElement = focusableElements[focusableElements.length - 1];
+
+  document.addEventListener('keydown', function(e) {
+      if (e.key === 'Tab') {
+          if (e.shiftKey) {
+              if (document.activeElement === firstFocusableElement) {
+                  e.preventDefault();
+                  lastFocusableElement.focus();
+              }
+          } else {
+              if (document.activeElement === lastFocusableElement) {
+                  e.preventDefault();
+                  firstFocusableElement.focus();
+              }
+          }
+      }
+  });
+});
