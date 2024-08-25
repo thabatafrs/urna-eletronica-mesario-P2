@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aguarde</title>
+    <link rel="stylesheet" href="styleMesario.css" />
+    <script
+    src="https://kit.fontawesome.com/877e197de7.js"
+    crossorigin="anonymous"
+  ></script>
+    <style>
+      .container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+      }
+
+      #eleitorVotando {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        gap: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <div id="eleitorVotando">
+        <span class="loader"></span>
+        <h1>Eleitor votando...</h1>
+        <button id="voltarHub" class="botao sair" onclick="voltarHub()">
+          <i class="fa-solid fa-circle-chevron-left"></i> Voltar para o hub
+        </button>
+      </div>
+    </div>
+    <script src="mainMesario.js"></script>
+    <script>
+      const animacao = document.getElementById("animacao");
+      const texto = document.getElementById("texto");
+
+      function verificarUrnaLiberada() {
+        fetch("https://mesariobarao.squareweb.app/liberacao_urna?isUrnaLiberada=true", {
+          method: "GET",
+        })
+          .then((response) => response.json())
+
+          .then((data) => {
+            let urnaLiberada = data;
+            console.log(urnaLiberada);
+            setTimeout(verificarUrnaLiberada, 3000);
+
+            if (urnaLiberada === false) {
+              console.log("urna liberada");
+              location.href = "id_eleitor.html";
+              // window.location.href = "voto.html";
+            }
+          })
+          .catch((err) => {
+            console.error(err);
+          });
+      }
+
+      verificarUrnaLiberada();
+    </script>
+  </body>
+</html>
