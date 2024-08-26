@@ -61,15 +61,12 @@ body.dark-theme {
   height: 60%;
   display: flex;
   align-items: center;
-  justify-content: center;
   flex-direction: column;
   border-radius: var(--border-card);
   background-color: var(--bg);
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
     rgba(0, 0, 0, 0.22) 0px 15px 12px;
-  gap: 20px;
   overflow: auto;
-  padding: 20px;
 }
 
 input {
@@ -85,7 +82,7 @@ input {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .infoLogin label {
@@ -106,8 +103,8 @@ input {
 }
 
 .botao {
-  width: 50%;
-  height: 50px;
+  width: 60%;
+  height: 60px;
   font-size: 0.9rem;
   background-color: var(--verde);
   padding: 10px;
@@ -269,7 +266,6 @@ input {
 }
 
 h2 {
-  text-transform: uppercase;
   text-align: center;
 }
 
