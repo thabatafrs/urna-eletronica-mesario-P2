@@ -9,19 +9,32 @@
       src="https://kit.fontawesome.com/877e197de7.js"
       crossorigin="anonymous"
     ></script>
+    <style>
+      h3 {
+        font-weight: 300;
+        padding: 10px;
+      }
+
+      .janela {
+        display: flex;
+        justify-content: center;
+      }
+    </style>
   </head>
   <body>
     <div class="container" id="trap-container">
       <div class="janela">
-        <h2>Cadastro do Eleitor</h2>
+        <h1>Cadastro do Eleitor</h1>
         <div class="infoLogin">
           <label for="ra">
             <i class="fa-regular fa-rectangle-list"></i>
+            <h3>Digite o RA do eleitor: </h3>
             <input type="text" name="ra" id="ra" placeholder="RA" maxlength="4" />
           </label>
 
           <label for="nome">
             <i class="fa-solid fa-user"></i>
+            <h3>Digite o nome do eleitor: </h3>
             <input type="text" name="nome" id="nome" placeholder="Nome" />
           </label>
 
