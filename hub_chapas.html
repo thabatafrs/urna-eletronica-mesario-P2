@@ -3,34 +3,64 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hub da Urna</title>
+    <title>Hub dos Candidatos</title>
     <link rel="stylesheet" href="styleMesario.css" />
     <script
-    src="https://kit.fontawesome.com/877e197de7.js"
-    crossorigin="anonymous"
-  ></script>
+      src="https://kit.fontawesome.com/877e197de7.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      .info {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        padding: 30px;
+      }
+      .botoes {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        width: 60%;
+        align-items: center;
+        gap: 20px;
+        height: 50%;
+      }
+      h2 {
+        text-transform: none;
+        font-weight: 400;
+      }
+    </style>
   </head>
   <body>
     <div class="container" id="trap-container">
       <div class="janela">
-        <button
-          class="botao"
-          id="cadastrarEleitor"
-          onclick="entrarCadastrarChapas()"
-        >
-          Adicionar Chapa/Candidato
-        </button>
-        <button id="hub" class="botao" onclick="entrarGerenciadorChapas()">
-          Exibir todos as Chapas/Candidatos
-        </button>
-        <button id="voltarHub" class="botao sair" onclick="voltarHub()">
-          <i class="fa-solid fa-circle-chevron-left"></i> Voltar
-        </button>
-        <button id="md_es" class="md_es" class="botao" onclick="mod_esc()">
-          Modo escuro
-        </button>
+        <div class="info">
+          <h1>Gestão dos Candidatos</h1>
+          <h2>
+            Gerencie todas as informações relacionadas às chapas e candidatos de
+            forma rápida e simples. Escolha entre cadastrar novas chapas ou
+            gerenciar as já existentes para manter tudo atualizado e organizado.
+          </h2>
+        </div>
+        <div class="botoes">
+          <button
+            class="botao"
+            id="cadastrarEleitor"
+            onclick="entrarCadastrarChapas()"
+          >
+            Cadastrar nova Chapa
+          </button>
+          <button id="hub" class="botao" onclick="entrarGerenciadorChapas()">
+            Gerenciar Candidatos
+          </button>
+          <button id="voltarHub" class="botao sair" onclick="voltarHub()">
+            <i class="fa-solid fa-circle-chevron-left"></i> Voltar
+          </button>
+          <button id="md_es" class="md_es" class="botao" onclick="mod_esc()">
+            Modo escuro
+          </button>
+        </div>
       </div>
-
     </div>
     <script src="mainMesario.js"></script>
   </body>

@@ -3,34 +3,65 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Hub da Urna</title>
+    <title>Hub do Eleitor</title>
     <link rel="stylesheet" href="styleMesario.css" />
     <script
-    src="https://kit.fontawesome.com/877e197de7.js"
-    crossorigin="anonymous"
-  ></script>
+      src="https://kit.fontawesome.com/877e197de7.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      .info {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        padding: 30px;
+      }
+      .botoes {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        width: 60%;
+        align-items: center;
+        gap: 20px;
+        height: 50%;
+      }
+      h2 {
+        text-transform: none;
+        font-weight: 400;
+      }
+    </style>
   </head>
   <body>
     <div class="container" id="trap-container">
       <div class="janela">
-        <button
-          class="botao"
-          id="cadastrarEleitor"
-          onclick="entrarCadastrarEleitor()"
-        >
-          Adicionar Eleitor
-        </button>
-        <button id="hub" class="botao" onclick="entrarGerenciadorEleitor()">
-          Exibir todos os eleitores
-        </button>
-        <button id="voltarHub" class="botao sair" onclick="voltarHub()">
-          <i class="fa-solid fa-circle-chevron-left"></i> Voltar
-        </button>
+        <div class="info">
+          <h1>Área do Eleitor</h1>
+          <h2>
+            Controle os eleitores cadastrados de forma eficiente. Adicione novos
+            eleitores ao sistema ou visualize a lista completa de eleitores já
+            registrados.
+          </h2>
+        </div>
+        <div class="botoes">
+          <button
+            class="botao"
+            id="cadastrarEleitor"
+            onclick="entrarCadastrarEleitor()"
+          >
+            Adicionar Eleitor
+          </button>
+          <button id="hub" class="botao" onclick="entrarGerenciadorEleitor()">
+            Exibir todos os eleitores
+          </button>
+          <button id="voltarHub" class="botao sair" onclick="voltarHub()">
+            <i class="fa-solid fa-circle-chevron-left"></i> Voltar
+          </button>
+        </div>
+
         <button id="md_es" class="md_es" class="botao" onclick="mod_esc()">
           Modo escuro
         </button>
       </div>
-
     </div>
     <script src="mainMesario.js"></script>
   </body>
