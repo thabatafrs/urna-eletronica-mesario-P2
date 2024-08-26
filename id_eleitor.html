@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Id log</title>
+  <title>Página do Mesário</title>
   <link rel="stylesheet" href="styleMesario.css" />
   <script src="https://kit.fontawesome.com/877e197de7.js" crossorigin="anonymous"></script>
   <style>
@@ -16,21 +16,46 @@
       width: 40%;
       height: 20%;
     }
+    .info {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        padding: 30px;
+      }
+      h2{
+        font-weight: 400;
+      }
+      p {
+        color: red;
+        margin-bottom: 20px;
+      }
+
+      #ra {
+        margin-bottom: 5px;
+      }
   </style>
 </head>
 
 <body>
   <div class="container" id="trap-container">
     <div class="janela" id="janela">
+      <div class="info">
+        <h1>Processo de Votação</h1>
+        <h2>Digite o RA do eleitor para buscar seu registro e autorizar a votação.</h2>
+      </div>
+
       <div id="eleitores"></div>
-      <p id="mensagem"></p>
       <input type="search" name="ra" id="ra" placeholder="RA do eleitor" autofocus class="searchInput" maxlength="4" />
+      <p id="mensagem"></p>
       <button class="botao buscarBTN" id="buscarBTN" onclick="buscarEleitores()">
         Buscar Eleitores
       </button>
+
+
       <button id="voltarHub" class="botao sair" onclick="voltarHub()">
         <i class="fa-solid fa-circle-chevron-left"></i> Voltar
       </button>
+
       <button id="md_es" class="md_es" class="botao" onclick="mod_esc()">
         Modo escuro
       </button>
@@ -70,13 +95,14 @@
             `;
             eleitoresDiv.appendChild(eleitorDiv);
           } else {
-            window.alert("RA não encontrado!");
-            window.location.reload();
+            
           }
         })
         .catch((error) => {
-          window.alert("RA não encontrado!");
-          window.location.reload();
+          document.getElementById("mensagem").innerHTML = "RA não encontrado ou incorreto.";
+          setTimeout(function(){
+         document.getElementById("mensagem").innerHTML = "";
+         },3000);
         });
     }
 
