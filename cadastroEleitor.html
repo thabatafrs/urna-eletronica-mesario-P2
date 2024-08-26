@@ -10,14 +10,8 @@
       crossorigin="anonymous"
     ></script>
     <style>
-      h3 {
-        font-weight: 300;
-        padding: 10px;
-      }
-
-      .janela {
-        display: flex;
-        justify-content: center;
+      h2 {
+        font-size: medium;
       }
     </style>
   </head>
@@ -25,17 +19,18 @@
     <div class="container" id="trap-container">
       <div class="janela">
         <h1>Cadastro do Eleitor</h1>
-        <div class="infoLogin">
+
+        <form class="infoLogin">
           <label for="ra">
             <i class="fa-regular fa-rectangle-list"></i>
-            <h3>Digite o RA do eleitor: </h3>
-            <input type="text" name="ra" id="ra" placeholder="RA" maxlength="4" />
+            <h2>RA: </h2>
+            <input type="text" name="ra" id="ra" placeholder="Digite o número do RA" maxlength="4" />
           </label>
 
           <label for="nome">
             <i class="fa-solid fa-user"></i>
-            <h3>Digite o nome do eleitor: </h3>
-            <input type="text" name="nome" id="nome" placeholder="Nome" />
+            <h2>Nome: </h2>
+            <input type="text" name="nome" id="nome" placeholder="Digite o nome do aluno" />
           </label>
 
           <div>
@@ -46,7 +41,7 @@
           <button onclick="adicionarRegistroEle()" class="botao">
             <i class="fa-solid fa-user-plus"></i> Cadastrar
           </button>
-        </div>
+        </form>
         <button id="voltarHub" class="botao sair" onclick="voltarHubEleitores()">
           <i class="fa-solid fa-circle-chevron-left"></i> Voltar
         </button>

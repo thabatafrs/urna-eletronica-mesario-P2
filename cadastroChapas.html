@@ -10,29 +10,16 @@
       crossorigin="anonymous"
     ></script>
     <style>
-      p {
-        margin-top: -20px;
-        margin-bottom: 10px;
-      }
-
       #preview {
-        width: 20%;
+        width: 30%;
         margin: auto;
         display: flex;
-        padding: 5px;
-      }
-
-      .imageForm {
-        width: 63%;
       }
 
       h2 {
         font-size: medium;
       }
 
-      h1 {
-        padding: 15px;
-      }
     </style>
   </head>
   <body>
@@ -65,9 +52,15 @@
             />
           </label>
 
-          
-          <div class="imageForm">
-            <label for="foto">Escolha a foto do candidato:</label>
+          <label for="foto"
+            ><i class="fa-solid fa-image"></i>
+            <h2>Foto do candidato:</h2>
+            <img
+              id="preview"
+              src="#"
+              alt="Preview da imagem"
+              style="display: none"
+            />
             <input
               type="file"
               id="foto"
@@ -76,13 +69,7 @@
               required
               onchange="previewImage()"
             />
-            <img
-              id="preview"
-              src="#"
-              alt="Preview da imagem"
-              style="display: none"
-            />
-          </div>
+          </label>
 
           <button type="submit" class="botao" id="cadastro">
             <i class="fa-solid fa-user-plus"></i> Cadastrar

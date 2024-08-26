@@ -1,28 +1,36 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Página do Mesário</title>
+    <link rel="stylesheet" href="styleMesario.css" />
+    <script
+      src="https://kit.fontawesome.com/877e197de7.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      .buscarBTN {
+        width: 40%;
+      }
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Página do Mesário</title>
-  <link rel="stylesheet" href="styleMesario.css" />
-  <script src="https://kit.fontawesome.com/877e197de7.js" crossorigin="anonymous"></script>
-  <style>
-    .buscarBTN {
-      width: 40%;
-    }
-
-    .searchInput {
-      width: 40%;
-      height: 20%;
-    }
-    .info {
+      .searchInput {
+        width: 40%;
+        height: 20%;
+      }
+      .info {
         text-align: center;
         display: flex;
         flex-direction: column;
         padding: 30px;
       }
-      h2{
+      .botoes {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+      }
+      h2 {
         font-weight: 400;
       }
       p {
@@ -33,139 +41,153 @@
       #ra {
         margin-bottom: 5px;
       }
-  </style>
-</head>
+    </style>
+  </head>
 
-<body>
-  <div class="container" id="trap-container">
-    <div class="janela" id="janela">
-      <div class="info">
-        <h1>Processo de Votação</h1>
-        <h2>Digite o RA do eleitor para buscar seu registro e autorizar a votação.</h2>
+  <body>
+    <div class="container" id="trap-container">
+      <div class="janela" id="janela">
+        <div class="info">
+          <h1>Processo de Votação</h1>
+          <h2>
+            Digite o RA do eleitor para buscar seu registro e autorizar a
+            votação.
+          </h2>
+        </div>
+
+        <div class="botoes">
+          <div id="eleitores"></div>
+          <input
+            type="search"
+            name="ra"
+            id="ra"
+            placeholder="RA do eleitor"
+            autofocus
+            class="searchInput"
+            maxlength="4"
+          />
+          <p id="mensagem"></p>
+          <button
+            class="botao buscarBTN"
+            id="buscarBTN"
+            onclick="buscarEleitores()"
+          >
+            Buscar Eleitores
+          </button>
+        </div>
+
+        <button id="voltarHub" class="botao sair" onclick="voltarHub()">
+          <i class="fa-solid fa-circle-chevron-left"></i> Voltar
+        </button>
+
+        <button id="md_es" class="md_es" class="botao" onclick="mod_esc()">
+          Modo escuro
+        </button>
       </div>
-
-      <div id="eleitores"></div>
-      <input type="search" name="ra" id="ra" placeholder="RA do eleitor" autofocus class="searchInput" maxlength="4" />
-      <p id="mensagem"></p>
-      <button class="botao buscarBTN" id="buscarBTN" onclick="buscarEleitores()">
-        Buscar Eleitores
-      </button>
-
-
-      <button id="voltarHub" class="botao sair" onclick="voltarHub()">
-        <i class="fa-solid fa-circle-chevron-left"></i> Voltar
-      </button>
-
-      <button id="md_es" class="md_es" class="botao" onclick="mod_esc()">
-        Modo escuro
-      </button>
     </div>
-  </div>
 
-  <script src="mainMesario.js"></script>
-  <script>
-    var input = document.getElementById("ra");
-    input.addEventListener("keyup", function (event) {
-      if (event.keyCode === 13) {
-        event.preventDefault();
-        document.getElementById("buscarBTN").click();
-      }
-    });
+    <script src="mainMesario.js"></script>
+    <script>
+      var input = document.getElementById("ra");
+      input.addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          document.getElementById("buscarBTN").click();
+        }
+      });
 
+      function buscarEleitores() {
+        const ra = document.getElementById("ra").value;
+        fetch(`https://mesariobarao.squareweb.app/eleitor/${ra}`)
+          .then((response) => response.json())
+          .then((eleitor) => {
+            console.log(eleitor);
+            const eleitorRA = eleitor.ra;
+            console.log(eleitorRA);
 
-    function buscarEleitores() {
-      const ra = document.getElementById("ra").value;
-      fetch(`https://mesariobarao.squareweb.app/eleitor/${ra}`)
-        .then((response) => response.json())
-        .then((eleitor) => {
-          console.log(eleitor);
-          const eleitorRA = eleitor.ra;
-          console.log(eleitorRA);
+            if (typeof eleitorRA != "undefined") {
+              const eleitoresDiv = document.getElementById("eleitores");
+              eleitoresDiv.innerHTML = "";
 
-          if (typeof eleitorRA != "undefined") {
-            const eleitoresDiv = document.getElementById("eleitores");
-            eleitoresDiv.innerHTML = "";
-
-            const eleitorDiv = document.createElement("div");
-            eleitorDiv.innerHTML = `
+              const eleitorDiv = document.createElement("div");
+              eleitorDiv.innerHTML = `
               <section class="liberarVoto">
                 <p>RA: ${eleitor.ra}, Nome: ${eleitor.nome}</p>
                 <button class="botao" onclick="liberarEleitor('${eleitor.ra}')">Liberar Voto</button>
               </section>
             `;
-            eleitoresDiv.appendChild(eleitorDiv);
-          } else {
-            
-          }
-        })
-        .catch((error) => {
-          document.getElementById("mensagem").innerHTML = "RA não encontrado ou incorreto.";
-          setTimeout(function(){
-         document.getElementById("mensagem").innerHTML = "";
-         },3000);
+              eleitoresDiv.appendChild(eleitorDiv);
+            } else {
+            }
+          })
+          .catch((error) => {
+            document.getElementById("mensagem").innerHTML =
+              "RA não encontrado ou incorreto.";
+            setTimeout(function () {
+              document.getElementById("mensagem").innerHTML = "";
+            }, 3000);
+          });
+      }
+
+      function liberarEleitor(ra) {
+        const url = `https://mesariobarao.squareweb.app/eleitor/verificar/${ra}`;
+        const data = JSON.stringify({
+          ra: ra,
         });
-    }
 
-    function liberarEleitor(ra) {
-      const url = `https://mesariobarao.squareweb.app/eleitor/verificar/${ra}`;
-      const data = JSON.stringify({
-        ra: ra
-      });
-
-      fetch(url, {
+        fetch(url, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: data,
         })
-        .then((response) => {
-          if (!response.ok) {} else {
-            window.alert("Eleitor liberado para votar!");
+          .then((response) => {
+            if (!response.ok) {
+            } else {
+              window.alert("Eleitor liberado para votar!");
+              window.location.reload();
+            }
+            return response.json();
+          })
+
+          .catch((error) => {
+            if (
+              error.name === "TypeError" &&
+              error.message === "Failed to fetch"
+            ) {
+              console.error("Erro de CORS:", error);
+              window.alert("Eleitor já votou!");
+            } else if (error.response && error.response.status === 502) {
+            } else {
+            }
             window.location.reload();
-          }
-          return response.json();
-        })
+          });
 
-        .catch((error) => {
-          if (error.name === 'TypeError' && error.message === 'Failed to fetch') {
-            console.error("Erro de CORS:", error);
-            window.alert("Eleitor já votou!");
-          } else if (error.response && error.response.status === 502) {
+        // const responseText = data.text();
+        // console.log(responseText);
+        // console.log(data);
+        //   if (data.votou === false) {
+        //     document.getElementById("mensagem").textContent = "Este eleitor já votou.";
+        //   } else {
+        //     window.alert("eleitor liberado!")
+        //     window.postMessage("urnaLiberada", "*");
+        //   }
+        // })
+        // .then(() => {
+        //   console.log("Eleitor já votou");
+        //   window.alert('eleitor já votou!!!!!!!')
+        //   window.reload()
+        // })
+        // .catch(error => {
+        //   console.error("Eleitor Liberado", error);
+        //   limparTela();
+      }
 
-          } else {
-
-          }
-          window.location.reload();
-        });
-
-
-      // const responseText = data.text();
-      // console.log(responseText);
-      // console.log(data);
-      //   if (data.votou === false) {
-      //     document.getElementById("mensagem").textContent = "Este eleitor já votou.";
-      //   } else {
-      //     window.alert("eleitor liberado!")
-      //     window.postMessage("urnaLiberada", "*");
-      //   }
-      // })
-      // .then(() => {
-      //   console.log("Eleitor já votou");
-      //   window.alert('eleitor já votou!!!!!!!')
-      //   window.reload()
-      // })
-      // .catch(error => {
-      //   console.error("Eleitor Liberado", error);
-      //   limparTela();
-
-    }
-
-    // function limparTela() {
-    //   document.getElementById("ra").value = "";
-    //   document.getElementById("eleitores").innerHTML = "";
-    // }
-  </script>
-</body>
-
+      // function limparTela() {
+      //   document.getElementById("ra").value = "";
+      //   document.getElementById("eleitores").innerHTML = "";
+      // }
+    </script>
+  </body>
 </html>
