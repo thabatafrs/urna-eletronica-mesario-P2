@@ -9,26 +9,49 @@
       src="https://kit.fontawesome.com/877e197de7.js"
       crossorigin="anonymous"
     ></script>
+    <style>
+      .sistema {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px;
+        gap: 15px;
+        width: 100%;
+        align-items: center;
+      }
+    </style>
   </head>
   <body>
     <div class="container" id="trap-container">
       <div class="janela" id="trap-container">
-        <button class="botao" id="cadastrarChapas" onclick="entrarHubChapas()">
-          Gerenciar Candidatos/Chapas
-        </button>
-        <button
-          class="botao"
-          id="cadastrarEleitor"
-          onclick="entrarHubEleitor()"
-        >
-          Gerenciar Eleitores
-        </button>
-        <button class="botao" id="entrarContagem" onclick="entrarContagem()">
-          Contagem de Votos
-        </button>
-        <button id="hub" class="botao" onclick="iniciarProcesso()">
-          Iniciar Processo
-        </button>
+        <div class="sistema">
+          <h2>Gestão do Sistema</h2>
+          <button
+            class="botao"
+            id="cadastrarChapas"
+            onclick="entrarHubChapas()"
+          >
+            Gerenciar Candidatos
+          </button>
+          <button
+            class="botao"
+            id="cadastrarEleitor"
+            onclick="entrarHubEleitor()"
+          >
+            Gerenciar Eleitores
+          </button>
+        </div>
+
+        <div class="sistema">
+          <h2>Processo Eleitoral</h2>
+          <button class="botao" id="entrarContagem" onclick="entrarContagem()">
+            Contagem de Votos
+          </button>
+          <button id="hub" class="botao" onclick="iniciarProcesso()">
+            Iniciar Processo
+          </button>
+        </div>
+
         <button id="hubSair" class="botao sair" onclick="hubSair()">
           <i class="fa-solid fa-right-from-bracket"></i> Sair
         </button>
