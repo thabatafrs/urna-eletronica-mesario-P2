@@ -92,23 +92,17 @@ function confirma() {
 
 
 const switcher = document.querySelector('.md_es');
-
-
 function toggleTheme() {
-
   document.body.classList.toggle('dark-theme');
   document.body.classList.toggle('light-theme');
 
   if (document.body.classList.contains('dark-theme')) {
     switcher.textContent = 'Tema Claro';
-
     localStorage.setItem('theme', 'dark');
   } else {
     switcher.textContent = 'Tema Escuro';
-
     localStorage.setItem('theme', 'light');
   }
-
   console.log('current class name: ' + document.body.className);
 }
 
@@ -119,16 +113,13 @@ if (switcher) {
 document.addEventListener('DOMContentLoaded', function() {
   
   const savedTheme = localStorage.getItem('theme');
-  
   if (savedTheme === 'dark') {
-    
     document.body.classList.add('dark-theme');
     document.body.classList.remove('light-theme');
     if (switcher) {
       switcher.textContent = 'Tema Claro';
     }
   } else {
-    
     document.body.classList.add('light-theme');
     document.body.classList.remove('dark-theme');
     if (switcher) {
