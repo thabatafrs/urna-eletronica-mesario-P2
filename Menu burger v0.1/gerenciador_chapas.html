@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Gerenciador de Candidatos</title>
+    <link rel="stylesheet" href="styleMesario.css" />
+    <script
+      src="https://kit.fontawesome.com/877e197de7.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      p {
+        margin-bottom: 5px;
+      }
+
+      hr {
+        width: 90%;
+        border: none;
+        height: 1px;
+        margin-top: -20px;
+        background-color: #000000;
+        margin-bottom: 25px;
+        margin-top: -10px;
+        margin-bottom: 25px;
+      }
+      .buscar {
+        margin-bottom: 10px;
+      }
+      .cabecalho {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 20%;
+        gap: 10px;
+        top: 0;
+
+      }
+
+      #DeletarTodos {
+        right: 150px;}
+
+    </style>
+  </head>
+  <body>
+    <nav>
+      <i class="fa-solid fa-bars" onclick="toggleMenu()"></i>
+      <div class="nv_est" id="menuItems">
+        <a href="hub.html">Home</a>
+        <a href="gerenciador_chapas.html">Gerenciador de Candidatos</a>
+        <a href="gerenciador_eleitores.html">Gerenciador de Eleitores</a>
+        <a href="contagem.html">Contagem de Votos</a>
+        <a href="id_eleitor.html">Iniciar Processo</a>
+        <a href="index.html">Sair</a>
+      </div>
+  </nav>
+    <div class="container" id="trap-container">
+      <div class="gerenciadorChapa">
+        <div class="cabecalho">
+          <h2>Gerenciador de Chapa/Candidato</h2>
+          <div class="buscar">
+            <input
+              type="search"
+              class="searchInput"
+              id="searchInput"
+              placeholder="Digite o nome"
+            />
+            <button
+              class="botao"
+              onclick="buscarCandidatos()"
+              id="searchButton"
+            >
+              Buscar
+            </button>
+            <button id="md_es" class="md_es" class="botao" onclick="mod_esc()">
+              Modo escuro
+            </button>
+          </div>
+        </div>
+
+
+        <div id="candidatos" class="listaDeChapas"></div>
+        <button
+          id="DeletarTodos"
+          class="botao botaoVermelho"
+          onclick="deletarTodosCandidatos()"
+        >
+          <i class="fa-solid fa-trash-can"></i> Deletar todos
+        </button>
+        <button
+          id="voltarHub"
+          class="botao botaoVermelho"
+          onclick="voltarHubChapas()"
+        >
+          <i class="fa-solid fa-circle-chevron-left"></i> Voltar
+        </button>
+      </div>
+    </div>
+    <script src="mainMesario.js"></script>
+    <script>
+      var input = document.getElementById("searchInput");
+      input.addEventListener("keyup", function (event) {
+        if (event.keyCode === 13) {
+          event.preventDefault();
+          document.getElementById("searchButton").click();
+        }
+      });
+
+      function carregarCandidatos() {
+        fetch("https://mesariobarao.squareweb.app/candidato")
+          .then((response) => response.json())
+          .then((data) => {
+            const candidatosDiv = document.getElementById("candidatos");
+            candidatosDiv.innerHTML = "";
+            console.log(data);
+            data.forEach((candidato) => {
+                
+                if (candidato.chapa !== "0" || candidato.nome !== "Brancos & Nulos") {
+                    const candidatoDiv = document.createElement("div");
+                    candidatoDiv.innerHTML = `
+                        <p>Chapa: ${candidato.chapa}
+                            Nome: ${candidato.nome}</p>
+                        <button class="botaoExcluir" onclick="excluirCandidato('${candidato.chapa}')"><i class="fa-solid fa-trash-can"></i></button>
+                    `;
+                    candidatosDiv.appendChild(candidatoDiv);
+                }
+            });
+        })
+        .catch((error) => {
+            console.error("Erro ao carregar os candidatos:", error);
+        });
+      }
+
+      function buscarCandidatos() {
+        const searchTerm = document
+          .getElementById("searchInput")
+          .value.trim()
+          .toLowerCase();
+        const candidatos = document.querySelectorAll("#candidatos p");
+
+        candidatos.forEach((candidato) => {
+          const candidatoInfo = candidato.textContent.toLowerCase();
+
+          if (candidatoInfo.includes(searchTerm)) {
+            candidato.style.display = "block";
+            candidato.nextElementSibling.style.display = "inline-block";
+          } else {
+            candidato.style.display = "none";
+            candidato.nextElementSibling.style.display = "none";
+          }
+        });
+      }
+
+      function excluirCandidato(chapa) {
+        if (confirm("Tem certeza que deseja excluir este candidato?")) {
+          fetch(`https://mesariobarao.squareweb.app/candidato/${chapa}`, {
+            method: "DELETE",
+          })
+            .then((response) => {
+              if (response.ok) {
+                console.log("Candidato excluído com sucesso:", chapa);
+                carregarCandidatos();
+              } else {
+                console.error("Erro ao excluir candidato:", response.status);
+              }
+            })
+            .catch((error) => {
+              console.error("Erro ao excluir candidato:", error);
+            });
+        }
+      }
+
+      function deletarTodosCandidatos() {
+        if (confirm("Tem certeza que deseja excluir todos os candidatos?")) {
+          fetch("https://mesariobarao.squareweb.app/candidato", {
+            method: "DELETE",
+          })
+            .then((response) => {
+              if (response.ok) {
+                console.log("Todos os candidatos foram excluídos com sucesso.");
+                carregarCandidatos();
+              } else {
+                console.error(
+                  "Erro ao excluir todos os candidatos:",
+                  response.status
+                );
+              }
+            })
+            .catch((error) => {
+              console.error("Erro ao excluir todos os candidatos:", error);
+            });
+        }
+      }
+
+      window.onload = carregarCandidatos;
+    </script>
+  </body>
+</html>
