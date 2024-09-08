@@ -150,3 +150,11 @@ document.addEventListener('DOMContentLoaded', function() {
       }
   });
 });
+
+function toggleMenu() {
+    const menu = document.getElementById("menuItems");
+        menu.classList.toggle("menu-opened");
+ }
+ document.querySelector('.fa-bars').addEventListener('click', function() {
+  document.body.classList.toggle('menu-opened'); 
+});
