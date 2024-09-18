@@ -13,23 +13,24 @@
   <body>
     <div class="container">
       <div class="janela">
-        <button class="botao" id="cadastrarChapas" onclick="entrarHubChapas()">
+        <button class="botao" id="cadastrarChapas" onclick="entrarHubChapas()" title="Modificar lista de Candidatos/Chapas" >
           Gerenciar Candidatos/Chapas
         </button>
         <button
           class="botao"
           id="cadastrarEleitor"
           onclick="entrarHubEleitor()"
+          title="Controle da lista de Eleitores"
         >
           Gerenciar Eleitores
         </button>
-        <button class="botao" id="entrarContagem" onclick="entrarContagem()">
+        <button class="botao" id="entrarContagem" onclick="entrarContagem()" title="Contagem geral de votos">
           Contagem de Votos
         </button>
-        <button id="hub" class="botao" onclick="iniciarProcesso()">
+        <button id="hub" class="botao" onclick="iniciarProcesso()" title="Iniciar votação">
           Iniciar Processo
         </button>
-        <button id="hubSair" class="botao sair" onclick="hubSair()">
+        <button id="hubSair" class="botao sair" onclick="hubSair()" title="Desconectar conta">
           <i class="fa-solid fa-right-from-bracket"></i> Sair
         </button>
       </div>

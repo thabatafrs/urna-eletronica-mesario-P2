@@ -41,6 +41,13 @@
   padding: 20px;
 }
 
+.botaoCadastroUsuario {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+
 input {
   border-radius: var(--border-card);
   padding: 1rem;

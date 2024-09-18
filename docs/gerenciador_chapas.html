@@ -47,16 +47,18 @@
           <div class="buscar">
             <input
               type="search"
-              class="searchInput"
               id="searchInput"
+              class="searchInput"
               placeholder="Digite o nome"
             />
             <button
               class="botao"
-              onclick="buscarCandidatos()"
               id="searchButton"
+              style="margin-left: 10px;"
+              onclick="buscarCandidatos()"
+              title="Consultar chapa ou candidato"
             >
-              Buscar
+              <i class="fa-solid fa-magnifying-glass"></i> Buscar
             </button>
           </div>
         </div>
@@ -67,11 +69,13 @@
           id="DeletarTodos"
           class="botao botaoVermelho"
           onclick="deletarTodosCandidatos()"
+          title="Limpar lista de candidatos e chapas"
         >
           <i class="fa-solid fa-trash-can"></i> Deletar todos
         </button>
         <button
           id="voltarHub"
+          title="Página anterior"
           class="botao botaoVermelho"
           onclick="voltarHubChapas()"
         >

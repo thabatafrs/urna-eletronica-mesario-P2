@@ -58,8 +58,14 @@
               id="searchInput"
               placeholder="Digite o nome"
             />
-            <button class="botao" onclick="buscarEleitores()" id="searchButton">
-              Buscar
+            <button
+              class="botao"
+              id="searchButton"
+              title="Consultar nome"
+              style="margin-left: 10px;"
+              onclick="buscarEleitores()"
+            >
+              <i class="fa-solid fa-magnifying-glass"></i> Buscar
             </button>
           </div>
         </div>
@@ -69,12 +75,14 @@
         <button
           id="deletarTodosEleitores"
           class="botao botaoVermelho"
+          title="Limpar lista de eleitores"
           onclick="deletarTodosEleitores()"
         >
           <i class="fa-solid fa-trash-can"></i> Deletar todos
         </button>
         <button
           id="voltarHub"
+          title="Página anterior"
           class="botao botaoVermelho"
           onclick="voltarHubEleitores()"
         >
