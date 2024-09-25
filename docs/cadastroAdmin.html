@@ -37,6 +37,7 @@
     </div>
 
     <script src="main.js"></script>
+    <script src="constantes.js"></script>
     <script>
       
       document.addEventListener("DOMContentLoaded", function () {
@@ -51,7 +52,7 @@
               login: formData.get("login"),
               password: formData.get("password"),
             };
-            fetch("https://mesariobarao.squareweb.app/auth/login", {
+            fetch(`${BaseUrl}/auth/login`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -80,7 +81,7 @@
               password: formData.get("registerPassword"),
               role: formData.get("role"),
             };
-            fetch("https://mesariobarao.squareweb.app/auth/register", {
+            fetch(`${BaseUrl}/auth/register`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

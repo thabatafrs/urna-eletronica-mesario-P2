@@ -57,7 +57,7 @@
             nome: nomeValue,
           };
 
-          fetch("https://mesariobarao.squareweb.app/eleitor", {
+          fetch(`${BaseUrl}/eleitor`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

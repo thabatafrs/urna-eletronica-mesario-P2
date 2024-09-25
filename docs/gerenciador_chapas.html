@@ -80,6 +80,7 @@
       </div>
     </div>
     <script src="mainMesario.js"></script>
+    <script src="constantes.js"></script>
     <script>
       var input = document.getElementById("searchInput");
       input.addEventListener("keyup", function (event) {
@@ -90,7 +91,7 @@
       });
 
       function carregarCandidatos() {
-        fetch("https://mesariobarao.squareweb.app/candidato")
+        fetch(`${BaseUrl}/candidato`)
           .then((response) => response.json())
           .then((data) => {
             const candidatosDiv = document.getElementById("candidatos");
@@ -136,7 +137,7 @@
 
       function excluirCandidato(chapa) {
         if (confirm("Tem certeza que deseja excluir este candidato?")) {
-          fetch(`https://mesariobarao.squareweb.app/candidato/${chapa}`, {
+          fetch(`${BaseUrl}/candidato/${chapa}`, {
             method: "DELETE",
           })
             .then((response) => {
@@ -155,7 +156,7 @@
 
       function deletarTodosCandidatos() {
         if (confirm("Tem certeza que deseja excluir todos os candidatos?")) {
-          fetch("https://mesariobarao.squareweb.app/candidato", {
+          fetch(`${BaseUrl}/candidato`, {
             method: "DELETE",
           })
             .then((response) => {

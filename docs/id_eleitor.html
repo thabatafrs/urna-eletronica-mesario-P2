@@ -35,6 +35,7 @@
   </div>
 
   <script src="mainMesario.js"></script>
+  <script src="constantes.js"></script>
   <script>
     var input = document.getElementById("ra");
     input.addEventListener("keyup", function (event) {
@@ -47,7 +48,7 @@
 
     function buscarEleitores() {
       const ra = document.getElementById("ra").value;
-      fetch(`https://mesariobarao.squareweb.app/eleitor/${ra}`)
+      fetch(`${BaseUrl}/eleitor/${ra}`)
         .then((response) => response.json())
         .then((eleitor) => {
           console.log(eleitor);
@@ -78,7 +79,7 @@
     }
 
     function liberarEleitor(ra) {
-      const url = `https://mesariobarao.squareweb.app/eleitor/verificar/${ra}`;
+      const url = `${BaseUrl}/eleitor/verificar/${ra}`;
       const data = JSON.stringify({
         ra: ra
       });

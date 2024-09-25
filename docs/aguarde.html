@@ -38,12 +38,13 @@
       </div>
     </div>
     <script src="mainMesario.js"></script>
+    <script src="constantes.js"></script>
     <script>
       const animacao = document.getElementById("animacao");
       const texto = document.getElementById("texto");
 
       function verificarUrnaLiberada() {
-        fetch("https://mesariobarao.squareweb.app/liberacao_urna?isUrnaLiberada=true", {
+        fetch(`${BaseUrl}/liberacao_urna?isUrnaLiberada=true`, {
           method: "GET",
         })
           .then((response) => response.json())

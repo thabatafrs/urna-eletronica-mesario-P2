@@ -35,17 +35,18 @@
     </div>
 
     <script src="mainMesario.js"></script>
+    <script src="constantes.js"></script>
     <script>
       function zerarLista() {
         if (confirm("Encerrar processo irá apagar todos os dados desta eleição. Deseja prosseguir?")) {
-          fetch("https://mesariobarao.squareweb.app/presenca", {
+          fetch(`${BaseUrl}/presenca`, {
             method: "DELETE",
           })
-          fetch("https://mesariobarao.squareweb.app/voto", {
+          fetch(`${BaseUrl}/voto`, {
             method: "DELETE",
           })
 
-          fetch("https://mesariobarao.squareweb.app/liberacao_urna?isUrnaLiberada=false", {
+          fetch(`${BaseUrl}/liberacao_urna?isUrnaLiberada=false`, {
             method: "POST",
           })
           .then(() => {
@@ -59,7 +60,7 @@
       }
       // Função para fazer uma solicitação GET para o endpoint e renderizar a lista
       function carregarListaVotos() {
-        fetch("https://mesariobarao.squareweb.app/voto")
+        fetch(`${BaseUrl}/voto`)
           .then((response) => response.json())
           .then((data) => {
             const listaVotos = document.getElementById("lista-votos");

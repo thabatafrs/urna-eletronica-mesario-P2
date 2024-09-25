@@ -84,6 +84,7 @@
     </div>
 
     <script src="mainMesario.js"></script>
+    <script src="constantes.js"></script>
     <script>
       // Buscar ao clicar enter
       var input = document.getElementById("searchInput");
@@ -95,7 +96,7 @@
       });
 
       function carregarEleitores() {
-        fetch("https://mesariobarao.squareweb.app/eleitor")
+        fetch(`${BaseUrl}/eleitor`)
           .then((response) => response.json())
           .then((data) => {
             const eleitoresDiv = document.getElementById("eleitores");
@@ -138,7 +139,7 @@
 
       function excluirEleitor(ra) {
         if (confirm("Tem certeza que deseja excluir este eleitor?")) {
-          fetch(`https://mesariobarao.squareweb.app/eleitor/${ra}`, {
+          fetch(`${BaseUrl}/eleitor/${ra}`, {
             method: "DELETE",
           })
             .then((response) => {
@@ -157,7 +158,7 @@
 
       function deletarTodosEleitores() {
         if (confirm("Tem certeza que deseja excluir todos os eleitores?")) {
-          fetch("https://mesariobarao.squareweb.app/eleitor", {
+          fetch(`${BaseUrl}/eleitor`, {
             method: "DELETE",
           })
             .then((response) => {

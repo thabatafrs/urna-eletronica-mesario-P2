@@ -84,6 +84,7 @@
     </div>
 
     <script src="mainMesario.js"></script>
+    <script src="constantes.js"></script>
     <script>
       function previewImage() {
         const preview = document.getElementById("preview");
@@ -132,7 +133,7 @@
               }
             });
 
-            fetch("https://mesariobarao.squareweb.app/candidato", {
+            fetch(`${BaseUrl}/candidato`, {
               method: "POST",
               body: JSON.stringify(json),
               headers: {
