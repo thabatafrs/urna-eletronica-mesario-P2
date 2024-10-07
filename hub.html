@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hub da Urna</title>
+    <link rel="stylesheet" href="styleMesario.css" />
+    <script
+      src="https://kit.fontawesome.com/877e197de7.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      .sistema {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding: 20px;
+        gap: 15px;
+        width: 100%;
+        align-items: center;
+      }
+      
+    </style>
+  </head>
+  <nav>
+      <i class="fa-solid fa-bars" onclick="toggleMenu()"></i>
+      <div class="nv_est" id="menuItems">
+        <a href="hub.html">Home</a>
+        <a href="gerenciador_chapas.html">Gerenciador de Candidatos</a>
+        <a href="gerenciador_eleitores.html">Gerenciador de Eleitores</a>
+        <a href="contagem.html">Contagem de Votos</a>
+        <a href="id_eleitor.html">Iniciar Processo</a>
+        <a href="index.html">Sair</a>
+      </div>
+  </nav>
+  <body>
+    <div class="container" id="trap-container">
+      <div class="janela" id="trap-container">
+        <div class="sistema">
+          <h2>Gestão do Sistema</h2>
+          <button class="botao" id="cadastrarChapas" onclick="entrarHubChapas()" title="Modificar lista de Candidatos/Chapas" >
+
+            Gerenciar Candidatos
+          </button>
+          <button
+            class="botao"
+            id="cadastrarEleitor"
+            onclick="entrarHubEleitor()"
+            title="Controle da lista de Eleitores"
+
+          >
+            Gerenciar Eleitores
+          </button>
+        </div>
+
+        <div class="sistema">
+          <h2>Processo Eleitoral</h2>
+          <button class="botao" id="entrarContagem" onclick="entrarContagem()" title="Contagem geral de votos">
+            Contagem de Votos
+          </button>
+          <button id="hub" class="botao" onclick="iniciarProcesso()" title="Iniciar votação">
+            Iniciar Processo
+          </button>
+        </div>
+
+        <button id="hubSair" class="botao sair" onclick="hubSair()" title="Desconectar conta">
+          <i class="fa-solid fa-right-from-bracket"></i> Sair
+        </button>
+        <button id="md_es" class="md_es" class="botao" onclick="mod_esc()">
+          Modo escuro
+        </button>
+      </div>
+    </div>
+    <script src="mainMesario.js"></script>
+  </body>
+</html>
