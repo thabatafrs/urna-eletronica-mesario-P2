@@ -87,3 +87,74 @@ function confirma() {
   document.getElementById("confirma");
   location.href = "FIM.html";
 }
+
+'use strict';
+
+
+const switcher = document.querySelector('.md_es');
+function toggleTheme() {
+  document.body.classList.toggle('dark-theme');
+  document.body.classList.toggle('light-theme');
+
+  if (document.body.classList.contains('dark-theme')) {
+    switcher.textContent = 'Tema Claro';
+    localStorage.setItem('theme', 'dark');
+  } else {
+    switcher.textContent = 'Tema Escuro';
+    localStorage.setItem('theme', 'light');
+  }
+  console.log('current class name: ' + document.body.className);
+}
+
+if (switcher) {
+  switcher.addEventListener('click', toggleTheme);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    document.body.classList.add('dark-theme');
+    document.body.classList.remove('light-theme');
+    if (switcher) {
+      switcher.textContent = 'Tema Claro';
+    }
+  } else {
+    document.body.classList.add('light-theme');
+    document.body.classList.remove('dark-theme');
+    if (switcher) {
+      switcher.textContent = 'Tema Escuro';
+    }
+  }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  const trapContainer = document.getElementById('trap-container');
+  const focusableElements = trapContainer.querySelectorAll('input, select, textarea, button');
+  const firstFocusableElement = focusableElements[0];
+  const lastFocusableElement = focusableElements[focusableElements.length - 1];
+
+  document.addEventListener('keydown', function(e) {
+      if (e.key === 'Tab') {
+          if (e.shiftKey) {
+              if (document.activeElement === firstFocusableElement) {
+                  e.preventDefault();
+                  lastFocusableElement.focus();
+              }
+          } else {
+              if (document.activeElement === lastFocusableElement) {
+                  e.preventDefault();
+                  firstFocusableElement.focus();
+              }
+          }
+      }
+  });
+});
+
+function toggleMenu() {
+    const menu = document.getElementById("menuItems");
+        menu.classList.toggle("menu-opened");
+ }
+ document.querySelector('.fa-bars').addEventListener('click', function() {
+  document.body.classList.toggle('menu-opened'); 
+});

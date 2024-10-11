@@ -11,21 +11,34 @@
     ></script>
   </head>
   <body>
-    <div class="container">
+    <nav>
+      <i class="fa-solid fa-bars" onclick="toggleMenu()"></i>
+      <div class="nv_est" id="menuItems">
+        <a href="hub.html">Home</a>
+        <a href="hub_chapas.html">Gerenciador de Candidatos</a>
+        <a href="hub_eleitor.html">Gerenciador de Eleitores</a>
+        <a href="contagem.html">Contagem de Votos</a>
+        <a href="id_eleitor.html">Iniciar Processo</a>
+        <a href="index.html">Sair</a>
+      </div>
+  </nav>
+    <div class="container" id="trap-container">
       <div class="janela">
         <button
           class="botao"
           id="cadastrarChapas"
           onclick="entrarCadastrarChapas()"
           title="Modificar lista de Candidatos/Chapas"
+
         >
           Gerenciar Candidatos/Chapas
         </button>
         <button
           class="botao"
           id="cadastrarEleitor"
-          title="Controle da lista de Eleitores"
           onclick="entrarCadastrarEleitor()"
+          title="Controle da lista de Eleitores"
+
         >
           Gerenciar Eleitores
         </button>
@@ -37,6 +50,9 @@
         </button>
         <button id="hubSair" class="botao sair" onclick="hubSair()" title="Desconectar conta">
           <i class="fa-solid fa-right-from-bracket"></i> Sair
+        </button>
+        <button id="md_es" class="md_es" class="botao" onclick="mod_esc()">
+          Modo escuro
         </button>
       </div>
     </div>

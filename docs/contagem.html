@@ -9,6 +9,7 @@
       src="https://kit.fontawesome.com/877e197de7.js"
       crossorigin="anonymous"
     ></script>
+    <script src="constantes.js"></script>
     <style>
       hr {
         width: 100%;
@@ -20,18 +21,35 @@
       }
     </style>
   </head>
+  
   <body>
-    <div class="container">
+    <nav>
+      <i class="fa-solid fa-bars" onclick="toggleMenu()"></i>
+      <div class="nv_est" id="menuItems">
+        <a href="hub.html">Home</a>
+        <a href="hub_chapas.html">Gerenciador de Candidatos</a>
+        <a href="hub_eleitor.html">Gerenciador de Eleitores</a>
+        <a href="contagem.html">Contagem de Votos</a>
+        <a href="id_eleitor.html">Iniciar Processo</a>
+        <a href="index.html">Sair</a>
+      </div>
+  </nav>
+    <div class="container" id="trap-container">
       <div class="janela contagem">
-        <h2>Votos</h2>
+        <h2 class="txt_2">Votos</h2>
 
         <ul id="lista-votos"></ul>
 
         <button class="botao zerar" onclick="zerarLista()" title="Finalizar votação">
           <i class="fa-solid fa-rectangle-xmark"></i> Encerrar Processo
         </button>
+
         <button id="voltarHub" class="botao sair" onclick="voltarHub()" title="Página anterior">
           <i class="fa-solid fa-circle-chevron-left"></i> Voltar
+        </button>
+        
+        <button id="md_es" class="md_es" class="botao" onclick="mod_esc()">
+          Modo escuro
         </button>
       </div>
     </div>
@@ -40,14 +58,14 @@
     <script>
       function zerarLista() {
         if (confirm("Encerrar processo irá apagar todos os dados desta eleição. Deseja prosseguir?")) {
-          fetch("https://mesariobarao.squareweb.app/presenca", {
+          fetch(`${BaseUrl}/presenca`, {
             method: "DELETE",
           })
-          fetch("https://mesariobarao.squareweb.app/voto", {
+          fetch(`${BaseUrl}/voto`, {
             method: "DELETE",
           })
 
-          fetch("https://mesariobarao.squareweb.app/liberacao_urna?isUrnaLiberada=false", {
+          fetch(`${BaseUrl}/liberacao_urna?isUrnaLiberada=false`, {
             method: "POST",
           })
           .then(() => {
@@ -61,7 +79,7 @@
       }
       // Função para fazer uma solicitação GET para o endpoint e renderizar a lista
       function carregarListaVotos() {
-        fetch("https://mesariobarao.squareweb.app/voto")
+        fetch(`${BaseUrl}/voto`)
           .then((response) => response.json())
           .then((data) => {
             const listaVotos = document.getElementById("lista-votos");

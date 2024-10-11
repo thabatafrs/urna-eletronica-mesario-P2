@@ -9,6 +9,7 @@
       src="https://kit.fontawesome.com/877e197de7.js"
       crossorigin="anonymous"
     ></script>
+    <script src="constantes.js"></script>
     <style>
       p {
         margin-bottom: 5px;
@@ -29,7 +30,7 @@
       }
 
       #deletarTodosEleitores {
-        left: 20px;
+        right: 150px;
       }
       #voltarHub {
         right: 20px;
@@ -47,10 +48,21 @@
     </style>
   </head>
   <body>
-    <div class="container">
+    <nav>
+      <i class="fa-solid fa-bars" onclick="toggleMenu()"></i>
+      <div class="nv_est" id="menuItems">
+        <a href="hub.html">Home</a>
+        <a href="hub_chapas.html">Gerenciador de Candidatos</a>
+        <a href="hub_eleitor.html">Gerenciador de Eleitores</a>
+        <a href="contagem.html">Contagem de Votos</a>
+        <a href="id_eleitor.html">Iniciar Processo</a>
+        <a href="index.html">Sair</a>
+      </div>
+  </nav>
+    <div class="container" id="trap-container">
       <div class="gerenciadorChapa">
         <div class="cabecalho">
-          <h2>Gerenciador de Eleitores</h2>
+          <h2 class="txt_2">Gerenciador de Eleitores</h2>
           <div class="buscar">
             <input
               type="search"
@@ -59,13 +71,16 @@
               placeholder="Digite o nome"
             />
             <button
-              class="botao"
-              id="searchButton"
-              title="Consultar nome"
-              style="margin-left: 10px;"
-              onclick="buscarEleitores()"
-            >
-              <i class="fa-solid fa-magnifying-glass"></i> Buscar
+            class="botao"
+            id="searchButton"
+            title="Consultar nome"
+            style="margin-left: 10px;"
+            onclick="buscarEleitores()"
+          >
+            <i class="fa-solid fa-magnifying-glass"></i> Buscar
+            </button>
+            <button id="md_es" class="md_es" class="botao" onclick="mod_esc()">
+              Modo escuro
             </button>
           </div>
         </div>
@@ -75,16 +90,17 @@
         <button
           id="deletarTodosEleitores"
           class="botao botaoVermelho"
-          title="Limpar lista de eleitores"
           onclick="deletarTodosEleitores()"
+          title="Limpar lista de eleitores"
+
         >
           <i class="fa-solid fa-trash-can"></i> Deletar todos
         </button>
         <button
           id="voltarHub"
-          title="Página anterior"
           class="botao botaoVermelho"
           onclick="voltarHubEleitores()"
+          title="Página anterior"
         >
           <i class="fa-solid fa-circle-chevron-left"></i> voltar
         </button>
@@ -103,7 +119,7 @@
       });
 
       function carregarEleitores() {
-        fetch("https://mesariobarao.squareweb.app/eleitor")
+        fetch(`${BaseUrl}/eleitor`)
           .then((response) => response.json())
           .then((data) => {
             const eleitoresDiv = document.getElementById("eleitores");
@@ -146,7 +162,7 @@
 
       function excluirEleitor(ra) {
         if (confirm("Tem certeza que deseja excluir este eleitor?")) {
-          fetch(`https://mesariobarao.squareweb.app/eleitor/${ra}`, {
+          fetch(`${BaseUrl}/eleitor/${ra}`, {
             method: "DELETE",
           })
             .then((response) => {
@@ -165,7 +181,7 @@
 
       function deletarTodosEleitores() {
         if (confirm("Tem certeza que deseja excluir todos os eleitores?")) {
-          fetch("https://mesariobarao.squareweb.app/eleitor", {
+          fetch(`${BaseUrl}/eleitor`, {
             method: "DELETE",
           })
             .then((response) => {

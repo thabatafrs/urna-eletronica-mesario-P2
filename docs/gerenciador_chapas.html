@@ -9,6 +9,7 @@
       src="https://kit.fontawesome.com/877e197de7.js"
       crossorigin="anonymous"
     ></script>
+    <script src="constantes.js"></script>
     <style>
       p {
         margin-bottom: 5px;
@@ -35,34 +36,50 @@
         height: 20%;
         gap: 10px;
         top: 0;
+      }
 
+      #DeletarTodos {
+        right: 150px;
       }
     </style>
   </head>
   <body>
-    <div class="container">
+    <nav>
+      <i class="fa-solid fa-bars" onclick="toggleMenu()"></i>
+      <div class="nv_est" id="menuItems">
+        <a href="hub.html">Home</a>
+        <a href="hub_chapas.html">Gerenciador de Candidatos</a>
+        <a href="hub_eleitor.html">Gerenciador de Eleitores</a>
+        <a href="contagem.html">Contagem de Votos</a>
+        <a href="id_eleitor.html">Iniciar Processo</a>
+        <a href="index.html">Sair</a>
+      </div>
+  </nav>
+    <div class="container" id="trap-container">
       <div class="gerenciadorChapa">
         <div class="cabecalho">
-          <h2>Gerenciador de Chapa/Candidato</h2>
+          <h2 class="txt_2">Gerenciador de Chapa/Candidato</h2>
           <div class="buscar">
             <input
               type="search"
-              id="searchInput"
               class="searchInput"
+              id="searchInput"
               placeholder="Digite o nome"
             />
             <button
               class="botao"
-              id="searchButton"
-              style="margin-left: 10px;"
               onclick="buscarCandidatos()"
+              id="searchButton"
+              style="margin-left: 10px"
               title="Consultar chapa ou candidato"
             >
               <i class="fa-solid fa-magnifying-glass"></i> Buscar
             </button>
+            <button id="md_es" class="md_es" class="botao" onclick="mod_esc()">
+              Modo escuro
+            </button>
           </div>
         </div>
-
 
         <div id="candidatos" class="listaDeChapas"></div>
         <button
@@ -70,14 +87,16 @@
           class="botao botaoVermelho"
           onclick="deletarTodosCandidatos()"
           title="Limpar lista de candidatos e chapas"
+
         >
           <i class="fa-solid fa-trash-can"></i> Deletar todos
         </button>
         <button
           id="voltarHub"
-          title="Página anterior"
           class="botao botaoVermelho"
           onclick="voltarHubChapas()"
+          title="Página anterior"
+
         >
           <i class="fa-solid fa-circle-chevron-left"></i> Voltar
         </button>
@@ -94,28 +113,30 @@
       });
 
       function carregarCandidatos() {
-        fetch("https://mesariobarao.squareweb.app/candidato")
+        fetch(`${BaseUrl}/candidato`)
           .then((response) => response.json())
           .then((data) => {
             const candidatosDiv = document.getElementById("candidatos");
             candidatosDiv.innerHTML = "";
             console.log(data);
             data.forEach((candidato) => {
-                
-                if (candidato.chapa !== "0" || candidato.nome !== "Brancos & Nulos") {
-                    const candidatoDiv = document.createElement("div");
-                    candidatoDiv.innerHTML = `
+              if (
+                candidato.chapa !== "0" ||
+                candidato.nome !== "Brancos & Nulos"
+              ) {
+                const candidatoDiv = document.createElement("div");
+                candidatoDiv.innerHTML = `
                         <p>Chapa: ${candidato.chapa}
                             Nome: ${candidato.nome}</p>
                         <button class="botaoExcluir" onclick="excluirCandidato('${candidato.chapa}')"><i class="fa-solid fa-trash-can"></i></button>
                     `;
-                    candidatosDiv.appendChild(candidatoDiv);
-                }
+                candidatosDiv.appendChild(candidatoDiv);
+              }
             });
-        })
-        .catch((error) => {
+          })
+          .catch((error) => {
             console.error("Erro ao carregar os candidatos:", error);
-        });
+          });
       }
 
       function buscarCandidatos() {
@@ -140,7 +161,7 @@
 
       function excluirCandidato(chapa) {
         if (confirm("Tem certeza que deseja excluir este candidato?")) {
-          fetch(`https://mesariobarao.squareweb.app/candidato/${chapa}`, {
+          fetch(`${BaseUrl}/candidato/${chapa}`, {
             method: "DELETE",
           })
             .then((response) => {
@@ -159,7 +180,7 @@
 
       function deletarTodosCandidatos() {
         if (confirm("Tem certeza que deseja excluir todos os candidatos?")) {
-          fetch("https://mesariobarao.squareweb.app/candidato", {
+          fetch(`${BaseUrl}/candidato`, {
             method: "DELETE",
           })
             .then((response) => {
