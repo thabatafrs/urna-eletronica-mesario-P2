@@ -315,6 +315,17 @@ document.addEventListener('DOMContentLoaded', function() {
           }
       }
   });
+<<<<<<< HEAD
 >>>>>>>> origin/deploy-teste:mainMesario.js
 >>>>>>> origin/deploy-teste
+=======
+});
+
+function toggleMenu() {
+    const menu = document.getElementById("menuItems");
+        menu.classList.toggle("menu-opened");
+ }
+ document.querySelector('.fa-bars').addEventListener('click', function() {
+  document.body.classList.toggle('menu-opened'); 
+>>>>>>> origin/Menu-burger-v0.1
 });
