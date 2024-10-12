@@ -140,7 +140,11 @@ body.dark-theme {
   position: relative;  
   border: 2px solid var(--botao-fundo);
   width: 70%;
+<<<<<<< HEAD:docs/styleMesario.css
   height: 60%;
+=======
+  height: 70%;
+>>>>>>> origin/develop-v1:styleMesario.css
   border-radius: var(--border-card);
   background-color: var(--bg);
   box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px,
@@ -148,6 +152,7 @@ body.dark-theme {
   overflow: auto;
   transition: transform 0.3s ease; 
 }
+<<<<<<< HEAD:docs/styleMesario.css
 .janela::-webkit-scrollbar {
   width: 8px; 
 }
@@ -172,6 +177,8 @@ body.dark-theme {
   transition: transform 0.3s ease, background-color 0.3s ease; 
 }
 
+=======
+>>>>>>> origin/develop-v1:styleMesario.css
 .menu-opened .janela {
   transform: translateX(10%); 
 }
@@ -369,6 +376,7 @@ input {
     margin-bottom: -15px;
   }
 }
+<<<<<<< HEAD:docs/styleMesario.css
 
 
 
@@ -796,6 +804,8 @@ input {
   }
 }
 
+=======
+>>>>>>> origin/develop-v1:styleMesario.css
 .error-message {
   margin-top: 5px;
   font-size: 1.2rem;
