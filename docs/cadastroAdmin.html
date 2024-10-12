@@ -5,33 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cadastro</title>
     <link rel="stylesheet" href="styleMesario.css" />
-    <script
-    src="https://kit.fontawesome.com/877e197de7.js"
-    crossorigin="anonymous"
-  ></script>
+    <script src="https://kit.fontawesome.com/877e197de7.js" crossorigin="anonymous"></script>
+    <script src="constantes.js"></script>
   </head>
   <body>
     <div class="container">
       <div class="janela">
         <form id="registerForm" class="formContainer">
           <label for="register">Usuário:</label>
-          <input type="text" id="register" name="register" />
+          <input type="text" id="register" name="register"/>
           <label for="registerPassword">Senha:</label>
-          <input
-            type="password"
-            id="registerPassword"
-            name="registerPassword"
-          />
+          <input type="password" id="registerPassword" name="registerPassword" />
           <label for="role">Role:</label>
           <select id="role" name="role">
             <option value="ADMIN">Admin</option>
             <option value="USER">User</option>
           </select>
-          <button type="submit" class="botao">Cadastrar</button>
+          <div class="botaoCadastroUsuario">
+            <button type="submit" class="botao" title="Realizar Cadastro">
+              <i class="fa-solid fa-user-plus"></i> Cadastrar
+            </button>
+          </div>
+          
           <p id="error-message" class="error-message"></p>
         </form>
+
         <button id="hubSair" class="botao sair" onclick="hubSair()">
           Voltar
+        </button>
+        <button id="md_es" class="md_es" class="botao" onclick="mod_esc()">
+          Modo escuro
         </button>
       </div>
     </div>
@@ -51,7 +54,7 @@
               login: formData.get("login"),
               password: formData.get("password"),
             };
-            fetch("https://mesariobarao.squareweb.app/auth/login", {
+            fetch(`${BaseUrl}/auth/login`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
@@ -80,7 +83,7 @@
               password: formData.get("registerPassword"),
               role: formData.get("role"),
             };
-            fetch("https://mesariobarao.squareweb.app/auth/register", {
+            fetch(`${BaseUrl}/auth/register`, {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

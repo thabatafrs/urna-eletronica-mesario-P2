@@ -3,25 +3,43 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Urna</title>
+    <title>LogIn da Urna</title>
     <script
       src="https://kit.fontawesome.com/877e197de7.js"
       crossorigin="anonymous"
     ></script>
+    <script src="constantes.js"></script>
     <link rel="stylesheet" href="styleMesario.css" />
+    <style>
+      h2 {
+        font-size: medium;
+      }
+
+      .info {
+        margin: 10px;
+      }
+
+    </style>
   </head>
 
   <body>
-    <div class="container">
+    <div class="container" id="trap-container">
       <div class="janela">
         <div class="infoLogin">
+          <div class="info">
+            <h1>Sistema de Urna Eletrônica</h1>
+            <h2>
+              Insira suas credenciais para acessar e gerenciar votações.
+            </h2>
+          </div>
+
           <label>
-            <i class="fa-solid fa-user"></i
-            ><input
+            <i class="fa-solid fa-user"></i>
+            <input
               type="text"
               name="usuario"
               id="usuario"
-              placeholder="Usuário"
+              placeholder="Digite o usuário"
               required
           /></label>
 
@@ -31,13 +49,19 @@
               type="password"
               name="senha"
               id="senha"
-              placeholder="Senha"
+              placeholder="Digite a senha"
               required
             />
           </label>
+
           <p id="error-message" class="error-message"></p>
-          <button class="botao" id="entrar" onclick="login()">Entrar</button>
-        </div>
+          <button class="botao" id="entrar" onclick="login()" title="Acessar conta">
+            <i class="fa-solid fa-door-open"></i> Entrar
+          </button>        </div>
+
+        <button id="md_es" class="md_es" class="botao" onclick="mod_esc()">
+          Modo escuro
+        </button>
       </div>
     </div>
 
@@ -61,7 +85,7 @@
           password: senha,
         };
 
-        fetch("https://mesariobarao.squareweb.app/auth/login", {
+        fetch(`${BaseUrl}/auth/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -77,7 +101,6 @@
               console.error("Login failed!");
               document.getElementById("error-message").innerText =
                 "Usuário ou senha incorretos!";
-                
             } else {
               console.log("Login successful!");
               window.location.href = "hub.html";

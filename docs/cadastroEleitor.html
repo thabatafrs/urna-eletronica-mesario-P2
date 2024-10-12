@@ -9,20 +9,39 @@
       src="https://kit.fontawesome.com/877e197de7.js"
       crossorigin="anonymous"
     ></script>
+    <style>
+      h2 {
+        font-size: medium;
+      }
+    </style>
   </head>
   <body>
-    <div class="container">
+    <nav>
+      <i class="fa-solid fa-bars" onclick="toggleMenu()"></i>
+      <div class="nv_est" id="menuItems">
+        <a href="hub.html">Home</a>
+        <a href="hub_chapas.html">Gerenciador de Candidatos</a>
+        <a href="hub_eleitor.html">Gerenciador de Eleitores</a>
+        <a href="contagem.html">Contagem de Votos</a>
+        <a href="id_eleitor.html">Iniciar Processo</a>
+        <a href="index.html">Sair</a>
+      </div>
+  </nav>
+    <div class="container" id="trap-container">
       <div class="janela">
-        <h2>Cadastro do Eleitor</h2>
-        <div class="infoLogin">
+        <h1 class="txt_1">Cadastro do Eleitor</h1>
+
+        <form class="infoLogin">
           <label for="ra">
             <i class="fa-regular fa-rectangle-list"></i>
-            <input type="text" name="ra" id="ra" placeholder="RA" maxlength="4" />
+            <h2>RA: </h2>
+            <input type="text" name="ra" id="ra" placeholder="Digite o número do RA" maxlength="4" />
           </label>
 
           <label for="nome">
             <i class="fa-solid fa-user"></i>
-            <input type="text" name="nome" id="nome" placeholder="Nome" />
+            <h2 class="txt_2">Nome: </h2>
+            <input type="text" name="nome" id="nome" placeholder="Digite o nome do aluno" />
           </label>
 
           <div>
@@ -30,14 +49,17 @@
             <span id="ID"></span>
           </div>
 
-          <button onclick="adicionarRegistroEle()" class="botao">
+          <button onclick="adicionarRegistroEle()" class="botao" title="Realizar Cadastro">
             <i class="fa-solid fa-user-plus"></i> Cadastrar
           </button>
-        </div>
-        <button id="voltarHub" class="botao sair" onclick="voltarHubEleitores()">
+        </form>
+        <button id="voltarHub" class="botao sair" onclick="voltarHubEleitores()" title="Página anterior">
           <i class="fa-solid fa-circle-chevron-left"></i> Voltar
         </button>
         <ul id="registros"></ul>
+        <button id="md_es" class="md_es" class="botao" onclick="mod_esc()">
+          Modo escuro
+        </button>
       </div>
     </div>
 
@@ -57,7 +79,7 @@
             nome: nomeValue,
           };
 
-          fetch("https://mesariobarao.squareweb.app/eleitor", {
+          fetch(`${BaseUrl}/eleitor`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -85,6 +107,12 @@
             .catch((error) => {
               console.error("Erro:", error);
               alert("RA já cadastrado!");
+
+              if (error.response && error.response.status === 400) {
+                  alert("Erro de conexão!");
+              } else {
+                  alert("Erro inesperado! Tente novamente.");
+              }
               window.location.reload();
             });
 
