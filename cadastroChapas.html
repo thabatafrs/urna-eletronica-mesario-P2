@@ -1,3 +1,4 @@
+<<<<<<< HEAD:cadastroChapas.html
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -202,3 +203,180 @@
     </script>
   </body>
 </html>
+=======
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro de Chapas</title>
+    <link rel="stylesheet" href="styleMesario.css" />
+    <script
+      src="https://kit.fontawesome.com/877e197de7.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      p {
+        margin-top: -20px;
+        margin-bottom: 10px;
+      }
+
+      #preview {
+        width: 15%;
+        margin: auto;
+        display: block;
+        padding: 5px;
+      }
+
+      .imageForm {
+        width: 63%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="janela">
+        <h2>Cadastro de Candidato</h2>
+        <form class="infoLogin" id="cadastroForm">
+          <label for="chapa">
+            <i class="fa-solid fa-server"></i>
+            <input
+              type="text"
+              id="chapa"
+              placeholder="Número da chapa"
+              name="chapa"
+              required
+              maxlength="2"
+            />
+          </label>
+
+          <label for="nome">
+            <i class="fa-solid fa-user"></i>
+            <input
+              type="text"
+              id="nome"
+              placeholder="Nome do candidato"
+              name="nome"
+              required
+            />
+          </label>
+
+          <div class="imageForm">
+            <label for="foto">Foto:</label>
+            <input
+              type="file"
+              id="foto"
+              name="foto"
+              accept="image/*"
+              required
+              onchange="previewImage()"
+            />
+          </div>
+          <img
+            id="preview"
+            src="#"
+            alt="Preview da imagem"
+            style="display: none"
+          />
+          <button type="submit" class="botao" id="cadastro">
+            <i class="fa-solid fa-user-plus"></i> Cadastrar
+          </button>
+        </form>
+
+        <button id="voltarHub" class="botao sair" onclick="voltarHubChapas()">
+          <i class="fa-solid fa-circle-chevron-left"></i> Voltar
+        </button>
+      </div>
+    </div>
+
+    <script src="mainMesario.js"></script>
+    <script src="constantes.js"></script>
+    <script>
+      function previewImage() {
+        const preview = document.getElementById("preview");
+        const file = document.getElementById("foto").files[0];
+        const reader = new FileReader();
+
+        reader.onloadend = function () {
+          preview.src = reader.result;
+          preview.style.display = "block";
+        };
+
+        if (file) {
+          reader.readAsDataURL(file);
+        } else {
+          preview.src = "";
+          preview.style.display = "none";
+        }
+      }
+
+      document.getElementById("chapa").addEventListener("input", function () {
+        if (this.value.length > 2) {
+          this.value = this.value.slice(0, 2);
+        }
+      });
+
+      document
+        .getElementById("cadastroForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const formData = new FormData(this);
+          const reader = new FileReader();
+          const json = {};
+
+          reader.onload = function () {
+            const base64Image = reader.result.split(",")[1];
+            const nomeCandidato = formData.get("nome");
+            const numeroChapa = formData.get("chapa");
+
+            const downloadLink = document.createElement("a");
+
+            json["foto"] = base64Image;
+            formData.forEach(function (value, key) {
+              if (key !== "foto") {
+                json[key] = value;
+              }
+            });
+
+            fetch(`${BaseUrl}/candidato`, {
+              method: "POST",
+              body: JSON.stringify(json),
+              headers: {
+                "Content-Type": "application/json",
+              },
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                const cadastro = data.chapa;
+                console.log(cadastro);
+
+                if (typeof cadastro != "undefined") {
+                  console.log(data);
+                  alert(
+                    "Cadastro Bem Sucedido - Chapa: " +
+                      data.chapa +
+                      ", Nome: " +
+                      data.nome
+                  );
+                  window.location.reload();
+                } else {
+                  window.alert("Falha ao Cadastrar, Chapa já cadastrada!");
+                  window.location.reload();
+                }
+              })
+              .catch((error) => {
+                console.error("Erro:", error);
+                alert("Falha ao Cadastrar");
+                window.location.reload();
+              });
+          };
+
+          reader.readAsDataURL(
+            this.querySelector('input[type="file"]').files[0]
+          );
+        });
+    </script>
+  </body>
+</html>
+>>>>>>> origin/Variável-de-EndPoint---V0.1:docs/cadastroChapas.html
