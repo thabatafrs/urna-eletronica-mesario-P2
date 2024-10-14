@@ -1,4 +1,3 @@
-<<<<<<< HEAD:cadastroEleitor.html
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -21,13 +20,8 @@
       <i class="fa-solid fa-bars" onclick="toggleMenu()"></i>
       <div class="nv_est" id="menuItems">
         <a href="hub.html">Home</a>
-<<<<<<< HEAD:docs/cadastroEleitor.html
         <a href="hub_chapas.html">Gerenciador de Candidatos</a>
         <a href="hub_eleitor.html">Gerenciador de Eleitores</a>
-=======
-        <a href="gerenciador_chapas.html">Gerenciador de Candidatos</a>
-        <a href="gerenciador_eleitores.html">Gerenciador de Eleitores</a>
->>>>>>> origin/develop-v1:cadastroEleitor.html
         <a href="contagem.html">Contagem de Votos</a>
         <a href="id_eleitor.html">Iniciar Processo</a>
         <a href="index.html">Sair</a>
@@ -35,11 +29,7 @@
   </nav>
     <div class="container" id="trap-container">
       <div class="janela">
-<<<<<<< HEAD:docs/cadastroEleitor.html
         <h1 class="txt_1">Cadastro do Eleitor</h1>
-=======
-        <h1>Cadastro do Eleitor</h1>
->>>>>>> origin/develop-v1:cadastroEleitor.html
 
         <form class="infoLogin">
           <label for="ra">
@@ -50,11 +40,7 @@
 
           <label for="nome">
             <i class="fa-solid fa-user"></i>
-<<<<<<< HEAD:docs/cadastroEleitor.html
             <h2 class="txt_2">Nome: </h2>
-=======
-            <h2>Nome: </h2>
->>>>>>> origin/develop-v1:cadastroEleitor.html
             <input type="text" name="nome" id="nome" placeholder="Digite o nome do aluno" />
           </label>
 
@@ -121,15 +107,12 @@
             .catch((error) => {
               console.error("Erro:", error);
               alert("RA já cadastrado!");
-<<<<<<< HEAD:docs/cadastroEleitor.html
 
               if (error.response && error.response.status === 400) {
                   alert("Erro de conexão!");
               } else {
                   alert("Erro inesperado! Tente novamente.");
               }
-=======
->>>>>>> origin/develop-v1:cadastroEleitor.html
               window.location.reload();
             });
 
@@ -140,118 +123,4 @@
       }
     </script>
   </body>
-=======
-<!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cadastro do Eleitor</title>
-    <link rel="stylesheet" href="styleMesario.css" />
-    <script
-      src="https://kit.fontawesome.com/877e197de7.js"
-      crossorigin="anonymous"
-    ></script>
-  </head>
-  <body>
-<<<<<<< HEAD
-    <div class="container">
-=======
-    <nav>
-      <i class="fa-solid fa-bars" onclick="toggleMenu()"></i>
-      <div class="nv_est" id="menuItems">
-        <a href="hub.html">Home</a>
-        <a href="gerenciador_chapas.html">Gerenciador de Candidatos</a>
-        <a href="gerenciador_eleitores.html">Gerenciador de Eleitores</a>
-        <a href="contagem.html">Contagem de Votos</a>
-        <a href="id_eleitor.html">Iniciar Processo</a>
-        <a href="index.html">Sair</a>
-      </div>
-  </nav>
-    <div class="container" id="trap-container">
->>>>>>> origin/Menu-burger-v0.1
-      <div class="janela">
-        <h2>Cadastro do Eleitor</h2>
-        <div class="infoLogin">
-          <label for="ra">
-            <i class="fa-regular fa-rectangle-list"></i>
-            <input type="text" name="ra" id="ra" placeholder="RA" maxlength="4" />
-          </label>
-
-          <label for="nome">
-            <i class="fa-solid fa-user"></i>
-            <input type="text" name="nome" id="nome" placeholder="Nome" />
-          </label>
-
-          <div>
-            <label for="ID">ID:</label>
-            <span id="ID"></span>
-          </div>
-
-          <button onclick="adicionarRegistroEle()" class="botao">
-            <i class="fa-solid fa-user-plus"></i> Cadastrar
-          </button>
-        </div>
-        <button id="voltarHub" class="botao sair" onclick="voltarHubEleitores()">
-          <i class="fa-solid fa-circle-chevron-left"></i> Voltar
-        </button>
-        <ul id="registros"></ul>
-      </div>
-    </div>
-
-    <script src="mainMesario.js"></script>
-    <script>
-      var idCounter = 1;
-
-      function adicionarRegistroEle() {
-        var raInput = document.getElementById("ra");
-        var nomeInput = document.getElementById("nome");
-        var raValue = raInput.value;
-        var nomeValue = nomeInput.value;
-
-        if (raValue && nomeValue) {
-          var eleitor = {
-            ra: raValue,
-            nome: nomeValue,
-          };
-
-          fetch(`${BaseUrl}/eleitor`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              mode: "no-cors",
-            },
-            body: JSON.stringify(eleitor),
-          })
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error("Erro ao adicionar eleitor");
-              }
-              return response.json();
-            })
-            .then((data) => {
-
-              console.log(data);
-              alert(
-                    "Cadastro Bem Sucedido - Nome: " +
-                      data.nome +
-                      ". RA: " +
-                      data.ra
-                  );
-              window.location.reload();
-            })
-            .catch((error) => {
-              console.error("Erro:", error);
-              alert("RA já cadastrado!");
-              window.location.reload();
-            });
-
-          document.getElementById("ID").textContent = "";
-        } else {
-          alert("Por favor, preencha todos os campos.");
-        }
-      }
-    </script>
-  </body>
->>>>>>> origin/Variável-de-EndPoint---V0.1:docs/cadastroEleitor.html
 </html>
