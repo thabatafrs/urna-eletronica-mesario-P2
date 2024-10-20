@@ -86,10 +86,11 @@
             title="Consultar nome"
             style="margin-left: 10px;"
             onclick="buscarEleitores()"
+            alt="Buscar eleitores"
           >
             <i class="fa-solid fa-magnifying-glass"></i> Buscar
             </button>
-            <button id="md_es" class="md_es" class="botao" onclick="mod_esc()">
+            <button id="md_es" class="md_es" class="botao" onclick="mod_esc()" alt="Alterar modo escuro">
               Modo escuro
             </button>
           </div>
@@ -102,6 +103,7 @@
           class="botao botaoVermelho"
           onclick="deletarTodosEleitores()"
           title="Limpar lista de eleitores"
+          alt="Limpa lista de eleitores"
 
         >
           <i class="fa-solid fa-trash-can"></i> Deletar todos
@@ -111,6 +113,7 @@
           class="botao botaoVermelho"
           onclick="voltarHubEleitores()"
           title="Página anterior"
+          alt="Voltar para página anterior"
         >
           <i class="fa-solid fa-circle-chevron-left"></i> voltar
         </button>
@@ -291,7 +294,7 @@
               id="searchInput"
               placeholder="Digite o nome"
             />
-            <button class="botao" onclick="buscarEleitores()" id="searchButton">
+            <button class="botao" onclick="buscarEleitores()" id="searchButton" alt="Busca eleitores">
               Buscar
             </button>
           </div>
@@ -303,6 +306,7 @@
           id="deletarTodosEleitores"
           class="botao botaoVermelho"
           onclick="deletarTodosEleitores()"
+          alt="Deleta todos eleitores"
         >
           <i class="fa-solid fa-trash-can"></i> Deletar todos
         </button>
@@ -310,6 +314,7 @@
           id="voltarHub"
           class="botao botaoVermelho"
           onclick="voltarHubEleitores()"
+          alt="Volta para o HUB"
         >
           <i class="fa-solid fa-circle-chevron-left"></i> voltar
         </button>
