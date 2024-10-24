@@ -28,6 +28,12 @@ function hubSair() {
   location.href = "index.html";
 }
 
+function Adm() {
+  document.getElementById("botao_ADM");
+  location.href = "administracao.html";
+}
+
+
 function entrarCadastrarChapas() {
   document.getElementById("cadastrarChapas");
   location.href = "cadastroChapas.html";

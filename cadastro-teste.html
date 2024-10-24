@@ -11,9 +11,7 @@
     ></script>
     <script src="constantes.js"></script>
     <style>
-      h2 {
-        font-size: medium;
-      }
+   
 
       #mensagem {
         text-align: center;
@@ -26,22 +24,17 @@
         margin: 20px;
       }
 
-      input,
-      button,
-      textarea {
-        margin-bottom: 10px;
-        padding: 5px;
-      }
-
-      .input-box {
+      label {
         display: flex;
-        flex-direction: column;
-        margin-bottom: 20px;
+        align-items: center;
       }
+      
+      #classe {
+        display: flex;
+        align-items: center;
+        width: 50%; /* defina a largura */
+        margin: 0 auto;
 
-      .output {
-        width: 100%;
-        height: 150px;
       }
 
       textarea {
@@ -66,15 +59,16 @@
     <div class="container" id="trap-container">
       <div class="janela">
         <h1 class="txt_1">Cadastro do Eleitor</h1>
+        <div class="input-box">
+          <label for="classe">Classe</label>
+          <input
+            type="text"
+            id="classe"
+            placeholder="Digite a classe (ex: 5F)"
+          />
+        </div>
         <div class="infoLogin">
-          <div class="input-box">
-            <label for="classe">Classe</label>
-            <input
-              type="text"
-              id="classe"
-              placeholder="Digite a classe (ex: 5F)"
-            />
-          </div>
+          
 
           <div class="input-box">
             <label for="nomes">Nomes (um por linha)</label>
@@ -91,14 +85,19 @@
               placeholder="Digite um número por linha"
             ></textarea>
           </div>
-          <button onclick="gerarRegistros()" class="botao">
-            <i class="fa-solid fa-user-plus"></i> Cadastrar
-          </button>
+          
           <div class="input-box">
             <label for="resultado">Registros Gerados</label>
             <textarea id="resultado" class="output" readonly></textarea>
           </div>
+
+          <button onclick="gerarRegistros()" class="botao">
+            <i class="fa-solid fa-user-plus"></i> Cadastrar
+          </button>
         </div>
+
+        
+
         <button
           id="voltarHub"
           class="botao sair"

@@ -412,11 +412,13 @@ input {
 
 .infoLogin {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   gap: 1.5rem;
   padding: 20px;
+  margin-left: 5%;
+  margin-right: 5%;
 }
 
 .infoLogin label {
@@ -738,6 +740,299 @@ input {
   justify-content: center;
 }
 
+.botao_ADM  {
+  width: 60%;
+  height: 60px;
+  font-size: 0.9rem;
+  background-color: rgb(171, 195, 66);
+  padding: 10px;
+  border-radius: var(--border-card);
+  text-transform: uppercase;
+  font-weight: bold;
+  border: 1px solid var(--botao-fundo);
+  cursor: pointer;
+}
+
+.botao_ADM:hover {
+  background-color: rgb(129, 146, 50);
+  transition: 300ms;
+}
+
+@media screen and (max-width: 800px) {
+  .botao_ADM {
+    height: auto;
+    font-size: 0.8rem;
+    padding: -10px;
+    margin-bottom: -15px;
+  }
+}
+
+@media screen and (max-width: 750px) {
+  .botao_ADM {
+    height: auto;
+    font-size: 0.8rem;
+    padding: -18px;
+    margin-bottom: -15px;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .botao_ADM {
+    height: 30px;
+    font-size: 0.55rem;
+    padding: -20px;
+    margin-bottom: -15px;
+  }
+}
+
+@media screen and (max-width: 550px) {
+  .botao_ADM {
+    height: 0px;
+    font-size: 0.5rem;
+    padding: -18px;
+    margin-bottom: -15px;
+  }
+}
+
+@media screen and (max-width: 530px) {
+  .botao_ADM {
+    height: 0px;
+    font-size: 0.4rem;
+    padding: -18px;
+    margin-bottom: -15px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .botao_ADM {
+    height: 0px;
+    font-size: 0.3rem;
+    padding: -18px;
+    margin-bottom: -15px;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  .botao_ADM {
+    height: 0px;
+    font-size: 0.2rem;
+    padding: -18px;
+    margin-bottom: -15px;
+  }
+}
+
+@media screen and (max-height: 750px) {
+  .botao_ADM {
+    width: 60%;
+    height: 50px;
+    font-size: 0.9rem;
+    background-color: rgb(171, 195, 66);
+    padding: 10px;
+    border-radius: var(--border-card);
+    text-transform: uppercase;
+    font-weight: bold;
+    border: 1px solid var(--botao-fundo);
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-height: 700px) {
+  .botao_ADM {
+    width: 60%;
+    height: 42px;
+    font-size: 0.9rem;
+    background-color: rgb(171, 195, 66);
+    padding: 10px;
+    border-radius: var(--border-card);
+    text-transform: uppercase;
+    font-weight: bold;
+    border: 1px solid var(--botao-fundo);
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-height: 640px) {
+  .botao_ADM {
+    width: 60%;
+    height: 40px;
+    font-size: 0.9rem;
+    background-color: rgb(171, 195, 66);
+    padding: 10px;
+    border-radius: var(--border-card);
+    text-transform: uppercase;
+    font-weight: bold;
+    border: 1px solid var(--botao-fundo);
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-height: 630px) {
+  .botao_ADM {
+    width: 60%;
+    height: 33px;
+    font-size: 0.9rem;
+    background-color: rgb(171, 195, 66);
+    padding: 10px;
+    border-radius: var(--border-card);
+    text-transform: uppercase;
+    font-weight: bold;
+    border: 1px solid var(--botao-fundo);
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-height: 620px) {
+  .botao_ADM {
+    width: 60%;
+    height: 31px;
+    font-size: 0.9rem;
+    background-color: rgb(171, 195, 66);
+    padding: 10px;
+    border-radius: var(--border-card);
+    text-transform: uppercase;
+    font-weight: bold;
+    border: 1px solid var(--botao-fundo);
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-height: 600px) {
+  .botao_ADM {
+    width: 60%;
+    height: 30px;
+    font-size: 0.9rem;
+    background-color: rgb(171, 195, 66);
+    padding: 10px;
+    border-radius: var(--border-card);
+    text-transform: uppercase;
+    font-weight: bold;
+    border: 1px solid var(--botao-fundo);
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-height: 580px) {
+  .botao_ADM {
+    width: 60%;
+    height: 27px;
+    font-size: 0.9rem;
+    background-color: rgb(171, 195, 66);
+    padding: 10px;
+    border-radius: var(--border-card);
+    text-transform: uppercase;
+    font-weight: bold;
+    border: 1px solid var(--botao-fundo);
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-height: 575px) {
+  .botao_ADM {
+    width: 60%;
+    height: 27px;
+    font-size: 0.6rem;
+    background-color: rgb(171, 195, 66);
+    padding: 10px;
+    border-radius: var(--border-card);
+    text-transform: uppercase;
+    font-weight: bold;
+    border: 1px solid var(--botao-fundo);
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-height: 550px) {
+  .botao_ADM {
+    width: 60%;
+    height: 25px;
+    font-size: 0.6rem;
+    background-color: rgb(171, 195, 66);
+    padding: 10px;
+    border-radius: var(--border-card);
+    text-transform: uppercase;
+    font-weight: bold;
+    border: 1px solid var(--botao-fundo);
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-height: 530px) {
+  .botao_ADM {
+    width: 60%;
+    height: 25px;
+    font-size: 0.55rem;
+    background-color: rgb(171, 195, 66);
+    padding: 10px;
+    border-radius: var(--border-card);
+    text-transform: uppercase;
+    font-weight: bold;
+    border: 1px solid var(--botao-fundo);
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-height: 500px) {
+  .botao_ADM {
+    width: 30%;
+    height: 26px;
+    font-size: 0.53rem;
+    background-color: rgb(171, 195, 66);
+    padding: 10px;
+    border-radius: var(--border-card);
+    text-transform: uppercase;
+    font-weight: bold;
+    border: 1px solid var(--botao-fundo);
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-height: 450px) {
+  .botao_ADM {
+    width: 30%;
+    height: 26px;
+    font-size: 0.48rem;
+    background-color: rgb(171, 195, 66);
+    padding: -18px;
+    border-radius: var(--border-card);
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: -15px;
+    border: 1px solid var(--botao-fundo);
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-height: 400px) {
+  .botao_ADM {
+    width: 30%;
+    height: 26px;
+    font-size: 0.48rem;
+    background-color: rgb(171, 195, 66);
+    padding: -18px;
+    border-radius: var(--border-card);
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-bottom: -15px;
+    border: 1px solid var(--botao-fundo);
+    cursor: pointer;
+  }
+}
+
+@media screen and (max-height: 300px) {
+  .botao_ADM {
+    height: 0px;
+    font-size: 0.2rem;
+    padding: -18px;
+    margin-bottom: -15px;
+  }
+}
+
+.botao_ADM:hover {
+  background-color: rgb(129, 146, 50);
+  transition: 300ms;
+}
+
+
 @media screen and (max-width: 800px) {
   .botao {
     height: auto;
@@ -1010,7 +1305,7 @@ input {
 
 
 @media screen and (max-height: 550px) {
-  .txt_1 {
+  .txt_1, .contagem {
     font-size: 1.3rem;
   }
   .txt_2 {
@@ -1019,7 +1314,7 @@ input {
 }
 
 @media screen and (max-height: 530px) {
-  .txt_1 {
+  .txt_1, .contagem {
     font-size: 1.3rem;
   }
   .txt_2 {
@@ -1028,7 +1323,7 @@ input {
 }
 
 @media screen and (max-height: 400px) {
-  .txt_1 {
+  .txt_1, .contagem {
     font-size: 1.1rem;
   }
   .txt_2 {
@@ -1037,7 +1332,7 @@ input {
 }
 
 @media screen and (max-height: 360px) {
-  .txt_1 {
+  .txt_1, .contagem {
     font-size: 0.9rem;
   }
   .txt_2 {
@@ -1046,7 +1341,7 @@ input {
 }
 
 @media screen and (max-height: 340px) {
-  .txt_1 {
+  .txt_1, .contagem {
     font-size: 0.7rem;
   }
   .txt_2 {
@@ -1056,7 +1351,7 @@ input {
 
 
 @media screen and (max-height: 300px) {
-  .txt_1 {
+  .txt_1, .contagem {
     font-size: 0.5rem;
   }
   .txt_2 {
@@ -1065,7 +1360,7 @@ input {
 }
 
 @media screen and (max-height: 250px) {
-  .txt_1 {
+  .txt_1, .contagem {
     padding: 0px;
     font-size: 0.3rem;
   }
@@ -1075,7 +1370,7 @@ input {
 }
 
 @media screen and (max-height: 200px) {
-  .txt_1 {
+  .txt_1, .contagem {
     padding: 0px;
     font-size: 0.1rem;
   }
@@ -1122,7 +1417,7 @@ input {
 }
 
 @media screen and (max-width: 800px) {
-  .txt_1 {
+  .txt_1, .contagem {
     font-size: 1.3rem;
   }
   .txt_2 {
@@ -1131,7 +1426,7 @@ input {
 }
 
 @media screen and (max-width: 750px) {
-  .txt_1 {
+  .txt_1, .contagem {
     font-size: 1.1rem;
   }
   .txt_2 {
@@ -1140,7 +1435,7 @@ input {
 }
 
 @media screen and (max-width: 640px) {
-  .txt_1 {
+  .txt_1, .contagem {
     font-size: 1rem;
   }
   .txt_2 {
@@ -1149,7 +1444,7 @@ input {
 }
 
 @media screen and (max-width: 550px) {
-  .txt_1 {
+  .txt_1, .contagem {
     font-size: 0.9rem;
   }
   .txt_2 {
@@ -1158,7 +1453,7 @@ input {
 }
 
 @media screen and (max-width: 530px) {
-  .txt_1 {
+  .txt_1, .contagem {
     font-size: 0.8rem;
   }
   .txt_2 {
@@ -1167,7 +1462,7 @@ input {
 }
 
 @media screen and (max-width: 400px) {
-  .txt_1 {
+  .txt_1, .contagem {
     font-size: 0.2rem;
   }
   .txt_2 {
@@ -1176,7 +1471,7 @@ input {
 }
 
 @media screen and (max-width: 300px) {
-  .txt_1 {
+  .txt_1, .contagem {
     font-size: 0.1rem;
   }
   .txt_2 {
@@ -1680,15 +1975,16 @@ li {
 /* contagem da urna */
 .contagem {
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 1rem;
-  padding-top: 2rem;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 10%;
+  padding-right: 10%;
+  
+  padding-top:5%;
 }
 
 .contagem ul {
   display: flex;
-  gap: 10px;
   flex-direction: column;
 }
 
@@ -1696,14 +1992,13 @@ li {
   border: 2px solid;
   display: flex;
   justify-content: space-between;
-  padding: 10px;
+  margin: 5px;
 }
 
 #lista-votos {
-  font-size: 1.5rem;
   overflow-y: auto;
-  width: 50%;
-  height: 75%;
+  width: 100%;
+  height: 150%;
 }
 
 .botaoExcluir {

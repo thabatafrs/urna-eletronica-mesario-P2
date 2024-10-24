@@ -11,14 +11,35 @@
     ></script>
     <script src="constantes.js"></script>
     <style>
-      h2 {
-        font-size: medium;
-      }
+   
 
       #mensagem {
         text-align: center;
         font-weight: bold;
         font-size: large;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+
+      label {
+        display: flex;
+        align-items: center;
+      }
+      
+      #classe {
+        display: flex;
+        align-items: center;
+        width: 50%; /* defina a largura */
+        margin: 0 auto;
+
+      }
+
+      textarea {
+        height: 100px;
+        resize: none;
       }
     </style>
   </head>
@@ -38,46 +59,45 @@
     <div class="container" id="trap-container">
       <div class="janela">
         <h1 class="txt_1">Cadastro do Eleitor</h1>
-<div class="infoLogin">
+        <div class="input-box">
+          <label for="classe">Classe</label>
+          <input
+            type="text"
+            id="classe"
+            placeholder="Digite a classe (ex: 5F)"
+          />
+        </div>
+        <div class="infoLogin">
+          
 
-          <label for="ra">
-            <i class="fa-regular fa-rectangle-list"></i>
-            <h2>RA:</h2>
-
-            <input
-              type="text"
-              name="ra"
-              id="ra"
-              placeholder="Digite o número do RA"
-              maxlength="4"
-              
-            />
-            
-          </label>
-
-          <label for="nome">
-            <i class="fa-solid fa-user"></i>
-            <h2 class="txt_2">Nome:</h2>
-            <input
-              type="text"
-              name="nome"
-              id="nome"
-              placeholder="Digite o nome do aluno"
-            
-            />
-            </label>
-            <span style="color: red; " id="mensagem"></span>
-
-
-          <div style="display: none;">
-            <label for="ID">ID:</label>
-            <span id="ID"></span>
+          <div class="input-box">
+            <label for="nomes">Nomes (um por linha)</label>
+            <textarea
+              id="nomes"
+              placeholder="Digite um nome por linha"
+            ></textarea>
           </div>
 
-          <button onclick="adicionarRegistroEle()" class="botao">
+          <div class="input-box">
+            <label for="numeros">Números (um por linha)</label>
+            <textarea
+              id="numeros"
+              placeholder="Digite um número por linha"
+            ></textarea>
+          </div>
+          
+          <div class="input-box">
+            <label for="resultado">Registros Gerados</label>
+            <textarea id="resultado" class="output" readonly></textarea>
+          </div>
+
+          <button onclick="gerarRegistros()" class="botao">
             <i class="fa-solid fa-user-plus"></i> Cadastrar
           </button>
         </div>
+
+        
+
         <button
           id="voltarHub"
           class="botao sair"
@@ -94,59 +114,143 @@
     </div>
 
     <script src="mainMesario.js"></script>
-    <script> var idCounter = 1;
+    <script>
+      function gerarRegistros() {
+        // Pegando os valores dos inputs
+        const classe = document.getElementById("classe").value.trim();
+        const nomes = document
+          .getElementById("nomes")
+          .value.split("\n")
+          .map((nome) => nome.trim())
+          .filter((nome) => nome !== "");
+        const numeros = document
+          .getElementById("numeros")
+          .value.split("\n")
+          .map((numero) => numero.trim())
+          .filter((numero) => numero !== "");
 
-// function exibirMensagem(mensagem) {
-//         document.getElementById("mensagem").innerHTML = mensagem;
-//       }
+        // Verificação se os inputs foram preenchidos corretamente
+        if (!classe || nomes.length === 0 || numeros.length === 0) {
+          alert("Preencha todos os campos corretamente.");
+          return;
+        }
 
-      function adicionarRegistroEle() {
-        var raInput = document.getElementById("ra");
-        var nomeInput = document.getElementById("nome");
-        var raValue = raInput.value;
-        var nomeValue = nomeInput.value;
+        // Verificação se o número de nomes e números é igual
+        if (nomes.length !== numeros.length) {
+          alert("A quantidade de nomes e números deve ser a mesma.");
+          return;
+        }
 
-        if (raValue && nomeValue) {
+        // Função para adicionar zero à frente de números de 1 a 9
+        function formatarNumero(numero) {
+          return numero.padStart(2, "0");
+        }
+
+        // Gerando os registros
+        let registros = "";
+        for (let i = 0; i < nomes.length; i++) {
+          const numeroFormatado = formatarNumero(numeros[i]);
+          var teste = classe + numeroFormatado;
+          console.log(teste);
+          registros += `${nomes[i]} - RA: ${teste}\n`;
+
           var eleitor = {
-            ra: raValue,
-            nome: nomeValue,
+            ra: teste,
+            nome: nomes[i],
           };
 
-          fetch(`${BaseUrl}/eleitor`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              mode: "no-cors",
-            },
-            body: JSON.stringify(eleitor),
-          })
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error("Erro ao adicionar eleitor");
-              }
-              return response.json();
-            })
-            .then((data) => {
+          console.log(eleitor);
+          const url = `${BaseUrl}/eleitor`;
 
-              console.log(data);
-              document.getElementById("mensagem").innerHTML = `Cadastro bem sucedido. Nome: ${data.nome}. RA: ${data.ra}`
-              document.getElementById("mensagem").style.color = "green"
-              setTimeout(function() {
-                window.location.href = 'cadastroEleitor.html';
-            }, 3000);
-            })
-            .catch((error) => {
-              console.error("Erro:", error);
-              document.getElementById("mensagem").innerHTML = "RA já cadastrado!"
-
-            });
-
-          document.getElementById("ID").textContent = "";
-        } else {
-          document.getElementById("mensagem").innerHTML = "Preencha todos os campos corretamente."
-          
+          fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(eleitor), // Convert the array to a JSON string
+        })
+          .then((response) => response.json())
+          .then((data) => console.log(data))
+          .catch((error) => console.error("Error:", error));
         }
+
+        // Exibindo os registros no textarea
+        document.getElementById("resultado").value = registros;
+
       }
+
+      function enviarDados() {
+        const url = `${BaseUrl}/eleitor`;
+        var eleitor = {
+          //   ra: teste,
+          nome: nomes,
+        }; // Your JSON array
+
+        console.log(eleitor);
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data), // Convert the array to a JSON string
+        })
+          .then((response) => response.json())
+          .then((data) => console.log(data))
+          .catch((error) => console.error("Error:", error));
+      }
+
+      // function exibirMensagem(mensagem) {
+      //         document.getElementById("mensagem").innerHTML = mensagem;
+      //       }
+
+      //   function adicionarRegistroEle() {
+      //     var raInput = document.getElementById("ra");
+      //     var nomeInput = document.getElementById("nome");
+      //     var raValue = raInput.value;
+      //     var nomeValue = nomeInput.value;
+
+      //     if (raValue && nomeValue) {
+      //       var eleitor = {
+      //         ra: raValue,
+      //         nome: nomeValue,
+      //       };
+
+      //       fetch(`${BaseUrl}/eleitor`, {
+      //         method: "POST",
+      //         headers: {
+      //           "Content-Type": "application/json",
+      //           mode: "no-cors",
+      //         },
+      //         body: JSON.stringify(eleitor),
+      //       })
+      //         .then((response) => {
+      //           if (!response.ok) {
+      //             throw new Error("Erro ao adicionar eleitor");
+      //           }
+      //           return response.json();
+      //         })
+      //         .then((data) => {
+      //           console.log(data);
+      //           document.getElementById(
+      //             "mensagem"
+      //           ).innerHTML = `Cadastro bem sucedido. Nome: ${data.nome}. RA: ${data.ra}`;
+      //           document.getElementById("mensagem").style.color = "green";
+      //           setTimeout(function () {
+      //             window.location.href = "cadastroEleitor.html";
+      //           }, 3000);
+      //         })
+      //         .catch((error) => {
+      //           console.error("Erro:", error);
+      //           document.getElementById("mensagem").innerHTML =
+      //             "RA já cadastrado!";
+      //         });
+
+      //       document.getElementById("ID").textContent = "";
+      //     } else {
+      //       document.getElementById("mensagem").innerHTML =
+      //         "Preencha todos os campos corretamente.";
+      //     }
+      //   }
     </script>
   </body>
 </html>

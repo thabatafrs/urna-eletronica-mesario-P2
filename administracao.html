@@ -14,14 +14,13 @@
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding: 20px;
-        gap: 15px;
-        width: 100%;
         align-items: center;
+        gap: 15px;
+        padding: 20px;
+        width: 100%;
+        height: 50vh;
       }
 
-
-      
     </style>
   </head>
   <nav>
@@ -39,44 +38,32 @@
     <div class="container" id="trap-container">
       <div class="janela" id="trap-container">
         <div class="sistema">
-          <h2 class="txt_1" >Gestão do Sistema</h2>
-          <button class="botao" id="cadastrarChapas" onclick="entrarHubChapas()" title="Modificar lista de Candidatos/Chapas" >
+          <h1 class="txt_1" >Area Administrativa</h2>
+          <h2 class="txt_2">
+            Vizualização e alteração de dados sensiveis 
+          </h2>
+          <button class="botao_ADM" 
+          id="cadastrarChapas" 
+          onclick="entrarContagem()" 
+          title="Modificar lista de Candidatos/Chapas" 
+          
+          >
 
-            Gerenciar Candidatos
+            APURAÇÃO DOS VOTOS
           </button>
           
           <button
-            class="botao"
-            id="cadastrarEleitor"
+            class="botao_ADM"
+            id=""
             onclick="entrarHubEleitor()"
             title="Controle da lista de Eleitores"
 
           >
-            Gerenciar Eleitores
+            alteração de senhas
           </button>
 
-
-          <button
-            class="botao_ADM"
-            id = "botao_ADM"
-            onclick="Adm()"
-            title="Controle da lista de Eleitores"
-
-          >
-            ADMINISTRAÇÃO
-          </button>
-        </div>
-
-        <div class="sistema">
-          <h2 class="txt_1">Processo Eleitoral</h2>
-          <button id="hub" class="botao" onclick="iniciarProcesso()" title="Iniciar votação">
-            Iniciar Processo
-          </button>
-        </div>
-
-        
-        <button id="hubSair" class="botao sair" onclick="hubSair()" title="Desconectar conta">
-          <i class="fa-solid fa-right-from-bracket"></i> Sair
+        <button id="voltarHub" class="botao sair" onclick="voltarHub()" title="Página anterior">
+            <i class="fa-solid fa-circle-chevron-left"></i> Voltar
         </button>
         <button id="md_es" class="md_es" class="botao" onclick="mod_esc()">
           Modo escuro
