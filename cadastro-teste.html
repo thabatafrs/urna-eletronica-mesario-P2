@@ -11,10 +11,6 @@
     ></script>
     <script src="constantes.js"></script>
     <style>
-      h2 {
-        font-size: medium;
-      }
-
       #mensagem {
         text-align: center;
         font-weight: bold;
@@ -26,27 +22,32 @@
         margin: 20px;
       }
 
-      input,
-      button,
+      label {
+        display: flex;
+        align-items: center;
+      }
+
+      #classe {
+        display: flex;
+        justify-content: center;
+        /* width: 100%; defina a largura */
+        /* margin: 0 auto; */
+      }
+
       textarea {
-        margin-bottom: 10px;
-        padding: 5px;
+        line-height: 1.5;
+        field-sizing: content;
+        min-height: 3lh;
+        width: 180px;
       }
 
       .input-box {
         display: flex;
-        flex-direction: column;
-        margin-bottom: 20px;
-      }
-
-      .output {
-        width: 100%;
-        height: 150px;
-      }
-
-      textarea {
-        height: 100px;
-        resize: none;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        gap: 5px;
+        width: 50%;
       }
     </style>
   </head>
@@ -66,39 +67,43 @@
     <div class="container" id="trap-container">
       <div class="janela">
         <h1 class="txt_1">Cadastro do Eleitor</h1>
+        <div class="input-box">
+          <label for="classe">Classe:</label>
+          <input
+            type="text"
+            id="classe"
+            placeholder="Digite a classe (ex: 5F)"
+          />
+        </div>
         <div class="infoLogin">
-          <div class="input-box">
-            <label for="classe">Classe</label>
-            <input
-              type="text"
-              id="classe"
-              placeholder="Digite a classe (ex: 5F)"
-            />
-          </div>
-
-          <div class="input-box">
+          <div class="input-box2">
             <label for="nomes">Nomes (um por linha)</label>
             <textarea
               id="nomes"
               placeholder="Digite um nome por linha"
+              class="increase"
             ></textarea>
           </div>
 
-          <div class="input-box">
+          <div class="input-box2">
             <label for="numeros">Números (um por linha)</label>
             <textarea
               id="numeros"
               placeholder="Digite um número por linha"
+              class="increase"
             ></textarea>
+          </div>
+
+          <div class="input-box2">
+            <label for="resultado">Registros Gerados</label>
+            <textarea id="resultado" class="output" readonly></textarea>
           </div>
           <button onclick="gerarRegistros()" class="botao">
             <i class="fa-solid fa-user-plus"></i> Cadastrar
           </button>
-          <div class="input-box">
-            <label for="resultado">Registros Gerados</label>
-            <textarea id="resultado" class="output" readonly></textarea>
-          </div>
         </div>
+        <h5 id="mensagem"></h5>
+
         <button
           id="voltarHub"
           class="botao sair"
@@ -132,13 +137,23 @@
 
         // Verificação se os inputs foram preenchidos corretamente
         if (!classe || nomes.length === 0 || numeros.length === 0) {
-          alert("Preencha todos os campos corretamente.");
+          document.getElementById(
+            "mensagem"
+          ).innerHTML = `Preencha todos os campos corretamente.`;
+          setTimeout(function () {
+            window.location.href = "cadastro-teste.html";
+          }, 3000);
           return;
         }
 
         // Verificação se o número de nomes e números é igual
         if (nomes.length !== numeros.length) {
-          alert("A quantidade de nomes e números deve ser a mesma.");
+          document.getElementById(
+            "mensagem"
+          ).innerHTML = `A quantidade de nomes e números deve ser a mesma.`;
+          setTimeout(function () {
+            window.location.href = "cadastro-teste.html";
+          }, 3000);
           return;
         }
 
@@ -147,111 +162,68 @@
           return numero.padStart(2, "0");
         }
 
-        // Gerando os registros
         let registros = "";
+        let eleitores = []; // 1. Cria o array para armazenar todos os eleitores
+
+        // 2. Loop para gerar os eleitores
         for (let i = 0; i < nomes.length; i++) {
-          const numeroFormatado = formatarNumero(numeros[i]);
-          var teste = classe + numeroFormatado;
-          console.log(teste);
-          registros += `${nomes[i]} - RA: ${teste}\n`;
+          var numeroFormatado = formatarNumero(numeros[i]);
+          var classeRa = classe + numeroFormatado;
+          var nome = nomes[i];
+          registros += `${nome} - RA: ${classeRa}\n`;
 
+          // Cria um objeto para cada eleitor e adiciona ao array
           var eleitor = {
-            ra: teste,
-            nome: nomes[i],
+            nome: nome,
+            ra: classeRa,
           };
-
-          console.log(eleitor);
-          const url = `${BaseUrl}/eleitor`;
-
-          fetch(url, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(eleitor), // Convert the array to a JSON string
-        })
-          .then((response) => response.json())
-          .then((data) => console.log(data))
-          .catch((error) => console.error("Error:", error));
+          eleitores.push(eleitor); // Armazena o eleitor no array
         }
 
-        // Exibindo os registros no textarea
         document.getElementById("resultado").value = registros;
 
-      }
+        // console.log(eleitores);
+        // var Eleitores = JSON.stringify(eleitores);
+        // console.log(Eleitores);
 
-      function enviarDados() {
-        const url = `${BaseUrl}/eleitor`;
-        var eleitor = {
-          //   ra: teste,
-          nome: nomes,
-        }; // Your JSON array
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
 
-        console.log(eleitor);
-        fetch(url, {
+        const raw = JSON.stringify(eleitores);
+
+        const requestOptions = {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(data), // Convert the array to a JSON string
-        })
-          .then((response) => response.json())
-          .then((data) => console.log(data))
-          .catch((error) => console.error("Error:", error));
-      }
+          headers: myHeaders,
+          mode: 'no-cors',
+          body: raw,
+          redirect: "follow",
+        };
 
-      // function exibirMensagem(mensagem) {
-      //         document.getElementById("mensagem").innerHTML = mensagem;
+        fetch("https://mesariobarao.squareweb.app/eleitor", requestOptions)
+          .then((response) => response.text())
+          .then((result) => console.log(result))
+          .catch((error) => console.error(error));
+
+      //   const url = `${BaseUrl}/eleitor`;
+
+      //   fetch(url, {
+      //     method: "POST",
+      //     headers: {
+      //       "Content-Type": "application/json",
+      //     },
+      //     mode: "no-cors",
+      //     body: JSON.stringify(eleitores),
+      //   })
+      //     .then((response) => {
+      //       if (!response.ok) {
+      //         throw new Error(`HTTP error! status: ${response.status}`);
       //       }
-
-      //   function adicionarRegistroEle() {
-      //     var raInput = document.getElementById("ra");
-      //     var nomeInput = document.getElementById("nome");
-      //     var raValue = raInput.value;
-      //     var nomeValue = nomeInput.value;
-
-      //     if (raValue && nomeValue) {
-      //       var eleitor = {
-      //         ra: raValue,
-      //         nome: nomeValue,
-      //       };
-
-      //       fetch(`${BaseUrl}/eleitor`, {
-      //         method: "POST",
-      //         headers: {
-      //           "Content-Type": "application/json",
-      //           mode: "no-cors",
-      //         },
-      //         body: JSON.stringify(eleitor),
-      //       })
-      //         .then((response) => {
-      //           if (!response.ok) {
-      //             throw new Error("Erro ao adicionar eleitor");
-      //           }
-      //           return response.json();
-      //         })
-      //         .then((data) => {
-      //           console.log(data);
-      //           document.getElementById(
-      //             "mensagem"
-      //           ).innerHTML = `Cadastro bem sucedido. Nome: ${data.nome}. RA: ${data.ra}`;
-      //           document.getElementById("mensagem").style.color = "green";
-      //           setTimeout(function () {
-      //             window.location.href = "cadastroEleitor.html";
-      //           }, 3000);
-      //         })
-      //         .catch((error) => {
-      //           console.error("Erro:", error);
-      //           document.getElementById("mensagem").innerHTML =
-      //             "RA já cadastrado!";
-      //         });
-
-      //       document.getElementById("ID").textContent = "";
-      //     } else {
-      //       document.getElementById("mensagem").innerHTML =
-      //         "Preencha todos os campos corretamente.";
-      //     }
-      //   }
+      //       return response.json();
+      //     })
+      //     .then((data) => console.log(data))
+      //     .catch((error) => console.error("Error:", error));
+      }
     </script>
   </body>
 </html>
+
