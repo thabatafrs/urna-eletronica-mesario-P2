@@ -236,13 +236,40 @@
             setTimeout(() => {
               window.location.reload();
             }, 3000);
-            console.log(result)
+            console.log
+          })
+          .catch((error) => {
+            console.error(error);
+            // document.getElementById(
+            //   "mensagem"
+            // ).innerHTML = `Erro, verifique se há RAs duplicados.`;
+            // document.getElementById("mensagem").style.color = "red";
+          });
+      
+
+      obterMensagemDeErro();
+      }
+
+      function obterMensagemDeErro() {
+        const url = `${BaseUrl}/eleitor`; // Defina a URL do seu endpoint
+
+        fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Erro ao obter a mensagem de erro.");
+            }
+            return response.text(); // Retorna a resposta como texto
+          })
+          .then((mensagemErro) => {
+            // Atualiza a mensagem na tela
+            document.getElementById("mensagem").innerHTML = mensagemErro;
+            document.getElementById("mensagem").style.color = "red";
           })
           .catch((error) => {
             console.error(error);
             document.getElementById(
               "mensagem"
-            ).innerHTML = `Erro, verifique se há RAs duplicados.`;
+            ).innerHTML = `Erro: ${error.message}`;
             document.getElementById("mensagem").style.color = "red";
           });
       }
