@@ -18,6 +18,12 @@ function cadastrar() {
   location.href = "cadastroAdmin.html";
 }
 
+function alt_snh() {
+  document.getElementById("AlterarSenhas");
+  location.href = "alterarsenha.html";
+}
+
+
 function iniciarProcesso() {
   document.getElementById("hub");
   location.href = "id_eleitor.html";

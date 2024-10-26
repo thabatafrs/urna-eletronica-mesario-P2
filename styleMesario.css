@@ -744,7 +744,7 @@ input {
   width: 60%;
   height: 60px;
   font-size: 0.9rem;
-  background-color: rgb(171, 195, 66);
+  background-color: rgb(236, 234, 83);
   padding: 10px;
   border-radius: var(--border-card);
   text-transform: uppercase;
@@ -754,7 +754,7 @@ input {
 }
 
 .botao_ADM:hover {
-  background-color: rgb(129, 146, 50);
+  background-color: rgb(192, 190, 61);
   transition: 300ms;
 }
 
@@ -826,7 +826,7 @@ input {
     width: 60%;
     height: 50px;
     font-size: 0.9rem;
-    background-color: rgb(171, 195, 66);
+    background-color: rgb(236, 234, 83);
     padding: 10px;
     border-radius: var(--border-card);
     text-transform: uppercase;
@@ -841,7 +841,7 @@ input {
     width: 60%;
     height: 42px;
     font-size: 0.9rem;
-    background-color: rgb(171, 195, 66);
+    background-color: rgb(236, 234, 83);
     padding: 10px;
     border-radius: var(--border-card);
     text-transform: uppercase;
@@ -856,7 +856,7 @@ input {
     width: 60%;
     height: 40px;
     font-size: 0.9rem;
-    background-color: rgb(171, 195, 66);
+    background-color: rgb(236, 234, 83);
     padding: 10px;
     border-radius: var(--border-card);
     text-transform: uppercase;
@@ -871,7 +871,7 @@ input {
     width: 60%;
     height: 33px;
     font-size: 0.9rem;
-    background-color: rgb(171, 195, 66);
+    background-color: rgb(236, 234, 83);
     padding: 10px;
     border-radius: var(--border-card);
     text-transform: uppercase;
@@ -886,7 +886,7 @@ input {
     width: 60%;
     height: 31px;
     font-size: 0.9rem;
-    background-color: rgb(171, 195, 66);
+    background-color: rgb(236, 234, 83);
     padding: 10px;
     border-radius: var(--border-card);
     text-transform: uppercase;
@@ -901,7 +901,7 @@ input {
     width: 60%;
     height: 30px;
     font-size: 0.9rem;
-    background-color: rgb(171, 195, 66);
+    background-color: rgb(236, 234, 83);
     padding: 10px;
     border-radius: var(--border-card);
     text-transform: uppercase;
@@ -916,7 +916,7 @@ input {
     width: 60%;
     height: 27px;
     font-size: 0.9rem;
-    background-color: rgb(171, 195, 66);
+    background-color: rgb(236, 234, 83);
     padding: 10px;
     border-radius: var(--border-card);
     text-transform: uppercase;
@@ -931,7 +931,7 @@ input {
     width: 60%;
     height: 27px;
     font-size: 0.6rem;
-    background-color: rgb(171, 195, 66);
+    background-color: rgb(236, 234, 83);
     padding: 10px;
     border-radius: var(--border-card);
     text-transform: uppercase;
@@ -946,7 +946,7 @@ input {
     width: 60%;
     height: 25px;
     font-size: 0.6rem;
-    background-color: rgb(171, 195, 66);
+    background-color: rgb(236, 234, 83);
     padding: 10px;
     border-radius: var(--border-card);
     text-transform: uppercase;
@@ -961,7 +961,7 @@ input {
     width: 60%;
     height: 25px;
     font-size: 0.55rem;
-    background-color: rgb(171, 195, 66);
+    background-color: rgb(236, 234, 83);
     padding: 10px;
     border-radius: var(--border-card);
     text-transform: uppercase;
@@ -976,7 +976,7 @@ input {
     width: 30%;
     height: 26px;
     font-size: 0.53rem;
-    background-color: rgb(171, 195, 66);
+    background-color: rgb(236, 234, 83);
     padding: 10px;
     border-radius: var(--border-card);
     text-transform: uppercase;
@@ -991,7 +991,7 @@ input {
     width: 30%;
     height: 26px;
     font-size: 0.48rem;
-    background-color: rgb(171, 195, 66);
+    background-color: rgb(236, 234, 83);
     padding: -18px;
     border-radius: var(--border-card);
     text-transform: uppercase;
@@ -1007,7 +1007,7 @@ input {
     width: 30%;
     height: 26px;
     font-size: 0.48rem;
-    background-color: rgb(171, 195, 66);
+    background-color: rgb(236, 234, 83);
     padding: -18px;
     border-radius: var(--border-card);
     text-transform: uppercase;
@@ -1026,12 +1026,6 @@ input {
     margin-bottom: -15px;
   }
 }
-
-.botao_ADM:hover {
-  background-color: rgb(129, 146, 50);
-  transition: 300ms;
-}
-
 
 @media screen and (max-width: 800px) {
   .botao {
