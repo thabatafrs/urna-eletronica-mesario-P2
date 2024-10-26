@@ -240,6 +240,84 @@ body.light-theme .listaDeChapas::-webkit-scrollbar-thumb:hover {
 .menu-opened .janela {
   transform: translateX(10%); 
 }
+
+select {
+  width: 70%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+
+
+@media screen and (max-width: 530px) {
+  select {
+    width: 45%;
+    font-size: 0.5rem;
+    padding: 4px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  select {
+    width: 40%;
+    font-size: 0.4rem;
+    padding: 3px;
+  }
+}
+
+@media screen and (max-width: 300px) {
+  select {
+    width: 35%;
+    font-size: 0.3rem;
+    padding: 2px;
+  }
+}
+
+
+
+@media screen and (max-height: 640px) {
+  select {
+    width: 55%;
+    font-size: 0.6rem;
+    padding: 6px;
+  }
+}
+
+@media screen and (max-height: 600px) {
+  select {
+    width: 50%;
+    font-size: 0.55rem;
+    padding: 5px;
+  }
+}
+
+@media screen and (max-height: 550px) {
+  select {
+    width: 45%;
+    font-size: 0.5rem;
+    padding: 4px;
+  }
+}
+
+@media screen and (max-height: 450px) {
+  select {
+    width: 40%;
+    font-size: 0.4rem;
+    padding: 3px;
+  }
+}
+
+@media screen and (max-height: 300px) {
+  select {
+    width: 35%;
+    font-size: 0.3rem;
+    padding: 2px;
+  }
+}
+
 input {
   border-radius: var(--border-card);
   padding: 1rem;

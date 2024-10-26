@@ -11,16 +11,14 @@
     <script src="constantes.js"></script>
     <link rel="stylesheet" href="styleMesario.css" />
     <style>
-   
-
-
-
       .infoLogin {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
       }
+
+      
 
       input {
         width: 100%;
@@ -36,9 +34,8 @@
       }
 
       #voltarHub {
-            border: none; 
-        }
-        
+        border: none;
+      }
     </style>
   </head>
 
@@ -60,12 +57,26 @@
 
         <div class="infoLogin">
           <label>
+            <i class="fa-solid fa-user"></i>
+            <select name="tip_urs" required id="tip_urs">
+              <option value="null" disabled selected>Selecione o tipo de usuário</option>
+              <option value="Mesario">Mesário</option>
+              <option value="Administrador">Administrador</option>
+            </select>
+          </label>
+
+          <label>
             <i class="fa-solid fa-lock"></i>
             <input
               type="password"
               name="senha_alt"
+              min="1"
+              maxlength="6"
               id="senha_alt"
               placeholder="Digite a nova senha"
+              pattern="[0-9]*"
+              inputmode="numeric"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '');"
               required
             />
           </label>
@@ -75,27 +86,22 @@
             <input
               type="password"
               name="senha_conf"
+              min="1"
+              maxlength="6"
               id="senha_conf"
               placeholder="Repita a nova senha"
+              pattern="[0-9]*"
+              inputmode="numeric"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '');"
               required
             />
           </label>
 
           <span id="error-message" class="error-message"></span>
-          <button
-            class="botao"
-            id="salvar"
-            onclick="verificarSenhas()"
-            title="salvar"
-          >
-            <i class="fa-solid fa-door-open"></i> Salvar
+          <button class="botao" id="salvar" onclick="verificarSenhas()" title="salvar">
+            <i class="fa-solid fa-floppy-disk"></i> Salvar
           </button>
-          <button
-            id="voltarHub"
-            class="sair"
-            onclick="Adm()"
-            title="Página anterior"
-          >
+          <button id="voltarHub" class="sair" onclick="Adm()" title="Página anterior">
             <i class="fa-solid fa-circle-chevron-left"></i> Voltar
           </button>
           <button id="md_es" class="md_es" onclick="mod_esc()">Modo escuro</button>
@@ -105,20 +111,26 @@
 
     <script>
       function verificarSenhas() {
+        const tipoUsuario = document.getElementById("tip_urs").value;
         const senha = document.getElementById("senha_alt").value;
         const confirmarSenha = document.getElementById("senha_conf").value;
         const errorMessage = document.getElementById("error-message");
 
+        if (tipoUsuario === "null") {
+          errorMessage.textContent = "Por favor, selecione um tipo de usuário.";
+          return false;
+        }
+
         if (!senha || !confirmarSenha) {
           errorMessage.textContent = "Por favor, preencha ambos os campos de senha.";
-          return false; 
+          return false;
         }
 
         if (senha !== confirmarSenha) {
           errorMessage.textContent = "As senhas não coincidem. Tente novamente.";
-          return false; 
+          return false;
         } else {
-          errorMessage.textContent = ""; 
+          errorMessage.textContent = "";
           alert("Senha alterada com sucesso!");
         }
       }
