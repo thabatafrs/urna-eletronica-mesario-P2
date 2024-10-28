@@ -1,4 +1,3 @@
-<<<<<<< HEAD:gerenciador_eleitores.html
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -12,30 +11,14 @@
     ></script>
     <script src="constantes.js"></script>
     <style>
-      p {
-        margin-bottom: 5px;
+      /* Estilo geral */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        overflow: hidden;
       }
 
-      hr {
-        width: 90%;
-        border: none;
-        height: 1px;
-        margin-top: -20px;
-        background-color: #000000;
-        margin-bottom: 25px;
-        margin-top: -10px;
-        margin-bottom: 25px;
-      }
-      .buscar {
-        margin-bottom: 10px;
-      }
-
-      #deletarTodosEleitores {
-        right: 150px;
-      }
-      #voltarHub {
-        right: 20px;
-      }
+      /* Estilo do cabeçalho */
       .cabecalho {
         width: 100%;
         display: flex;
@@ -44,8 +27,70 @@
         height: 20%;
         gap: 10px;
         top: 0;
-
       }
+
+      /* Estilo da lista de eleitores */
+      .listaDeEleitores {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr); /* 4 colunas iguais */
+        gap: 10px; /* Espaçamento entre os cartões */
+        margin-top: 20px; /* Espaço acima da lista */
+        max-height: 400px; /* Altura máxima da lista */
+        overflow-y: auto; /* Barra de rolagem vertical */
+        padding: 10px; /* Padding para o container */
+        /* border: 1px solid #ddd;  */
+        border-radius: 8px; /* Bordas arredondadas */
+        /* background-color: #f9f9f9; */
+      }
+
+      /* Cartão de cada eleitor */
+      .eleitor-card {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 15px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s; /* Animação ao passar o mouse */
+      }
+
+      .eleitor-card:hover {
+        transform: scale(1.05); /* Aumenta o cartão ao passar o mouse */
+      }
+
+      .info-eleitor {
+        text-align: center;
+        font-size: 1rem;
+        color: #444;
+      }
+
+      .botaoExcluir {
+        margin-top: 10px;
+        background-color: #e74c3c; /* Cor do botão de excluir */
+        color: white; /* Cor do texto */
+        border: none; /* Sem borda */
+        border-radius: 5px; /* Bordas arredondadas */
+        padding: 5px 10px; /* Espaçamento interno */
+        cursor: pointer; /* Cursor pointer ao passar o mouse */
+      }
+
+      .botaoExcluir:hover {
+        background-color: #c0392b; /* Cor do botão ao passar o mouse */
+      }
+
+      .buscar {
+        margin-bottom: 10px;
+      }
+      .botoes {
+  display: flex;
+  justify-content: space-between; /* Espaçamento igual entre os botões */
+  align-items: center; /* Alinhamento vertical */
+  margin-top: 20px; /* Espaço acima dos botões */
+  width: 90%;
+}
     </style>
   </head>
   <body>
@@ -53,26 +98,18 @@
       <i class="fa-solid fa-bars" onclick="toggleMenu()"></i>
       <div class="nv_est" id="menuItems">
         <a href="hub.html">Home</a>
-<<<<<<< HEAD:docs/gerenciador_eleitores.html
         <a href="hub_chapas.html">Gerenciador de Candidatos</a>
         <a href="hub_eleitor.html">Gerenciador de Eleitores</a>
-=======
-        <a href="gerenciador_chapas.html">Gerenciador de Candidatos</a>
-        <a href="gerenciador_eleitores.html">Gerenciador de Eleitores</a>
->>>>>>> origin/develop-v1:gerenciador_eleitores.html
         <a href="contagem.html">Contagem de Votos</a>
         <a href="id_eleitor.html">Iniciar Processo</a>
         <a href="index.html">Sair</a>
       </div>
-  </nav>
+    </nav>
+
     <div class="container" id="trap-container">
       <div class="gerenciadorChapa">
         <div class="cabecalho">
-<<<<<<< HEAD:docs/gerenciador_eleitores.html
           <h2 class="txt_2">Gerenciador de Eleitores</h2>
-=======
-          <h2>Gerenciador de Eleitores</h2>
->>>>>>> origin/develop-v1:gerenciador_eleitores.html
           <div class="buscar">
             <input
               type="search"
@@ -81,39 +118,39 @@
               placeholder="Digite o nome"
             />
             <button
-            class="botao"
-            id="searchButton"
-            title="Consultar nome"
-            style="margin-left: 10px;"
-            onclick="buscarEleitores()"
+              class="botao"
+              id="searchButton"
+              title="Consultar nome"
+              style="margin-left: 10px"
+              onclick="buscarEleitores()"
+            >
+              <i class="fa-solid fa-magnifying-glass"></i> Buscar
+            </button>
+          </div>
+        </div>
+
+        <div id="eleitores" class="listaDeEleitores"></div>
+        <div class="botoes">
+          <button id="md_es" class="md_es" class="botao" onclick="mod_esc()">
+            Modo escuro
+          </button>
+          <button
+            id="deletarTodosEleitores"
+            class="botao botaoVermelho"
+            onclick="deletarTodosEleitores()"
+            title="Limpar lista de eleitores"
           >
-            <i class="fa-solid fa-magnifying-glass"></i> Buscar
-            </button>
-            <button id="md_es" class="md_es" class="botao" onclick="mod_esc()">
-              Modo escuro
-            </button>
-          </div>
+            <i class="fa-solid fa-trash-can"></i> Deletar todos
+          </button>
+          <button
+            id="voltarHub"
+            class="botao botaoVermelho"
+            onclick="voltarHubEleitores()"
+            title="Página anterior"
+          >
+            <i class="fa-solid fa-circle-chevron-left"></i> Voltar
+          </button>
         </div>
-
-
-        <div id="eleitores" class="listaDeChapas"></div>
-        <button
-          id="deletarTodosEleitores"
-          class="botao botaoVermelho"
-          onclick="deletarTodosEleitores()"
-          title="Limpar lista de eleitores"
-
-        >
-          <i class="fa-solid fa-trash-can"></i> Deletar todos
-        </button>
-        <button
-          id="voltarHub"
-          class="botao botaoVermelho"
-          onclick="voltarHubEleitores()"
-          title="Página anterior"
-        >
-          <i class="fa-solid fa-circle-chevron-left"></i> voltar
-        </button>
       </div>
     </div>
 
@@ -137,11 +174,17 @@
 
             data.forEach((eleitor) => {
               const eleitorDiv = document.createElement("div");
+              eleitorDiv.classList.add("eleitor-card");
+
               eleitorDiv.innerHTML = `
-                          <p>RA: ${eleitor.ra} 
-                              Nome: ${eleitor.nome}</p>
-                          <button class="botaoExcluir" onclick="excluirEleitor('${eleitor.ra}')"><i class="fa-solid fa-trash-can"></i></button>
-                      `;
+                            <div class="info-eleitor">
+                                <p><strong>RA:</strong> ${eleitor.ra}</p>
+                                <p><strong>Nome:</strong> ${eleitor.nome}</p>
+                            </div>
+                            <button class="botaoExcluir" onclick="excluirEleitor('${eleitor.ra}')">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        `;
               eleitoresDiv.appendChild(eleitorDiv);
             });
           })
@@ -155,17 +198,15 @@
           .getElementById("searchInput")
           .value.trim()
           .toLowerCase();
-        const eleitores = document.querySelectorAll("#eleitores p");
+        const eleitores = document.querySelectorAll(".eleitor-card");
 
         eleitores.forEach((eleitor) => {
           const eleitorInfo = eleitor.textContent.toLowerCase();
 
           if (eleitorInfo.includes(searchTerm)) {
-            eleitor.style.display = "block";
-            eleitor.nextElementSibling.style.display = "inline-block";
+            eleitor.style.display = "flex";
           } else {
             eleitor.style.display = "none";
-            eleitor.nextElementSibling.style.display = "none";
           }
         });
       }
@@ -215,204 +256,3 @@
     </script>
   </body>
 </html>
-=======
-<!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gerenciador de Eleitores</title>
-    <link rel="stylesheet" href="styleMesario.css" />
-    <script
-      src="https://kit.fontawesome.com/877e197de7.js"
-      crossorigin="anonymous"
-    ></script>
-    <style>
-      p {
-        margin-bottom: 5px;
-      }
-
-      hr {
-        width: 90%;
-        border: none;
-        height: 1px;
-        margin-top: -20px;
-        background-color: #000000;
-        margin-bottom: 25px;
-        margin-top: -10px;
-        margin-bottom: 25px;
-      }
-      .buscar {
-        margin-bottom: 10px;
-      }
-
-      #deletarTodosEleitores {
-        left: 20px;
-      }
-      #voltarHub {
-        right: 20px;
-      }
-      .cabecalho {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        height: 20%;
-        gap: 10px;
-        top: 0;
-
-      }
-    </style>
-  </head>
-  <body>
-<<<<<<< HEAD
-    <div class="container">
-=======
-    <nav>
-      <i class="fa-solid fa-bars" onclick="toggleMenu()"></i>
-      <div class="nv_est" id="menuItems">
-        <a href="hub.html">Home</a>
-        <a href="gerenciador_chapas.html">Gerenciador de Candidatos</a>
-        <a href="gerenciador_eleitores.html">Gerenciador de Eleitores</a>
-        <a href="contagem.html">Contagem de Votos</a>
-        <a href="id_eleitor.html">Iniciar Processo</a>
-        <a href="index.html">Sair</a>
-      </div>
-  </nav>
-    <div class="container" id="trap-container">
->>>>>>> origin/Menu-burger-v0.1
-      <div class="gerenciadorChapa">
-        <div class="cabecalho">
-          <h2>Gerenciador de Eleitores</h2>
-          <div class="buscar">
-            <input
-              type="search"
-              class="searchInput"
-              id="searchInput"
-              placeholder="Digite o nome"
-            />
-            <button class="botao" onclick="buscarEleitores()" id="searchButton">
-              Buscar
-            </button>
-          </div>
-        </div>
-
-
-        <div id="eleitores" class="listaDeChapas"></div>
-        <button
-          id="deletarTodosEleitores"
-          class="botao botaoVermelho"
-          onclick="deletarTodosEleitores()"
-        >
-          <i class="fa-solid fa-trash-can"></i> Deletar todos
-        </button>
-        <button
-          id="voltarHub"
-          class="botao botaoVermelho"
-          onclick="voltarHubEleitores()"
-        >
-          <i class="fa-solid fa-circle-chevron-left"></i> voltar
-        </button>
-      </div>
-    </div>
-
-    <script src="mainMesario.js"></script>
-    <script src="constantes.js"></script>
-    <script>
-      // Buscar ao clicar enter
-      var input = document.getElementById("searchInput");
-      input.addEventListener("keyup", function (event) {
-        if (event.keyCode === 13) {
-          event.preventDefault();
-          document.getElementById("searchButton").click();
-        }
-      });
-
-      function carregarEleitores() {
-        fetch(`${BaseUrl}/eleitor`)
-          .then((response) => response.json())
-          .then((data) => {
-            const eleitoresDiv = document.getElementById("eleitores");
-            eleitoresDiv.innerHTML = "";
-
-            data.forEach((eleitor) => {
-              const eleitorDiv = document.createElement("div");
-              eleitorDiv.innerHTML = `
-                          <p>RA: ${eleitor.ra} 
-                              Nome: ${eleitor.nome}</p>
-                          <button class="botaoExcluir" onclick="excluirEleitor('${eleitor.ra}')"><i class="fa-solid fa-trash-can"></i></button>
-                      `;
-              eleitoresDiv.appendChild(eleitorDiv);
-            });
-          })
-          .catch((error) => {
-            console.error("Erro ao carregar os eleitores:", error);
-          });
-      }
-
-      function buscarEleitores() {
-        const searchTerm = document
-          .getElementById("searchInput")
-          .value.trim()
-          .toLowerCase();
-        const eleitores = document.querySelectorAll("#eleitores p");
-
-        eleitores.forEach((eleitor) => {
-          const eleitorInfo = eleitor.textContent.toLowerCase();
-
-          if (eleitorInfo.includes(searchTerm)) {
-            eleitor.style.display = "block";
-            eleitor.nextElementSibling.style.display = "inline-block";
-          } else {
-            eleitor.style.display = "none";
-            eleitor.nextElementSibling.style.display = "none";
-          }
-        });
-      }
-
-      function excluirEleitor(ra) {
-        if (confirm("Tem certeza que deseja excluir este eleitor?")) {
-          fetch(`${BaseUrl}/eleitor/${ra}`, {
-            method: "DELETE",
-          })
-            .then((response) => {
-              if (response.ok) {
-                console.log("Eleitor excluído com sucesso:", ra);
-                carregarEleitores();
-              } else {
-                console.error("Erro ao excluir eleitor:", response.status);
-              }
-            })
-            .catch((error) => {
-              console.error("Erro ao excluir eleitor:", error);
-            });
-        }
-      }
-
-      function deletarTodosEleitores() {
-        if (confirm("Tem certeza que deseja excluir todos os eleitores?")) {
-          fetch(`${BaseUrl}/eleitor`, {
-            method: "DELETE",
-          })
-            .then((response) => {
-              if (response.ok) {
-                console.log("Todos os eleitores foram excluídos com sucesso.");
-                carregarEleitores();
-              } else {
-                console.error(
-                  "Erro ao excluir todos os eleitores:",
-                  response.status
-                );
-              }
-            })
-            .catch((error) => {
-              console.error("Erro ao excluir todos os eleitores:", error);
-            });
-        }
-      }
-
-      window.onload = carregarEleitores;
-    </script>
-  </body>
-</html>
->>>>>>> origin/Variável-de-EndPoint---V0.1:docs/gerenciador_eleitores.html

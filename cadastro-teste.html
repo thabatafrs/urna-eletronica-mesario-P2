@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cadastro do Eleitor</title>
+    <link rel="stylesheet" href="styleMesario.css" />
+    <script
+      src="https://kit.fontawesome.com/877e197de7.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="constantes.js"></script>
+    <style>
+.janela {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 80%;
+  min-height: 400px;
+}
+
+
+
+.mensagem {
+  text-align: center;
+  font-weight: bold;
+  font-size: large;
+  margin: 10px 0;
+}
+
+.btnRegistros {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+
+      label {
+        display: flex;
+        align-items: center;
+      }
+
+      #classe {
+        display: flex;
+        justify-content: center;
+        /* width: 100%; defina a largura */
+        /* margin: 0 auto; */
+      }
+
+      textarea {
+        line-height: 1.5;
+        field-sizing: content;
+        min-height: 3lh;
+        width: 180px;
+      }
+
+      .input-box {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        align-items: center;
+        gap: 5px;
+        width: 50%;
+      }
+
+
+    </style>
+  </head>
+  <body>
+    <nav>
+      <i class="fa-solid fa-bars" onclick="toggleMenu()"></i>
+      <div class="nv_est" id="menuItems">
+        <a href="hub.html">Home</a>
+        <a href="hub_chapas.html">Gerenciador de Candidatos</a>
+        <a href="hub_eleitor.html">Gerenciador de Eleitores</a>
+        <a href="contagem.html">Contagem de Votos</a>
+        <a href="id_eleitor.html">Iniciar Processo</a>
+        <a href="index.html">Sair</a>
+      </div>
+    </nav>
+
+    <div class="container" id="trap-container">
+      <div class="janela">
+        <h1 class="txt_1">Cadastro do Eleitor</h1>
+        <div class="input-box">
+          <label for="classe">Classe:</label>
+          <input
+            type="text"
+            id="classe"
+            placeholder="Digite a classe (ex: 5F)"
+          />
+        </div>
+        <div class="infoLogin">
+          <div class="input-box2">
+            <label for="nomes">Nomes (um por linha)</label>
+            <textarea
+              id="nomes"
+              placeholder="Digite um nome por linha"
+              class="increase"
+            ></textarea>
+          </div>
+          <div class="input-box2">
+            <label for="numeros">Números (um por linha)</label>
+            <textarea
+              id="numeros"
+              placeholder="Digite um número por linha"
+              class="increase"
+            ></textarea>
+          </div>
+          <div class="input-box2">
+            <label for="resultado">Registros Gerados</label>
+            <textarea id="resultado" class="output" readonly></textarea>
+          </div>
+        </div>
+
+        <!-- Mensagem de resposta -->
+        <div id="mensagem" class="mensagem"></div>
+
+        <!-- Botão de cadastro -->
+        <div class="btnRegistros">
+          <button onclick="gerarRegistros()" class="botao btnRegistros">
+            <i class="fa-solid fa-user-plus"></i> Cadastrar
+          </button>
+        </div>
+
+        <button
+          id="voltarHub"
+          class="botao sair"
+          onclick="voltarHubEleitores()"
+          title="Página anterior"
+        >
+          <i class="fa-solid fa-circle-chevron-left"></i> Voltar
+        </button>
+        <ul id="registros"></ul>
+        <button id="md_es" class="md_es" class="botao" onclick="mod_esc()">
+          Modo escuro
+        </button>
+      </div>
+    </div>
+
+    <script src="mainMesario.js"></script>
+    <script>
+      function gerarRegistros() {
+        // Pegando os valores dos inputs
+        const classe = document.getElementById("classe").value.trim();
+        const nomes = document
+          .getElementById("nomes")
+          .value.split("\n")
+          .map((nome) => nome.trim())
+          .filter((nome) => nome !== "");
+        const numeros = document
+          .getElementById("numeros")
+          .value.split("\n")
+          .map((numero) => numero.trim())
+          .filter((numero) => numero !== "");
+
+        // Verificação se os inputs foram preenchidos corretamente
+        if (!classe || nomes.length === 0 || numeros.length === 0) {
+          document.getElementById(
+            "mensagem"
+          ).innerHTML = `Preencha todos os campos corretamente.`;
+          document.getElementById("mensagem").style.color = "red";
+          setTimeout(function () {
+            window.location.reload();
+          }, 3000);
+          return;
+        }
+
+        // Verificação se o número de nomes e números é igual
+        if (nomes.length !== numeros.length) {
+          document.getElementById(
+            "mensagem"
+          ).innerHTML = `A quantidade de nomes e números deve ser a mesma.`;
+          document.getElementById("mensagem").style.color = "red";
+          setTimeout(function () {
+            window.location.reload();
+          }, 3000);
+          return;
+        }
+
+        // Função para adicionar zero à frente de números de 1 a 9
+        function formatarNumero(numero) {
+          return numero.padStart(2, "0");
+        }
+
+        let registros = "";
+        let eleitores = []; // 1. Cria o array para armazenar todos os eleitores
+
+        // 2. Loop para gerar os eleitores
+        for (let i = 0; i < nomes.length; i++) {
+          var numeroFormatado = formatarNumero(numeros[i]);
+          var classeRa = classe + numeroFormatado;
+          var nome = nomes[i];
+          registros += `${nome} - RA: ${classeRa}\n`;
+
+          // Cria um objeto para cada eleitor e adiciona ao array
+          var eleitor = {
+            nome: nome,
+            ra: classeRa,
+          };
+          eleitores.push(eleitor); // Armazena o eleitor no array
+        }
+
+        document.getElementById("resultado").value = registros;
+
+        // console.log(eleitores);
+        // var Eleitores = JSON.stringify(eleitores);
+        // console.log(Eleitores);
+        // console.log(eleitores);
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        const raw = JSON.stringify(eleitores);
+        // console.log(raw);
+        const url = `${BaseUrl}/eleitor`;
+
+        const requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          // mode: 'no-cors',
+          body: raw,
+          redirect: "follow",
+        };
+
+        fetch(url, requestOptions)
+          .then((response) => response.json())
+          .then((result) => {
+            document.getElementById(
+              "mensagem"
+            ).innerHTML = `Cadastro realizado com sucesso!`;
+            document.getElementById("mensagem").style.color = "green";
+            setTimeout(() => {
+              window.location.reload();
+            }, 3000);
+            console.log
+          })
+          .catch((error) => {
+            console.error(error);
+            // document.getElementById(
+            //   "mensagem"
+            // ).innerHTML = `Erro, verifique se há RAs duplicados.`;
+            // document.getElementById("mensagem").style.color = "red";
+          });
+      
+
+      obterMensagemDeErro();
+      }
+
+      function obterMensagemDeErro() {
+        const url = `${BaseUrl}/eleitor`; // Defina a URL do seu endpoint
+
+        fetch(url)
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Erro ao obter a mensagem de erro.");
+            }
+            return response.text(); // Retorna a resposta como texto
+          })
+          .then((mensagemErro) => {
+            // Atualiza a mensagem na tela
+            document.getElementById("mensagem").innerHTML = mensagemErro;
+            document.getElementById("mensagem").style.color = "red";
+          })
+          .catch((error) => {
+            console.error(error);
+            document.getElementById(
+              "mensagem"
+            ).innerHTML = `Erro: ${error.message}`;
+            document.getElementById("mensagem").style.color = "red";
+          });
+      }
+    </script>
+  </body>
+</html>

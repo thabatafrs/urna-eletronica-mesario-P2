@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LogIn da Urna</title>
+    <script
+      src="https://kit.fontawesome.com/877e197de7.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="constantes.js"></script>
+    <link rel="stylesheet" href="styleMesario.css" />
+    <style>
+      .infoLogin {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      
+
+      input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+      }
+
+      #error-message {
+        color: red;
+        font-size: small;
+      }
+
+      #voltarHub {
+        border: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav>
+      <i class="fa-solid fa-bars" onclick="toggleMenu()"></i>
+      <div class="nv_est" id="menuItems">
+        <a href="hub.html">Home</a>
+        <a href="hub_chapas.html">Gerenciador de Candidatos</a>
+        <a href="hub_eleitor.html">Gerenciador de Eleitores</a>
+        <a href="contagem.html">Contagem de Votos</a>
+        <a href="id_eleitor.html">Iniciar Processo</a>
+        <a href="index.html">Sair</a>
+      </div>
+    </nav>
+    <div class="container" id="trap-container">
+      <div class="janela">
+        <h1>Trocar Senha</h1>
+
+        <div class="infoLogin">
+          <label>
+            <i class="fa-solid fa-user"></i>
+            <select name="tip_urs" required id="tip_urs">
+              <option value="null" disabled selected>Selecione o tipo de usuário</option>
+              <option value="Mesario">Mesário</option>
+              <option value="Administrador">Administrador</option>
+            </select>
+          </label>
+
+          <label>
+            <i class="fa-solid fa-lock"></i>
+            <input
+              type="password"
+              name="senha_alt"
+              min="1"
+              maxlength="6"
+              id="senha_alt"
+              placeholder="Digite a nova senha"
+              pattern="[0-9]*"
+              inputmode="numeric"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+              required
+            />
+          </label>
+
+          <label for="senha_conf">
+            <i class="fa-solid fa-lock"></i>
+            <input
+              type="password"
+              name="senha_conf"
+              min="1"
+              maxlength="6"
+              id="senha_conf"
+              placeholder="Repita a nova senha"
+              pattern="[0-9]*"
+              inputmode="numeric"
+              oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+              required
+            />
+          </label>
+
+          <span id="error-message" class="error-message"></span>
+          <button class="botao" id="salvar" onclick="verificarSenhas()" title="salvar">
+            <i class="fa-solid fa-floppy-disk"></i> Salvar
+          </button>
+          <button id="voltarHub" class="sair" onclick="Adm()" title="Página anterior">
+            <i class="fa-solid fa-circle-chevron-left"></i> Voltar
+          </button>
+          <button id="md_es" class="md_es" onclick="mod_esc()">Modo escuro</button>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function verificarSenhas() {
+        const tipoUsuario = document.getElementById("tip_urs").value;
+        const senha = document.getElementById("senha_alt").value;
+        const confirmarSenha = document.getElementById("senha_conf").value;
+        const errorMessage = document.getElementById("error-message");
+
+        if (tipoUsuario === "null") {
+          errorMessage.textContent = "Por favor, selecione um tipo de usuário.";
+          return false;
+        }
+
+        if (!senha || !confirmarSenha) {
+          errorMessage.textContent = "Por favor, preencha ambos os campos de senha.";
+          return false;
+        }
+
+        if (senha !== confirmarSenha) {
+          errorMessage.textContent = "As senhas não coincidem. Tente novamente.";
+          return false;
+        } else {
+          errorMessage.textContent = "";
+          alert("Senha alterada com sucesso!");
+        }
+      }
+    </script>
+    <script src="mainMesario.js"></script>
+  </body>
+</html>
