@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hub da Urna</title>
+    <link rel="stylesheet" href="styleMesario.css" />
+    <script
+      src="https://kit.fontawesome.com/877e197de7.js"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      .sistema {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        padding: 20px;
+        width: 100%;
+        height: 50vh;
+      }
+
+    </style>
+  </head>
+  <nav>
+      <i class="fa-solid fa-bars" onclick="toggleMenu()"></i>
+      <div class="nv_est" id="menuItems">
+        <a href="hub.html">Home</a>
+        <a href="hub_chapas.html">Gerenciador de Candidatos</a>
+        <a href="hub_eleitor.html">Gerenciador de Eleitores</a>
+        <a href="contagem.html">Contagem de Votos</a>
+        <a href="id_eleitor.html">Iniciar Processo</a>
+        <a href="index.html">Sair</a>
+      </div>
+  </nav>
+  <body>
+    <div class="container" id="trap-container">
+      <div class="janela" id="trap-container">
+        <div class="sistema">
+          <h1 class="txt_1" >Área Administrativa</h2>
+          <h2 class="txt_2">
+            Visualização e alteração de dados sensíveis
+          </h2>
+          <button class="botao_ADM" 
+          id="cadastrarChapas" 
+          onclick="entrarContagem()" 
+          title="Modificar lista de Candidatos/Chapas" 
+          
+          >
+
+            APURAÇÃO DOS VOTOS
+          </button>
+          
+          <button
+            class="botao_ADM"
+            id=""
+            onclick="alt_snh()"
+            title="Controle da lista de Eleitores"
+
+          >
+            alteração de senhas
+          </button>
+
+        <button id="voltarHub" class="botao sair" onclick="voltarHub()" title="Página anterior">
+            <i class="fa-solid fa-circle-chevron-left"></i> Voltar
+        </button>
+        <button id="md_es" class="md_es" class="botao" onclick="mod_esc()">
+          Modo escuro
+        </button>
+      </div>
+    </div>
+    <script src="mainMesario.js"></script>
+  </body>
+</html>
