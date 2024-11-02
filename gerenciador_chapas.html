@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerenciador de Candidatos</title>
+  <link rel="stylesheet" href="styleMesario.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/877e197de7.js" crossorigin="anonymous"></script>
+  <script src="constantes.js"></script>
+  <style>
+    .scrollable-container {
+      max-height: 350px;
+      overflow-y: auto;
+    }
+
+    .shadow-custom {
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .azul {
+      background-color: #302681;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+  <nav>
+    <i class="fa-solid fa-bars" onclick="toggleMenu()"></i>
+    <div class="nv_est" id="menuItems">
+      <a href="hub.html">Home</a>
+      <a href="hub_chapas.html">Gerenciador de Candidatos</a>
+      <a href="hub_eleitor.html">Gerenciador de Eleitores</a>
+      <a href="contagem.html">Contagem de Votos</a>
+      <a href="id_eleitor.html">Iniciar Processo</a>
+      <a href="index.html">Sair</a>
+    </div>
+  </nav>
+
+  <div class="container mx-auto p-4">
+    <button id="md_es" class="absolute bottom-4 bg-black text-gray-300 px-5 py-3 rounded-lg font-semibold text-lg"
+      onclick="toggleTheme()">
+      Modo Escuro
+    </button>
+
+    <div class="bg-gray-300 rounded-lg shadow-custom p-6 max-w-7xl mx-auto">
+      <div class="cabecalho text-center mb-4">
+        <h2 class="text-gray-700 font-bold text-2xl">
+          Gerenciador de Candidatos
+        </h2>
+        <div class="buscar mt-4 justify-center">
+          <input type="search" class="searchInput border border-gray-400 rounded-lg p-2 text-gray-700" id="searchInput"
+            placeholder="Digite o nome" />
+          <button class="azul hover:bg-blue-600 text-white py-2 px-4 rounded-lg ml-2" id="searchButton"
+            title="Consultar chapa ou candidato" onclick="buscarCandidatos()">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+      </div>
+
+      <div id="candidatos"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 scrollable-container px-5"></div>
+
+      <div class="flex justify-between mt-6">
+        <button id="deletarTodos"
+          class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg font-semibold text-lg transition"
+          onclick="deletarTodosCandidatos()" title="Limpar lista de candidatos e chapas">
+          <i class="fa-solid fa-trash-can"></i> Deletar todos
+        </button>
+        <button id="voltarHub"
+          class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg font-semibold text-lg transition"
+          onclick="voltarHubChapas()" title="Página anterior">
+          <i class="fa-solid fa-circle-chevron-left"></i> Voltar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="mainMesario.js"></script>
+  <script>
+    var input = document.getElementById("searchInput");
+    input.addEventListener("keyup", function (event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("searchButton").click();
+      }
+    });
+
+    function carregarCandidatos() {
+      fetch(`${BaseUrl}/candidato`)
+        .then((response) => response.json())
+        .then((data) => {
+          const candidatosDiv = document.getElementById("candidatos");
+          candidatosDiv.innerHTML = "";
+          data.forEach((candidato) => {
+            if (
+              candidato.chapa !== "0" ||
+              candidato.nome !== "Brancos & Nulos"
+            ) {
+              const candidatoDiv = document.createElement("div");
+              candidatoDiv.classList.add(
+                "bg-white",
+                "border",
+                "border-gray-300",
+                "rounded-lg",
+                "p-4",
+                "shadow-md",
+              );
+              candidatoDiv.setAttribute("data-nome", candidato.nome
+                .toLowerCase()); // Adiciona atributo para facilitar a busca
+
+              candidatoDiv.innerHTML = `
+            <div class="flex justify-center mb-2">
+              <img src="data:image/png;base64,${candidato.foto}" alt="${candidato.nome}" class="foto-candidato w-24 h-24 rounded-full object-cover" />
+            </div>
+            <div class="info-candidato text-center text-gray-800">
+              <p><strong>Chapa:</strong> ${candidato.chapa}</p>
+              <p><strong>Nome:</strong> ${candidato.nome}</p>
+              <button class="bg-red-500 hover:bg-red-600 text-white py-1 px-2 rounded-lg mt-2" onclick="excluirCandidato('${candidato.chapa}')">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          `;
+              candidatosDiv.appendChild(candidatoDiv);
+            }
+          });
+        })
+        .catch((error) => {
+          console.error("Erro ao carregar os candidatos:", error);
+        });
+    }
+
+    function buscarCandidatos() {
+      const searchTerm = document
+        .getElementById("searchInput")
+        .value.trim()
+        .toLowerCase();
+      const candidatos = document.querySelectorAll("#candidatos > div");
+
+      // Limpa a div de candidatos antes de buscar
+      const candidatosDiv = document.getElementById("candidatos");
+      candidatosDiv.innerHTML = ""; // Limpa a div para exibir apenas o candidato buscado
+
+      let encontrado = false; // Flag para verificar se o candidato foi encontrado
+
+      candidatos.forEach((candidato) => {
+        const candidatoInfo = candidato.getAttribute("data-nome"); // Obtém o nome do candidato
+        if (candidatoInfo.includes(searchTerm)) {
+          candidatosDiv.appendChild(candidato.cloneNode(true)); // Clona e adiciona apenas o candidato encontrado
+          encontrado = true; // Define a flag como verdadeira
+        }
+      });
+
+      if (!encontrado) {
+        candidatosDiv.innerHTML =
+          "<p class='text-red-500 text-center'>Candidato não encontrado.</p>"; // Mensagem de erro caso não encontre
+      }
+    }
+
+    function excluirCandidato(chapa) {
+      if (confirm("Tem certeza que deseja excluir este candidato?")) {
+        fetch(`${BaseUrl}/candidato/${chapa}`, {
+            method: "DELETE",
+          })
+          .then((response) => {
+            if (response.ok) {
+              console.log("Candidato excluído com sucesso:", chapa);
+              carregarCandidatos();
+            } else {
+              console.error("Erro ao excluir candidato:", response.status);
+            }
+          })
+          .catch((error) => {
+            console.error("Erro ao excluir candidato:", error);
+          });
+      }
+    }
+
+    function deletarTodosCandidatos() {
+      if (confirm("Tem certeza que deseja excluir todos os candidatos?")) {
+        fetch(`${BaseUrl}/candidato`, {
+            method: "DELETE",
+          })
+          .then((response) => {
+            if (response.ok) {
+              console.log("Todos os candidatos foram excluídos com sucesso.");
+              carregarCandidatos();
+            } else {
+              console.error(
+                "Erro ao excluir todos os candidatos:",
+                response.status
+              );
+            }
+          })
+          .catch((error) => {
+            console.error("Erro ao excluir todos os candidatos:", error);
+          });
+      }
+    }
+
+    window.onload = carregarCandidatos;
+  </script>
+</body>
+
+</html>

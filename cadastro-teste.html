@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cadastro do Eleitor</title>
+  <link rel="stylesheet" href="styleMesario.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script src="https://kit.fontawesome.com/877e197de7.js" crossorigin="anonymous"></script>
+  <script src="constantes.js"></script>
+  <style>
+    .mensagem {
+      text-align: center;
+      font-weight: bold;
+      font-size: large;
+      margin: 10px 0;
+    }
+
+    .shadow-custom {
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen shadow-custom">
+  <nav>
+    <i class="fa-solid fa-bars" onclick="toggleMenu()"></i>
+    <div class="nv_est" id="menuItems">
+      <a href="hub.html">Home</a>
+      <a href="hub_chapas.html">Gerenciador de Candidatos</a>
+      <a href="hub_eleitor.html">Gerenciador de Eleitores</a>
+      <a href="contagem.html">Contagem de Votos</a>
+      <a href="id_eleitor.html">Iniciar Processo</a>
+      <a href="index.html">Sair</a>
+    </div>
+  </nav>
+
+  <div class="container mx-auto p-8 w-full max-w-3xl">
+    <button id="md_es" class="absolute bottom-4 bg-black text-gray-300 px-5 py-3 rounded-lg font-semibold text-lg"
+      onclick="toggleTheme()">
+      Modo Escuro
+    </button>
+    <div class="bg-gray-300 rounded-lg shadow-lg p-12 relative">
+      <h1 class="text-gray-800 font-bold text-3xl mb-8 text-center">
+        Cadastro do Eleitor
+      </h1>
+
+      <div id="divInputs" class="space-y-6">
+        <div class="flex flex-col">
+          <label for="classe" class="font-semibold text-gray-700">Classe</label>
+          <input type="text" id="classe" placeholder="Digite a classe (ex: 5F)"
+            class="text-gray-700 mt-1 p-2 border border-gray-400 rounded-lg w-1/2" maxlength="2"
+            oninput="this.value = this.value.toUpperCase()" />
+        </div>
+
+        <div class="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
+          <div class="flex-1 flex flex-col">
+            <label for="nomes" class="font-semibold text-gray-700">Nomes (um por linha)</label>
+            <textarea id="nomes" placeholder="Digite um nome por linha"
+              class="text-gray-700 mt-1 p-2 border border-gray-400 rounded-lg resize-none h-40 w-full"
+              oninput="this.value = this.value.toUpperCase().replace(/[^A-Z\s\n]/g, '')"></textarea>
+          </div>
+
+          <div class="flex-1 flex flex-col">
+            <label for="numeros" class="font-semibold text-gray-700">Números (um por linha)</label>
+            <textarea id="numeros" placeholder="Digite um número por linha"
+              class="text-gray-700 mt-1 p-2 border border-gray-400 rounded-lg resize-none h-40 w-full"
+              oninput="this.value = this.value.replace(/[^0-9\n]/g, '')"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div id="registro-box" class="mt-8 hidden flex justify-center space-x-6">
+        <div id="registrosCadastrados" class="flex-1 text-center">
+          <h2 class="font-bold text-lg text-gray-700">Registros Criados</h2>
+          <textarea id="resultadoCadastrados" class="mt-1 p-2 border border-gray-400 rounded-lg w-full h-40 resize-none"
+            readonly></textarea>
+          <div id="mensagemCadastrados" class="mensagem text-green-600" style="display: none">
+            Cadastro realizado com sucesso.
+          </div>
+        </div>
+
+        <div id="registrosNaoCadastrados" class="flex-1 text-center">
+          <h2 class="font-bold text-lg text-gray-700">Erro ao cadastrar</h2>
+          <textarea id="resultadoNaoCadastrados"
+            class="mt-1 p-2 border border-gray-400 rounded-lg w-full h-40 resize-none" readonly></textarea>
+          <div id="mensagemNaoCadastrados" class="mensagem text-red-600" style="display: none">
+            Verifique os RAs duplicados!
+          </div>
+        </div>
+      </div>
+
+      <div id="btnMaisRegistro" class="mt-6 hidden flex justify-center">
+        <button onclick="adicionarMaisRegistro()"
+          class="bg-red-500 text-white py-2 px-6 rounded-lg font-semibold hover:bg-red-600 transition-all">
+          <i class="fa-solid fa-circle-chevron-left"></i> Voltar para o
+          cadastro
+        </button>
+      </div>
+
+      <div id="botoes" class="flex justify-between mt-8">
+        <button onclick="gerarRegistros()"
+          class="bg-green-500 text-white py-2 px-6 rounded-lg font-semibold hover:bg-green-600 transition-all">
+          <i class="fa-solid fa-user-plus"></i> Cadastrar
+        </button>
+        <button id="voltarHub"
+          class="bg-red-500 text-white py-2 px-6 rounded-lg font-semibold hover:bg-red-600 transition-all"
+          onclick="voltarHubEleitores()">
+          <i class="fa-solid fa-circle-chevron-left"></i> Voltar
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- <nav>
+      <i class="fa-solid fa-bars" onclick="toggleMenu()"></i>
+      <div class="nv_est" id="menuItems">
+        <a href="hub.html">Home</a>
+        <a href="hub_chapas.html">Gerenciador de Candidatos</a>
+        <a href="hub_eleitor.html">Gerenciador de Eleitores</a>
+        <a href="contagem.html">Contagem de Votos</a>
+        <a href="id_eleitor.html">Iniciar Processo</a>
+        <a href="index.html">Sair</a>
+      </div>
+    </nav> -->
+
+  <script src="mainMesario.js"></script>
+  <script>
+    function gerarRegistros() {
+      const classe = document.getElementById("classe").value.trim();
+
+      const numeros = document
+        .getElementById("numeros")
+        .value.split("\n")
+        .map((numero) => numero.trim())
+        .filter((numero) => numero !== "");
+
+      const nomes = document
+        .getElementById("nomes")
+        .value.split("\n")
+        .map((nome) => nome.trim())
+        .filter((nome) => nome !== "");
+
+      if (
+        !classe ||
+        nomes.length === 0 ||
+        numeros.length === 0 ||
+        nomes.length !== numeros.length
+      ) {
+        alert("Preencha todos os campos corretamente.");
+        return;
+      }
+
+      function formatarNumero(numero) {
+        return numero.padStart(2, "0");
+      }
+
+      let eleitores = [];
+      for (let i = 0; i < nomes.length; i++) {
+        const numeroFormatado = formatarNumero(numeros[i]);
+        const classeRa = classe + numeroFormatado;
+        eleitores.push({
+          nome: nomes[i],
+          ra: classeRa
+        });
+      }
+
+      const myHeaders = new Headers();
+      myHeaders.append("Content-Type", "application/json");
+
+      const raw = JSON.stringify(eleitores);
+      const url = `${BaseUrl}/eleitor`;
+
+      fetch(url, {
+          method: "POST",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
+        })
+        .then((response) => response.json())
+        .then((result) => {
+          const {
+            eleitoresNaoCadastrados,
+            eleitoresCadastrados
+          } = result;
+
+          // Exibindo eleitores cadastrados e não cadastrados
+          document.getElementById("divInputs").style.display = "none";
+          document.getElementById("registro-box").style.display = "flex";
+          document.getElementById("btnMaisRegistro").style.display = "flex";
+          document.getElementById("botoes").style.display = "none";
+
+          let textoCadastrados = "";
+          eleitoresCadastrados.forEach((e) => {
+            textoCadastrados += `${e.nome}, RA: ${e.ra}\n`;
+          });
+          document.getElementById("resultadoCadastrados").value =
+            textoCadastrados;
+
+          let textoNaoCadastrados = "";
+          eleitoresNaoCadastrados.forEach((e) => {
+            textoNaoCadastrados += `${e.nome} (RA: ${e.ra})\n`;
+          });
+          document.getElementById("resultadoNaoCadastrados").value =
+            textoNaoCadastrados;
+
+          // Exibir as áreas de registros
+          document.getElementById("registrosCadastrados").style.display =
+            eleitoresCadastrados.length > 0 ? "block" : "none";
+          document.getElementById("registrosNaoCadastrados").style.display =
+            eleitoresNaoCadastrados.length > 0 ? "block" : "none";
+
+          if (eleitoresCadastrados.length > 0) {
+            document.getElementById("mensagemCadastrados").style.display =
+              "block"; // Exibe a mensagem de sucesso
+          } else {
+            document.getElementById("mensagemCadastrados").style.display =
+              "none"; // Esconde a mensagem se não houver cadastrados
+          }
+
+          // Após a linha onde você configura os registros não cadastrados
+          if (eleitoresNaoCadastrados.length > 0) {
+            document.getElementById("mensagemNaoCadastrados").style.display =
+              "block"; // Exibe a mensagem de erro
+          } else {
+            document.getElementById("mensagemNaoCadastrados").style.display =
+              "none"; // Esconde a mensagem se não houver não cadastrados
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+          alert("Erro ao cadastrar eleitores.");
+        });
+    }
+
+    function adicionarMaisRegistro() {
+      window.location.reload();
+    }
+  </script>
+</body>
+
+</html>

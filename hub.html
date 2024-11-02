@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hub da Urna</title>
+  <link rel="stylesheet" href="styleMesario.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/877e197de7.js" crossorigin="anonymous"></script>
+  <style>
+    .shadow-custom {
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+  <nav>
+    <i class="fa-solid fa-bars" onclick="toggleMenu()"></i>
+    <div class="nv_est" id="menuItems">
+      <a href="hub.html">Home</a>
+      <a href="hub_chapas.html">Gerenciador de Candidatos</a>
+      <a href="hub_eleitor.html">Gerenciador de Eleitores</a>
+      <a href="contagem.html">Contagem de Votos</a>
+      <a href="id_eleitor.html">Iniciar Processo</a>
+      <a href="index.html">Sair</a>
+    </div>
+  </nav>
+
+  <div class="container mx-auto p-4">
+    <button id="md_es" class="absolute bottom-4 bg-black text-gray-300 px-5 py-3 rounded-lg font-semibold text-lg"
+      onclick="toggleTheme()">
+      Modo Escuro
+    </button>
+
+    <div class="bg-gray-300 rounded-lg shadow-custom p-10 max-w-2xl mx-auto">
+      <div class="text-center space-y-8">
+        <div>
+          <h2 class="text-gray-700 font-bold text-2xl mb-4">
+            Gestão do Sistema
+          </h2>
+          <button onclick="entrarHubChapas()"
+            class="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-semibold text-lg transition">
+            Gerenciar Candidatos
+          </button>
+          <button onclick="entrarHubEleitor()"
+            class="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-semibold text-lg mt-4 transition">
+            Gerenciar Eleitores
+          </button>
+          <button onclick="Adm()"
+            class="w-full bg-yellow-500 hover:bg-yellow-600 text-white py-3 rounded-lg font-semibold text-lg mt-4 transition">
+            Administração
+          </button>
+        </div>
+
+        <!-- Seção de Processo Eleitoral -->
+        <div>
+          <h2 class="text-gray-700 font-bold text-2xl mb-4">
+            Processo Eleitoral
+          </h2>
+          <button onclick="iniciarProcesso()"
+            class="w-full bg-green-500 hover:bg-green-600 text-white py-3 rounded-lg font-semibold text-lg transition">
+            Iniciar Processo
+          </button>
+        </div>
+      </div>
+
+      <!-- Botão Sair -->
+      <div class="mt-8 text-center">
+        <button
+          class="bg-red-500 hover:bg-red-600 text-white py-3 px-8 rounded-lg font-semibold text-lg inline-flex items-center transition"
+          onclick="hubSair()">
+          <i class="fa-solid fa-right-from-bracket mr-2"></i> Sair
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="mainMesario.js"></script>
+</body>
+
+</html>

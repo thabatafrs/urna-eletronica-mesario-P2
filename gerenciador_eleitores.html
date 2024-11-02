@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerenciador de Eleitores</title>
+  <link rel="stylesheet" href="styleMesario.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/877e197de7.js" crossorigin="anonymous"></script>
+  <script src="constantes.js"></script>
+  <style>
+    .scrollable-container {
+      max-height: 350px;
+      overflow-y: auto;
+    }
+
+    .shadow-custom {
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .azul {
+      background-color: #302681;
+    }
+
+    .selected {
+      background-color: #e0f7fa;
+    }
+
+    .eleitor-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .delete-button {
+      position: absolute;
+      top: 5px;
+      /* Distância do topo do card */
+      right: 5px;
+      /* Distância da direita do card */
+      background-color: rgba(255, 0, 0, 0.8);
+      border: none;
+      border-radius: 5px;
+      color: white;
+      padding: 3px 6px;
+      /* Reduzido para diminuir o tamanho do botão */
+      font-size: 0.8rem;
+      /* Tamanho da fonte reduzido */
+      cursor: pointer;
+    }
+
+    .delete-button:hover {
+      background-color: rgba(255, 0, 0, 1);
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+  <nav>
+    <i class="fa-solid fa-bars" onclick="toggleMenu()"></i>
+    <div class="nv_est" id="menuItems">
+      <a href="hub.html">Home</a>
+      <a href="hub_chapas.html">Gerenciador de Candidatos</a>
+      <a href="hub_eleitor.html">Gerenciador de Eleitores</a>
+      <a href="contagem.html">Contagem de Votos</a>
+      <a href="id_eleitor.html">Iniciar Processo</a>
+      <a href="index.html">Sair</a>
+    </div>
+  </nav>
+
+  <div class="container mx-auto p-4">
+    <button id="md_es" class="absolute bottom-4 bg-black text-gray-300 px-5 py-3 rounded-lg font-semibold text-lg"
+      onclick="toggleTheme()">
+      Modo Escuro
+    </button>
+    <div class="bg-gray-300 rounded-lg shadow-custom p-6 max-w-7xl mx-auto relative">
+      <div class="absolute top-4 right-4">
+        <button onclick="voltarHubEleitores()" id="voltarHubEleitores"
+          class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-full text-md font-semibold transition"
+          title="Página anterior">
+          <i class="fa-solid fa-circle-chevron-left mr-2"></i> Voltar
+        </button>
+      </div>
+      <div class="cabecalho text-center mb-4">
+        <h2 class="text-gray-700 font-bold text-2xl">
+          Gerenciador de Eleitores
+        </h2>
+        <div class="buscar mt-4 justify-center">
+          <input type="search" class="searchInput border border-gray-400 rounded-lg p-2 text-gray-700" id="searchInput"
+            placeholder="Digite o nome" />
+          <button class="azul hover:bg-blue-600 text-white py-2 px-4 rounded-lg ml-2" id="searchButton"
+            title="Consultar nome" onclick="buscarEleitores()">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+      </div>
+
+      <div id="eleitores"
+        class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 scrollable-container px-5"></div>
+
+      <div class="flex justify-between mt-6">
+        <button id="deletarSelecionados"
+          class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg font-semibold text-lg transition"
+          onclick="deletarSelecionados()" title="Excluir eleitores selecionados">
+          <i class="fa-solid fa-trash-can"></i>
+          Excluir Selecionados
+        </button>
+        <button id="deletarTodosEleitores"
+          class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg font-semibold text-lg transition"
+          onclick="deletarTodosEleitores()" title="Limpar lista de eleitores">
+          <i class="fa-solid fa-trash-can"></i>
+          Deletar todos
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="mainMesario.js"></script>
+  <script>
+    // Buscar ao clicar enter
+    var input = document.getElementById("searchInput");
+    input.addEventListener("keyup", function (event) {
+      if (event.keyCode === 13) {
+        event.preventDefault();
+        document.getElementById("searchButton").click();
+      }
+    });
+
+    function carregarEleitores() {
+      fetch(`${BaseUrl}/eleitor`)
+        .then((response) => response.json())
+        .then((data) => {
+          const eleitoresDiv = document.getElementById("eleitores");
+          eleitoresDiv.innerHTML = "";
+
+          data.forEach((eleitor) => {
+            const eleitorDiv = document.createElement("div");
+            eleitorDiv.classList.add(
+              "eleitor-card",
+              "bg-white",
+              "border",
+              "border-gray-300",
+              "rounded-lg",
+              "p-4",
+              "shadow",
+            );
+            eleitorDiv.setAttribute('data-ra', eleitor.ra); // Armazena o RA no atributo data
+
+            eleitorDiv.innerHTML = `
+              <button class="delete-button" onclick="excluirEleitor('${eleitor.ra}')">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+              <div class="info-eleitor text-gray-700 text-center">
+                <p><strong>RA:</strong> ${eleitor.ra}</p>
+                <p><strong>Nome:</strong> ${eleitor.nome}</p>
+              </div>
+              <div class="flex justify-center mt-4">
+                <button class="select-button text-gray-600" onclick="toggleSelect('${eleitor.ra}', this)">
+                  <i class="fa-solid fa-circle"></i>
+                </button>
+              </div>
+            `;
+
+            eleitoresDiv.appendChild(eleitorDiv);
+          });
+        })
+        .catch((error) => {
+          console.error("Erro ao carregar os eleitores:", error);
+        });
+    }
+
+    function toggleSelect(ra, button) {
+      const eleitorCard = button.closest('.eleitor-card');
+      eleitorCard.classList.toggle('selected');
+      button.innerHTML = eleitorCard.classList.contains('selected') ?
+        '<i class="fa-solid fa-check-circle"></i>' :
+        '<i class="fa-solid fa-circle"></i>';
+    }
+
+    function deletarSelecionados() {
+      const selecionados = document.querySelectorAll('.eleitor-card.selected');
+      const raSelecionados = Array.from(selecionados).map(card => card.getAttribute('data-ra'));
+
+      if (raSelecionados.length === 0) {
+        alert("Nenhum eleitor selecionado!");
+        return;
+      }
+
+      if (confirm("Tem certeza que deseja excluir os eleitores selecionados?")) {
+        raSelecionados.forEach(ra => {
+          fetch(`${BaseUrl}/eleitor/${ra}`, {
+              method: "DELETE",
+            })
+            .then((response) => {
+              if (!response.ok) {
+                console.error("Erro ao excluir eleitor:", response.status);
+              }
+              window.location.reload();
+            })
+            .catch((error) => {
+              console.error("Erro ao excluir eleitor:", error);
+            });
+        });
+
+      }
+    }
+
+    function buscarEleitores() {
+      const searchTerm = document
+        .getElementById("searchInput")
+        .value.trim()
+        .toLowerCase();
+      const eleitores = document.querySelectorAll(".eleitor-card");
+
+      eleitores.forEach((eleitor) => {
+        const eleitorInfo = eleitor.textContent.toLowerCase();
+
+        if (eleitorInfo.includes(searchTerm)) {
+          eleitor.style.display = "flex";
+        } else {
+          eleitor.style.display = "none";
+        }
+      });
+    }
+
+    function excluirEleitor(ra) {
+      if (confirm("Tem certeza que deseja excluir este eleitor?")) {
+        fetch(`${BaseUrl}/eleitor/${ra}`, {
+            method: "DELETE",
+          })
+          .then((response) => {
+            if (response.ok) {
+              console.log("Eleitor excluído com sucesso.");
+              carregarEleitores();
+            } else {
+              console.error("Erro ao excluir eleitor:", response.status);
+            }
+          })
+          .catch((error) => {
+            console.error("Erro ao excluir eleitor:", error);
+          });
+      }
+    }
+
+    function voltarHubEleitores() {
+      window.location.href = "hub.html"; // Redireciona para a página do hub
+    }
+
+    // Carrega os eleitores ao iniciar a página
+    window.onload = carregarEleitores;
+  </script>
+</body>
+
+</html>

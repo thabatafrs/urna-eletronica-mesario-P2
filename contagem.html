@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contagem de Votos</title>
+    <link rel="stylesheet" href="styleMesario.css" />
+    <script src="https://kit.fontawesome.com/877e197de7.js" crossorigin="anonymous"></script>
+    <script src="constantes.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .shadow-custom {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .scrollable-container {
+            max-height: 40vh;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <nav>
+        <i class="fa-solid fa-bars" onclick="toggleMenu()"></i>
+        <div class="nv_est" id="menuItems">
+            <a href="hub.html">Home</a>
+            <a href="hub_chapas.html">Gerenciador de Candidatos</a>
+            <a href="hub_eleitor.html">Gerenciador de Eleitores</a>
+            <a href="contagem.html">Contagem de Votos</a>
+            <a href="id_eleitor.html">Iniciar Processo</a>
+            <a href="index.html">Sair</a>
+        </div>
+    </nav>
+
+    <div class="container mx-auto p-4">
+        <button id="md_es" class="absolute bottom-4 bg-black text-gray-300 px-5 py-3 rounded-lg font-semibold text-lg"
+            onclick="toggleTheme()">
+            Modo Escuro
+        </button>
+
+        <!-- Div principal com sombra e arredondamento e largura aumentada -->
+        <div class="bg-gray-300 rounded-lg shadow-custom mx-auto relative w-[70%] p-6">
+            <h1 class="text-gray-700 font-bold text-2xl text-center mb-4">
+                Contagem de Votos
+            </h1>
+
+            <!-- Lista de votos -->
+            <ul id="lista-votos" class="list-none p-4 w-full mt-4 scrollable-container"></ul>
+
+            <!-- Botões de controle -->
+            <div class="flex justify-between mt-6">
+                <button
+                    class="bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-4 rounded-lg font-semibold text-lg transition"
+                    onclick="zerarLista()" title="Finalizar votação">
+                    <i class="fa-solid fa-rectangle-xmark mr-2"></i> Encerrar Processo
+                </button>
+
+                <button id="voltarHub"
+                    class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg font-semibold text-lg transition ml-4"
+                    onclick="Adm()" title="Página anterior">
+                    <i class="fa-solid fa-circle-chevron-left mr-2"></i> Voltar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="mainMesario.js"></script>
+    <script>
+        function zerarLista() {
+            if (confirm("Encerrar processo irá apagar todos os dados desta eleição. Deseja prosseguir?")) {
+                fetch(`${BaseUrl}/presenca`, {
+                    method: "DELETE"
+                });
+                fetch(`${BaseUrl}/voto`, {
+                    method: "DELETE"
+                });
+                fetch(`${BaseUrl}/liberacao_urna?isUrnaLiberada=false`, {
+                        method: "POST"
+                    })
+                    .then(() => {
+                        console.log("Urna zerada com sucesso.");
+                        window.location.reload();
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao zerar a urna:", error);
+                    });
+            }
+        }
+
+        function carregarListaVotos() {
+            fetch(`${BaseUrl}/voto`)
+                .then((response) => response.json())
+                .then((data) => {
+                    const listaVotos = document.getElementById("lista-votos");
+                    listaVotos.innerHTML = "";
+
+                    data.forEach((item) => {
+                        const li = document.createElement("li");
+                        li.innerHTML = `
+                            <div class="bg-white border border-gray-300 rounded-lg p-4 mb-2 shadow card ${document.body.classList.contains('dark-theme') ? 'card-dark' : ''}">
+                                <p class="text-gray-700"><strong>Nome:</strong> ${item.nome}</p>
+                                <p class="text-gray-700"><strong>Total de Votos:</strong> ${item.totalVotos}</p>
+                            </div>
+                        `;
+                        listaVotos.appendChild(li);
+                    });
+                })
+                .catch((error) => {
+                    console.error("Erro ao carregar a lista de votos:", error);
+                });
+        }
+
+        document.addEventListener("DOMContentLoaded", carregarListaVotos);
+    </script>
+</body>
+
+</html>
