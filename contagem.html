@@ -75,25 +75,26 @@
     <script src="mainMesario.js"></script>
     <script>
         function zerarLista() {
-            if (confirm("Encerrar processo irá apagar todos os dados desta eleição. Deseja prosseguir?")) {
-                fetch(`${BaseUrl}/presenca`, {
-                    method: "DELETE"
-                });
-                fetch(`${BaseUrl}/voto`, {
-                    method: "DELETE"
-                });
-                fetch(`${BaseUrl}/liberacao_urna?isUrnaLiberada=false`, {
-                        method: "POST"
-                    })
-                    .then(() => {
-                        console.log("Urna zerada com sucesso.");
-                        window.location.reload();
-                    })
-                    .catch((error) => {
-                        console.error("Erro ao zerar a urna:", error);
-                    });
-            }
+        if (confirm("Encerrar processo irá apagar todos os dados desta eleição. Deseja prosseguir?")) {
+          fetch(`${BaseUrl}/presenca`, {
+            method: "DELETE",
+          })
+          fetch(`${BaseUrl}/voto`, {
+            method: "DELETE",
+          })
+
+          fetch(`${BaseUrl}/liberacao_urna?isUrnaLiberada=false`, {
+            method: "POST",
+          })
+          .then(() => {
+            console.log("Urna zerada com sucesso.");
+            window.location.reload(); 
+          })
+          .catch((error) => {
+            console.error("Erro ao zerar a urna:", error);
+          });
         }
+      }
 
         function carregarListaVotos() {
             fetch(`${BaseUrl}/voto`)
