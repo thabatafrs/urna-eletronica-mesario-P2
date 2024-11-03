@@ -138,19 +138,22 @@
     function liberarEleitor(ra) {
       const url = `${BaseUrl}/eleitor/verificar/${ra}`;
       const data = JSON.stringify({
-        ra: ra
+        ra: ra,
       });
 
       fetch(url, {
           method: "POST",
           headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
           },
           body: data,
         })
         .then((response) => {
-          if (!response.ok) {} else {
-            document.getElementById("mensagem").innerHTML = "Eleitor liberado para votar!";
+          if (!response.ok) {
+            // Handle error
+          } else {
+            document.getElementById("mensagem").innerHTML =
+              "Eleitor liberado para votar!";
             document.getElementById("mensagem").style.color = "green";
             document.getElementById("liberarBTN").style.display = "none";
             setTimeout(function () {
@@ -160,14 +163,20 @@
           return response.json();
         })
         .catch((error) => {
-          if (error.name === "TypeError" && error.message === "Failed to fetch") {
+          if (
+            error.name === "TypeError" &&
+            error.message === "Failed to fetch"
+          ) {
             console.error("Erro de CORS:", error);
-            document.getElementById("mensagem").innerHTML = "Eleitor já votou! Tente novamente";
+            document.getElementById("mensagem").innerHTML =
+              "Eleitor já votou! Tente novamente";
             document.getElementById("mensagem").style.color = "red";
             document.getElementById("liberarBTN").style.display = "none";
             setTimeout(function () {
               location.href = "id_eleitor.html";
             }, 3000);
+          } else if (error.response && error.response.status === 502) {
+            // Handle 502 error
           }
         });
     }
