@@ -75,26 +75,32 @@
     <script src="mainMesario.js"></script>
     <script>
         function zerarLista() {
-        if (confirm("Encerrar processo irá apagar todos os dados desta eleição. Deseja prosseguir?")) {
-          fetch(`${BaseUrl}/presenca`, {
-            method: "DELETE",
-          })
-          fetch(`${BaseUrl}/voto`, {
-            method: "DELETE",
-          })
+            if (confirm("Encerrar processo irá apagar todos os dados desta eleição. Deseja prosseguir?")) {
+                fetch(`${BaseUrl}/presenca`, {
+                        method: "DELETE"
+                    })
+                    .then(() => console.log("Presenças deletadas com sucesso."))
+                    .catch(error => console.error("Erro ao deletar presenças:", error));
 
-          fetch(`${BaseUrl}/liberacao_urna?isUrnaLiberada=false`, {
-            method: "POST",
-          })
-          .then(() => {
-            console.log("Urna zerada com sucesso.");
-            window.location.reload(); 
-          })
-          .catch((error) => {
-            console.error("Erro ao zerar a urna:", error);
-          });
+                fetch(`${BaseUrl}/voto`, {
+                        method: "DELETE"
+                    })
+                    .then(() => console.log("Votos deletados com sucesso."))
+                    .catch(error => console.error("Erro ao deletar votos:", error));
+
+                fetch(`${BaseUrl}/liberacao_urna?isUrnaLiberada=false`, {
+                        method: "POST"
+                    })
+                    .then(() => {
+                        console.log("Urna zerada com sucesso.");
+                        window.location.reload();
+                    })
+                    .catch((error) => {
+                        console.error("Erro ao zerar a urna:", error);
+                    });
+            }
         }
-      }
+
 
         function carregarListaVotos() {
             fetch(`${BaseUrl}/voto`)
