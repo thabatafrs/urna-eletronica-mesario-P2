@@ -9,6 +9,44 @@
   <script src="https://kit.fontawesome.com/877e197de7.js" crossorigin="anonymous"></script>
   <script src="constantes.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css"
+    crossorigin="anonymous" />
+  <style>
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 10;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-content {
+      border-radius: 8px;
+      width: 100%;
+      max-width: 600px;
+      padding-top: 5px;
+      padding-bottom: 5px;
+      text-align: center;
+    }
+
+    #image {
+      max-width: 100%;
+      max-height: 400px;
+    }
+
+    .centered-animation {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: auto;
+      width: 40%;
+    }
+  </style>
 </head>
 
 <body class="bg-gray-100 flex items-center justify-center h-screen">
@@ -66,7 +104,7 @@
           <span class="text-gray-600">Foto do candidato:</span>
           <div class="flex items-center">
             <i class="fa-solid fa-image mr-2 text-gray-700"></i>
-            <input type="file" id="foto" name="foto" accept="image/*" required onchange="previewImage()"
+            <input type="file" id="foto" name="foto" accept="image/*" required onchange="openCropper()"
               class="mt-1 p-2 border rounded w-full text-gray-700 h-10" />
             <img id="preview" src="#" alt="Preview da imagem" class="w-24 h-24 rounded ml-4 hidden" />
           </div>
@@ -83,84 +121,120 @@
     </div>
   </div>
 
+  <div id="successModal" class="modal p-6">
+    <div class="modal-content flex justify-center align-items flex-col bg-white	">
+      <img src="Animation - 1730834839635.gif" alt="" srcset="" class="centered-animation">
+      <p class="text-gray-700 text-center font-semibold">Sucesso no cadastro!</p>
+    </div>
+  </div>
+
+  <div id="cropperModal" class="modal">
+    <div class="modal-content bg-white">
+      <h2 class="text-gray-800 font-bold mb-4">Recorte a Imagem</h2>
+      <img id="image" style="max-width: 100%;" />
+      <button onclick="cropImage()"
+        class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg mt-4">Recortar</button>
+      <button onclick="closeModal()"
+        class="bg-gray-400 hover:bg-gray-500 text-white py-2 px-4 rounded-lg mt-4">Cancelar</button>
+    </div>
+  </div>
+
   <script src="mainMesario.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js" crossorigin="anonymous"></script>
   <script>
-    function previewImage() {
-      const preview = document.getElementById("preview");
+    function openSuccessModal() {
+      document.getElementById("successModal").style.display = "flex";
+    }
+
+    function closeSuccessModal() {
+      document.getElementById("successModal").style.display = "none";
+      window.location.href = "cadastroChapas.html";
+    }
+
+    let cropper;
+    const modal = document.getElementById("cropperModal");
+
+    function openCropper() {
       const file = document.getElementById("foto").files[0];
-      const reader = new FileReader();
-
-      reader.onloadend = function () {
-        preview.src = reader.result;
-        preview.style.display = "block";
-      };
-
       if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const image = document.getElementById("image");
+          image.src = e.target.result;
+          modal.style.display = "flex";
+          cropper = new Cropper(image, {
+            aspectRatio: 1,
+            viewMode: 1,
+          });
+        };
         reader.readAsDataURL(file);
-      } else {
-        preview.src = "";
-        preview.style.display = "none";
       }
     }
 
-    document.getElementById("chapa").addEventListener("input", function () {
-      if (this.value.length > 2) {
-        this.value = this.value.slice(0, 2);
-      }
-    });
-
-    document
-      .getElementById("cadastroForm")
-      .addEventListener("submit", function (event) {
-        event.preventDefault();
-
-        const formData = new FormData(this);
-        const reader = new FileReader();
-        const json = {};
-
-        reader.onload = function () {
-          const base64Image = reader.result.split(",")[1];
-          json["foto"] = base64Image;
-          formData.forEach(function (value, key) {
-            if (key !== "foto") {
-              json[key] = value;
-            }
-          });
-
-          fetch(`${BaseUrl}/candidato`, {
-              method: "POST",
-              body: JSON.stringify(json),
-              headers: {
-                "Content-Type": "application/json",
-              },
-            })
-            .then((response) => response.json())
-            .then((data) => {
-              const cadastro = data.chapa;
-
-              if (typeof cadastro != "undefined") {
-                document.getElementById("mensagem").innerHTML = `Cadastro bem sucedido.`;
-                document.getElementById("mensagem").style.color = "green";
-
-                setTimeout(function () {
-                  window.location.href = "cadastroChapas.html";
-                }, 3000);
-              } else {
-                document.getElementById("mensagem").innerHTML = `Chapa já cadastrada.`;
-                setTimeout(function () {
-                  window.location.href = "cadastroChapas.html";
-                }, 3000);
-              }
-            })
-            .catch((error) => {
-              console.error("Erro:", error);
-              alert("Falha ao Cadastrar");
-              window.location.reload();
-            });
-        };
-
-        reader.readAsDataURL(this.querySelector('input[type="file"]').files[0]);
+    function cropImage() {
+      const preview = document.getElementById("preview");
+      const canvas = cropper.getCroppedCanvas({
+        width: 200,
+        height: 200,
       });
+      preview.src = canvas.toDataURL();
+      preview.style.display = "block";
+      document.getElementById("foto").dataset.croppedImage = preview.src;
+      cropper.destroy();
+      closeModal();
+    }
+
+    function closeModal() {
+      modal.style.display = "none";
+      if (cropper) {
+        cropper.destroy();
+        cropper = null;
+      }
+    }
+    document.getElementById("cadastroForm").addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      const formData = new FormData(this);
+      const json = {};
+
+      const croppedImage = document.getElementById("foto").dataset.croppedImage;
+      json["foto"] = croppedImage ? croppedImage.split(",")[1] : "";
+
+      formData.forEach((value, key) => {
+        if (key !== "foto") json[key] = value;
+      });
+
+      fetch(`${BaseUrl}/candidato`, {
+          method: "POST",
+          body: JSON.stringify(json),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          const cadastro = data.chapa;
+
+          if (typeof cadastro != "undefined") {
+            openSuccessModal();
+
+
+            setTimeout(function () {
+              window.location.href = "cadastroChapas.html";
+            }, 2000);
+          } else {
+            document.getElementById("mensagem").innerHTML = `ERRO: Chapa já cadastrada.`;
+            setTimeout(function () {
+              window.location.href = "cadastroChapas.html";
+            }, 3000);
+          }
+        })
+
+        .catch(error => {
+          console.error("Erro:", error);
+          alert("Falha ao Cadastrar");
+        });
+    });
   </script>
 </body>
 
