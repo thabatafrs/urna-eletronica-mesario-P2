@@ -12,6 +12,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css"
     crossorigin="anonymous" />
   <style>
+    input::placeholder {
+      text-transform: none;
+    }
+
     .modal {
       display: none;
       position: fixed;
@@ -23,20 +27,25 @@
       background-color: rgba(0, 0, 0, 0.5);
       align-items: center;
       justify-content: center;
+      overflow-y: auto;
     }
 
     .modal-content {
       border-radius: 8px;
       width: 100%;
-      max-width: 600px;
-      padding-top: 5px;
-      padding-bottom: 5px;
+      max-width: 500px;
+
       text-align: center;
+      background-color: white;
+      /* Garantindo visibilidade do conteúdo */
     }
 
-    #image {
+    .modal img {
       max-width: 100%;
-      max-height: 400px;
+      max-height: 300px;
+      /* Limita a altura da imagem */
+      margin-bottom: 1rem;
+      /* Adiciona espaçamento entre a imagem e o botão */
     }
 
     .centered-animation {
@@ -81,13 +90,14 @@
         </button>
       </div>
 
+
       <form class="flex flex-col space-y-4" id="cadastroForm">
         <label class="flex flex-col">
           <span class="text-gray-600">Número da chapa:</span>
           <div class="flex items-center">
             <i class="fa-solid fa-server mr-2 text-gray-700"></i>
             <input type="number" min="1" id="chapa" placeholder="Digite o número" name="chapa" required maxlength="2"
-              class="mt-1 p-2 border rounded w-full text-gray-700 h-10" />
+              class="mt-1 p-2 border rounded w-full text-gray-700 h-10" oninput="this.value = this.value.slice(0, 2)" />
           </div>
         </label>
 
@@ -96,7 +106,8 @@
           <div class="flex items-center">
             <i class="fa-solid fa-user mr-2 text-gray-700"></i>
             <input type="text" id="nome" placeholder="Digite o nome" name="nome" required
-              class="mt-1 p-2 border rounded w-full text-gray-700 h-10" />
+              class="mt-1 p-2 border rounded w-full text-gray-700 h-10 uppercase"
+              oninput="this.value = this.value.toUpperCase()" />
           </div>
         </label>
 
@@ -123,19 +134,21 @@
 
   <div id="successModal" class="modal p-6">
     <div class="modal-content flex justify-center align-items flex-col bg-white	">
-      <img src="Animation - 1730834839635.gif" alt="" srcset="" class="centered-animation">
+      <img src="Animation - 1730834839635.gif" alt="" srcset="" class="centered-animation mt-3">
       <p class="text-gray-700 text-center font-semibold">Sucesso no cadastro!</p>
     </div>
   </div>
 
   <div id="cropperModal" class="modal">
-    <div class="modal-content bg-white">
+    <div class="modal-content">
       <h2 class="text-gray-800 font-bold mb-4">Recorte a Imagem</h2>
-      <img id="image" style="max-width: 100%;" />
-      <button onclick="cropImage()"
-        class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg mt-4">Recortar</button>
-      <button onclick="closeModal()"
-        class="bg-gray-400 hover:bg-gray-500 text-white py-2 px-4 rounded-lg mt-4">Cancelar</button>
+      <img id="image" />
+      <div class="flex flex-col sm:flex-row gap-2 mt-4 justify-center">
+        <button onclick="cropImage()"
+          class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg mb-2">Recortar</button>
+        <button onclick="closeModal()"
+          class="bg-gray-400 hover:bg-gray-500 text-white py-2 px-4 rounded-lg mb-2">Cancelar</button>
+      </div>
     </div>
   </div>
 
