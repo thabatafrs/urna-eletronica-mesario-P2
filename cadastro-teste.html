@@ -1,91 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Cadastro do Eleitor</title>
-  <link rel="stylesheet" href="styleMesario.css" />
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <script src="https://kit.fontawesome.com/877e197de7.js" crossorigin="anonymous"></script>
-  <script src="constantes.js"></script>
-  <style>
-    .mensagem {
-      text-align: center;
-      font-weight: bold;
-      font-size: large;
-      margin: 10px 0;
-    }
-
-    .shadow-custom {
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-    }
-  </style>
-</head>
-
-<body class="bg-gray-100 flex items-center justify-center min-h-screen shadow-custom">
-  <nav>
-    <i class="fa-solid fa-bars" onclick="toggleMenu()"></i>
-    <div class="nv_est" id="menuItems">
-      <a href="hub.html">Home</a>
-      <a href="hub_chapas.html">Gerenciador de Candidatos</a>
-      <a href="hub_eleitor.html">Gerenciador de Eleitores</a>
-      <a href="id_eleitor.html">Iniciar Processo</a>
-      <a href="index.html">Sair</a>
-    </div>
-  </nav>
-
-  <div class="container mx-auto p-4">
-
-    <div class="bg-gray-300 rounded-lg shadow-custom p-6 w-[60%] mx-auto relative">
-      <div class="absolute top-4 right-4 h-20">
-        <button onclick="voltarHubEleitores()" id="voltarHubEleitores"
-          class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-full text-md font-semibold transition"
-          title="Página anterior">
-          <i class="fa-solid fa-circle-chevron-left mr-2"></i> Voltar
-        </button>
-      </div>
-      <div class="absolute top-4 left-4">
-        <button onclick="toggleTheme()" id="md_es"
-          class="bg-gray-600 hover:bg-black text-white py-2 px-4 rounded-full text-md font-semibold transition"
-          title="Ativar modo escuro">
-          Modo Escuro
-        </button>
-      </div>
-      <h1 class="text-gray-800 font-bold text-3xl text-center">
-        Cadastro do Eleitor
-      </h1>
-
-      <div id="divInputs" class="space-y-6">
-        <div class="flex flex-col">
-          <label for="classe" class="font-semibold text-gray-700">Classe</label>
-          <input type="text" id="classe" placeholder="(ex: 5F)"
-            class="text-gray-700 mt-1 p-2 border border-gray-400 rounded-lg w-1/5 h-10" maxlength="2"
-            oninput="this.value = this.value.toUpperCase()" />
-        </div>
-
-        <div class="flex flex-col md:flex-row md:space-x-4 space-y-4 md:space-y-0">
-          <div class="flex-1 flex flex-col">
-            <label for="numeros" class="font-semibold text-gray-700">Números (um por linha)</label>
-            <textarea id="numeros" placeholder="Digite um número por linha"
-              class="text-gray-700 mt-1 p-2 border border-gray-400 rounded-lg resize-none h-40 w-full"
-              oninput="this.value = this.value.replace(/[^0-9\n]/g, '')"></textarea>
-          </div>
-          <div class="flex-1 flex flex-col">
-            <label for="nomes" class="font-semibold text-gray-700">Nomes (um por linha)</label>
-            <textarea id="nomes" placeholder="Digite um nome por linha"
-              class="text-gray-700 mt-1 p-2 border border-gray-400 rounded-lg resize-none h-40 w-full"
-              oninput="this.value = this.value.toUpperCase().replace(/[^A-Z\s\n]/g, '')"></textarea>
-          </div>
-
-
-        </div>
-      </div>
-
-      <div id="registro-box" class="mt-8 hidden flex justify-center space-x-6">
-<!DOCTYPE html>
-<html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -305,7 +219,7 @@
           renderer: "svg",
           loop: true,
           autoplay: true,
-          path: "https://lottie.host/f2f5377c-ba0e-4103-bcf9-b38a0cd9e758/Cc5nrgtPXC.json", 
+          path: "https://lottie.host/f2f5377c-ba0e-4103-bcf9-b38a0cd9e758/Cc5nrgtPXC.json", // Substitua com o link da animação desejada
         });
 
         function formatarNumero(numero) {
@@ -336,10 +250,11 @@
         })
           .then((response) => response.json())
           .then((result) => {
-            document.getElementById("loadingOverlay").style.display = "none"; 
+            document.getElementById("loadingOverlay").style.display = "none"; // Ocultar o overlay ao concluir
 
             const { eleitoresNaoCadastrados, eleitoresCadastrados } = result;
 
+            // Exibindo eleitores cadastrados e não cadastrados
             document.getElementById("divInputs").style.display = "none";
             document.getElementById("registro-box").style.display = "flex";
             document.getElementById("btnMaisRegistro").style.display = "flex";
@@ -359,7 +274,7 @@
             document.getElementById("resultadoNaoCadastrados").value =
               textoNaoCadastrados;
 
- 
+            // Exibir as áreas de registros
             document.getElementById("registrosCadastrados").style.display =
               eleitoresCadastrados.length > 0 ? "block" : "none";
             document.getElementById("registrosNaoCadastrados").style.display =
@@ -367,22 +282,23 @@
 
             if (eleitoresCadastrados.length > 0) {
               document.getElementById("mensagemCadastrados").style.display =
-                "block"; 
+                "block"; // Exibe a mensagem de sucesso
             } else {
               document.getElementById("mensagemCadastrados").style.display =
-                "none"; 
+                "none"; // Esconde a mensagem se não houver cadastrados
             }
 
+            // Após a linha onde você configura os registros não cadastrados
             if (eleitoresNaoCadastrados.length > 0) {
               document.getElementById("mensagemNaoCadastrados").style.display =
-                "block";
+                "block"; // Exibe a mensagem de erro
             } else {
               document.getElementById("mensagemNaoCadastrados").style.display =
-                "none";
+                "none"; // Esconde a mensagem se não houver não cadastrados
             }
           })
           .catch((error) => {
-            document.getElementById("loadingOverlay").style.display = "none"; 
+            document.getElementById("loadingOverlay").style.display = "none"; // Ocultar o overlay em caso de erro
             console.error(error);
             alert("Erro ao cadastrar eleitores.");
           });
