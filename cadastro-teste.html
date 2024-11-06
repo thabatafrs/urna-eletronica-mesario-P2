@@ -219,7 +219,7 @@
           renderer: "svg",
           loop: true,
           autoplay: true,
-          path: "https://lottie.host/f2f5377c-ba0e-4103-bcf9-b38a0cd9e758/Cc5nrgtPXC.json", // Substitua com o link da animação desejada
+          path: "https://lottie.host/f2f5377c-ba0e-4103-bcf9-b38a0cd9e758/Cc5nrgtPXC.json", 
         });
 
         function formatarNumero(numero) {
@@ -250,11 +250,11 @@
         })
           .then((response) => response.json())
           .then((result) => {
-            document.getElementById("loadingOverlay").style.display = "none"; // Ocultar o overlay ao concluir
+            document.getElementById("loadingOverlay").style.display = "none"; 
 
             const { eleitoresNaoCadastrados, eleitoresCadastrados } = result;
 
-            // Exibindo eleitores cadastrados e não cadastrados
+
             document.getElementById("divInputs").style.display = "none";
             document.getElementById("registro-box").style.display = "flex";
             document.getElementById("btnMaisRegistro").style.display = "flex";
@@ -274,7 +274,6 @@
             document.getElementById("resultadoNaoCadastrados").value =
               textoNaoCadastrados;
 
-            // Exibir as áreas de registros
             document.getElementById("registrosCadastrados").style.display =
               eleitoresCadastrados.length > 0 ? "block" : "none";
             document.getElementById("registrosNaoCadastrados").style.display =
@@ -282,23 +281,23 @@
 
             if (eleitoresCadastrados.length > 0) {
               document.getElementById("mensagemCadastrados").style.display =
-                "block"; // Exibe a mensagem de sucesso
+                "block"; 
             } else {
               document.getElementById("mensagemCadastrados").style.display =
-                "none"; // Esconde a mensagem se não houver cadastrados
+                "none"; 
             }
 
-            // Após a linha onde você configura os registros não cadastrados
+
             if (eleitoresNaoCadastrados.length > 0) {
               document.getElementById("mensagemNaoCadastrados").style.display =
-                "block"; // Exibe a mensagem de erro
+                "block"; 
             } else {
               document.getElementById("mensagemNaoCadastrados").style.display =
-                "none"; // Esconde a mensagem se não houver não cadastrados
+                "none"; 
             }
           })
           .catch((error) => {
-            document.getElementById("loadingOverlay").style.display = "none"; // Ocultar o overlay em caso de erro
+            document.getElementById("loadingOverlay").style.display = "none";
             console.error(error);
             alert("Erro ao cadastrar eleitores.");
           });
