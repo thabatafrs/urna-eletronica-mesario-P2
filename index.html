@@ -30,11 +30,9 @@
 </head>
 
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-  <button id="md_es" class="absolute bottom-4 bg-black text-gray-300 px-5 py-3 rounded-lg font-semibold text-lg"
-    onclick="toggleTheme()">
-    Modo Escuro
-  </button>
+  
   <div class="bg-gray-300 shadow-lg shadow-custom rounded-lg p-8 w-full max-w-md relative">
+    
 
     <div class="text-center mb-6">
       <h1 class="text-2xl font-bold text-gray-700">Sistema de Urna Eletrônica</h1>
@@ -43,17 +41,19 @@
       </h2>
     </div>
 
+    
+
     <div class="flex flex-col gap-4">
       <label class="flex items-center">
         <i class="fa-solid fa-user mr-2"></i>
         <input type="text" name="usuario" id="usuario" placeholder="Digite o usuário" required
-          class="p-2 border border-gray-400 rounded-lg w-full text-gray-700" />
+          class="mt-1 p-2 border rounded w-full text-gray-700 h-10" />
       </label>
 
       <label class="flex items-center">
         <i class="fa-solid fa-lock mr-2"></i>
         <input type="password" name="senha" id="senha" placeholder="Digite a senha" required
-          class="p-2 border border-gray-400 rounded-lg w-full text-gray-700" />
+          class="mt-1 p-2 border rounded w-full text-gray-700 h-10" />
       </label>
 
       <span id="error-message" class="text-red-600 text-center"></span>
@@ -61,6 +61,14 @@
         onclick="login()" title="Acessar conta">
         Entrar
       </button>
+
+      <div class="flex justify-center">
+        <button onclick="toggleTheme()" id="md_es"
+            class="bg-gray-600 hover:bg-black text-white py-2 px-4 rounded-full text-md font-semibold transition"
+            title="Ativar modo escuro">
+            Modo Escuro
+        </button>
+      </div>
     </div>
   </div>
 

@@ -22,6 +22,21 @@
     .azul {
       background-color: #302681;
     }
+
+    .mensagem-centralizada {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+      height: 400px;
+      width: 700px;
+      padding: 2rem;
+      text-align: center;
+      font-size: 1.5rem;
+      /* Fundo leve para destacar */
+      border-radius: 8px;
+    }
   </style>
 </head>
 
@@ -72,6 +87,14 @@
       <div id="candidatos"
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 scrollable-container px-5"></div>
 
+      <div id="semCandidatos" class="mensagem-centralizada">
+        <p class="text-gray-700">Não há candidatos cadastrados.</p>
+        <a href="cadastroChapas.html"
+          class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg font-semibold mt-4 text-lg">
+          Cadastrar candidato
+        </a>
+      </div>
+
       <div class="flex justify-center mt-6">
         <button id="deletarTodos"
           class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg font-semibold text-lg transition"
@@ -98,39 +121,46 @@
         .then((response) => response.json())
         .then((data) => {
           const candidatosDiv = document.getElementById("candidatos");
+          const semCandidatosDiv = document.getElementById("semCandidatos");
+
           candidatosDiv.innerHTML = "";
-          data.forEach((candidato) => {
-            if (
-              candidato.chapa !== "0" ||
-              candidato.nome !== "Brancos & Nulos"
-            ) {
+
+          // Filtra os candidatos, removendo "Brancos & Nulos" e chapa "0"
+          const candidatosFiltrados = data.filter(candidato =>
+            candidato.chapa !== "0" && candidato.nome !== "Brancos & Nulos"
+          );
+
+          if (candidatosFiltrados.length === 0) {
+            semCandidatosDiv.style.display = "flex"; // Exibe a mensagem centralizada
+            candidatosDiv.style.display = "none"; // Oculta a lista de candidatos
+            document.getElementById('deletarTodos').style.display = "none"; // Oculta a lista de candidatos
+
+
+          } else {
+            semCandidatosDiv.style.display = "none";
+            candidatosDiv.style.display = "grid";
+
+            candidatosFiltrados.forEach((candidato) => {
               const candidatoDiv = document.createElement("div");
-              candidatoDiv.classList.add(
-                "bg-white",
-                "border",
-                "border-gray-300",
-                "rounded-lg",
-                "p-4",
-                "shadow-md",
-              );
-              candidatoDiv.setAttribute("data-nome", candidato.nome
-                .toLowerCase()); // Adiciona atributo para facilitar a busca
+              candidatoDiv.classList.add("bg-white", "border", "border-gray-300", "rounded-lg", "p-4",
+                "shadow-md");
+              candidatoDiv.setAttribute("data-nome", candidato.nome.toLowerCase());
 
               candidatoDiv.innerHTML = `
-            <div class="flex justify-center mb-2">
-              <img src="data:image/png;base64,${candidato.foto}" alt="${candidato.nome}" class="foto-candidato w-24 h-24 rounded-full object-cover" />
-            </div>
-            <div class="info-candidato text-center text-gray-800">
-              <p><strong>Chapa:</strong> ${candidato.chapa}</p>
-              <p><strong>Nome:</strong> ${candidato.nome}</p>
-              <button class="bg-red-500 hover:bg-red-600 text-white py-1 px-2 rounded-lg mt-2" onclick="excluirCandidato('${candidato.chapa}')">
-                <i class="fa-solid fa-trash-can"></i>
-              </button>
-            </div>
-          `;
+              <div class="flex justify-center mb-2">
+                <img src="data:image/png;base64,${candidato.foto}" alt="${candidato.nome}" class="foto-candidato w-24 h-24 rounded-full object-cover" />
+              </div>
+              <div class="info-candidato text-center text-gray-800">
+                <p><strong>Chapa:</strong> ${candidato.chapa}</p>
+                <p><strong>Nome:</strong> ${candidato.nome}</p>
+                <button class="bg-red-500 hover:bg-red-600 text-white py-1 px-2 rounded-lg mt-2" onclick="excluirCandidato('${candidato.chapa}')">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </div>
+            `;
               candidatosDiv.appendChild(candidatoDiv);
-            }
-          });
+            });
+          }
         })
         .catch((error) => {
           console.error("Erro ao carregar os candidatos:", error);

@@ -13,6 +13,8 @@
     .scrollable-container {
       max-height: 350px;
       overflow-y: auto;
+      height: 500px;
+      width: 700px;
     }
 
     .shadow-custom {
@@ -53,6 +55,21 @@
 
     .delete-button:hover {
       background-color: rgba(255, 0, 0, 1);
+    }
+
+    .mensagem-centralizada {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+      height: 400px;
+      width: 700px;
+      padding: 2rem;
+      text-align: center;
+      font-size: 1.5rem;
+      /* Fundo leve para destacar */
+      border-radius: 8px;
     }
   </style>
 </head>
@@ -102,7 +119,15 @@
       <div id="eleitores"
         class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 scrollable-container px-5"></div>
 
-      <div class="flex justify-center mt-6 gap-4">
+      <div id="semEleitores" class="mensagem-centralizada">
+        <p class="text-gray-700">Não há eleitores cadastrados.</p>
+        <a href="cadastro-teste.html"
+          class="bg-green-500 hover:bg-green-600 text-white text-lg py-2 px-4 rounded-lg font-semibold mt-4">
+          Cadastrar eleitor
+        </a>
+      </div>
+
+      <div class="flex justify-center mt-6 gap-4" id="btnRemover">
         <button id="deletarSelecionados"
           class="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg font-semibold text-lg transition"
           onclick="deletarSelecionados()" title="Excluir eleitores selecionados">
@@ -137,38 +162,42 @@
         .then((response) => response.json())
         .then((data) => {
           const eleitoresDiv = document.getElementById("eleitores");
+          const semEleitoresDiv = document.getElementById("semEleitores");
+
           eleitoresDiv.innerHTML = "";
 
-          data.forEach((eleitor) => {
-            const eleitorDiv = document.createElement("div");
-            eleitorDiv.classList.add(
-              "eleitor-card",
-              "bg-white",
-              "border",
-              "border-gray-300",
-              "rounded-lg",
-              "p-4",
-              "shadow",
-            );
-            eleitorDiv.setAttribute('data-ra', eleitor.ra); // Armazena o RA no atributo data
+          if (data.length === 0) {
+            semEleitoresDiv.style.display = "flex"; // Exibe a mensagem centralizada
+            eleitoresDiv.style.display = "none"; // Oculta a lista de eleitores
+            document.getElementById("btnRemover").style.display = "none"
+          } else {
+            semEleitoresDiv.style.display = "none";
+            eleitoresDiv.style.display = "grid";
 
-            eleitorDiv.innerHTML = `
-              <button class="delete-button" onclick="excluirEleitor('${eleitor.ra}')">
-                <i class="fa-solid fa-trash-can"></i>
-              </button>
-              <div class="info-eleitor text-gray-700 text-center">
-                <p><strong>RA:</strong> ${eleitor.ra}</p>
-                <p><strong>Nome:</strong> ${eleitor.nome}</p>
-              </div>
-              <div class="flex justify-center mt-4">
-                <button class="select-button text-gray-600" onclick="toggleSelect('${eleitor.ra}', this)">
-                  <i class="fa-solid fa-circle"></i>
+            data.forEach((eleitor) => {
+              const eleitorDiv = document.createElement("div");
+              eleitorDiv.classList.add("eleitor-card", "bg-white", "border", "border-gray-300", "rounded-lg",
+                "p-4", "shadow");
+              eleitorDiv.setAttribute('data-ra', eleitor.ra);
+
+              eleitorDiv.innerHTML = `
+                <button class="delete-button" onclick="excluirEleitor('${eleitor.ra}')">
+                  <i class="fa-solid fa-trash-can"></i>
                 </button>
-              </div>
-            `;
+                <div class="info-eleitor text-gray-700 text-center">
+                  <p><strong>RA:</strong> ${eleitor.ra}</p>
+                  <p><strong>Nome:</strong> ${eleitor.nome}</p>
+                </div>
+                <div class="flex justify-center mt-4">
+                  <button class="select-button text-gray-600" onclick="toggleSelect('${eleitor.ra}', this)">
+                    <i class="fa-solid fa-circle"></i>
+                  </button>
+                </div>
+              `;
 
-            eleitoresDiv.appendChild(eleitorDiv);
-          });
+              eleitoresDiv.appendChild(eleitorDiv);
+            });
+          }
         })
         .catch((error) => {
           console.error("Erro ao carregar os eleitores:", error);
@@ -208,6 +237,28 @@
             });
         });
 
+      }
+    }
+
+    function deletarTodosEleitores() {
+      if (confirm("Tem certeza que deseja excluir todos os eleitores?")) {
+        fetch(`${BaseUrl}/eleitor`, {
+            method: "DELETE",
+          })
+          .then((response) => {
+            if (response.ok) {
+              console.log("Todos os eleitores foram excluídos com sucesso.");
+              carregarEleitores();
+            } else {
+              console.error(
+                "Erro ao excluir todos os eleitores:",
+                response.status
+              );
+            }
+          })
+          .catch((error) => {
+            console.error("Erro ao excluir todos os eleitores:", error);
+          });
       }
     }
 
